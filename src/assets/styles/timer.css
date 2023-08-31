@@ -1,0 +1,253 @@
+:root {
+    --primary-clr: #b38add;
+}
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+    
+}
+
+.flex {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.timer--wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+    background-color: #C36868;
+}
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+.wrapper {
+    height: 60%;
+    padding: 2rem;
+    width: 65%;
+    max-width: 60rem;
+    background-color: #B3BCBB;
+    overflow: hidden;
+    /* background-color: red; */
+}
+.timer--container {
+    width: 100%;
+    max-width: 50rem;
+    height: 100%;
+    /* gap: 2rem; */
+    /* padding: 0 1rem; */
+    justify-content: space-between;
+}
+.container__timer--display {
+    height: 65%;
+    width: 100%;
+    max-width: 50rem;
+    background-color: white;
+    padding: 2rem 0;
+}
+
+.flex .timer--display__select--mode {
+    width: 100%;
+    height: 20%;
+    flex-direction: row;
+    gap: 1rem;
+}
+.timer--display__select--mode button{
+    font-size: 1.25em;
+    border: 0;
+    outline: 0;
+    width: 20%;
+    min-height: 2rem;
+    height: max-content;
+    background-color:unset;
+    cursor: pointer;
+}
+
+.timer--display__select--mode .selected__button {
+    border: 2px solid black;
+    border-radius: 1rem;
+    background-color:#99BCC0;
+}
+
+.timer--display__time {
+    font-size: 11rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 50%;
+    letter-spacing: 0.05em;
+}
+
+.flex .timer--display__buttons {
+    width: 100%;
+    min-height: 20%;
+    flex-direction: row;
+    gap:2rem;
+}
+
+.timer--display__buttons button {
+    padding: 0.625rem;
+    border-radius: 0.75rem;
+    width:7rem;
+    min-height: 3rem;
+    height: 50%;
+    background-color: white;
+    border: 2px solid black;
+    font-size: 1.5em;
+    cursor: pointer;
+}
+
+.timer--display__buttons button:hover {
+    background-color: #99BCC0;
+    transform: translateY(-3px);
+    color: white;
+    transition: transform 0.3s ease; 
+}
+.timer--display__buttons button:active {
+    filter: brightness(80%);
+    transform: translateY(1px);
+}
+
+
+
+.timer--container .container__timer--edit{
+    max-width: 50rem;
+    width: 100%;
+    height: 30%;
+    flex-direction: row;
+    gap: 2rem;
+}
+
+.timer--edit__block {
+    height: 70%;
+    width: 13rem;
+    max-width: 30rem;
+    max-height: 30rem;
+    background-color: #323232;
+    padding: 0.6rem;
+    gap: 0.5rem;
+}
+.timer--edit__block .block__edit--length{
+    background-color: #99BCC0;
+    height: 60%;
+    width: 100%;
+    align-items: center;
+    font-size: 3rem;
+    display: flex;
+}
+.timer--edit__block h2 {
+    text-align: center;
+    width: 100%;
+    height: 20%;
+    font-size: 1.3em;
+}
+.block__edit--length input {
+    height: 100%;
+    border: none;
+    background-color: #99BCC0;
+    outline: 0;
+    font-size: 0.9em;
+    width: 100%;
+    text-align: center;
+}
+
+.edit--length__sign {
+    width: 70%;
+    color: white;
+    height: auto;
+    font-size: 1.1em;
+    border: unset;
+    background-color: unset;
+    cursor: pointer;
+}
+
+/* Input field without displaying arrow */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0; 
+}
+input[type=number] {
+    -moz-appearance:textfield; /* Firefox */
+}
+
+.timer--edit__block {
+    color: white;
+}
+.rounded-md {
+    border-radius: 1rem;
+}
+.rounded-l {
+    border-radius: 1.5rem;
+}
+
+.edit--length__sign:active{
+    transform: translateY(1px);
+}
+
+@media screen and (max-width:1024px) {
+    .wrapper {
+        width: 85%;
+    }
+    .timer--edit__block {
+        width: 13rem;
+        font-size: 0.9em;
+    }
+}
+@media screen and (max-width:667px) {
+    .timer--display__time {
+        font-size: 9em;
+    }
+    .timer--edit__block {
+        font-size:small;
+        width: 10rem;
+        height: 25%;
+    }
+    .wrapper {
+        width: 90%;
+        height: 90%;
+        padding: 0;
+    }
+    .flex .timer--display__buttons {
+        width: 80%;
+    }
+    .container__timer--display {
+        border-radius: unset;
+    }
+    .block__edit--length input {
+        font-size: 0.6em;
+    }
+    .timer--container .container__timer--edit {
+        height: 45%;
+        flex-direction: column;
+        gap: 0.7rem;
+        
+    }
+
+    .edit--length__sign {
+        font-size:0.9em;
+    }
+}
+
+@media screen and (max-width:414px){
+    .timer--display__time {
+        font-size: 7em;
+    }
+}
+
+@media screen and (max-height:978px) {
+    .wrapper {
+        height: 98%;
+    }
+    .timer--display__time {
+        margin: 2rem 0;
+    }
+}
+
