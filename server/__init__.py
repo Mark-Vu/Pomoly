@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager
 from flask_mail import Mail
 from server.config import Config
-
+from flask_cors import CORS
 
 db = SQLAlchemy()
 
@@ -13,6 +13,8 @@ mail = Mail()
 def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(config_class)
+    # cors = CORS(app, origins=["http://localhost:5173"], supports_credentials=True)
+
     jwt = JWTManager(app)
 
     from server.auth import bp as auth_blueprint

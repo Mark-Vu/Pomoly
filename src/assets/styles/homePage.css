@@ -124,12 +124,6 @@ body {
     cursor: pointer;
 }
 
-.verification_code {
-    background-image: url("../images/verificationCodeIcon.png");
-    background-repeat:no-repeat;
-    background-position: 5%;
-}
-
 .input-container button:hover {
     filter: brightness(85%);
 }
