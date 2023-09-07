@@ -2,9 +2,11 @@ from itsdangerous import URLSafeTimedSerializer
 from flask import current_app
 from server.email import send_email
 
+
 def generate_verification_code(email):
     serializer = URLSafeTimedSerializer(current_app.config['SECRET_KEY'])
     return serializer.dumps(email, salt=current_app.config['SECURITY_PASSWORD_SALT'])
+
 
 def confirm_verification_code(token, expiration=3600):
     serializer = URLSafeTimedSerializer(current_app.config['SECRET_KEY'])
@@ -17,6 +19,7 @@ def confirm_verification_code(token, expiration=3600):
     except:
         return False
     return email
+
 
 def send_verification_email(user_email, verification_code):
     subject = "Verify your email"
