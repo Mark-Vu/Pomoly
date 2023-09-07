@@ -12,44 +12,48 @@ export const AuthContextProvider = ({ children }) => {
         }
         return null;
     });
+    console.log(user)
     const navigate = useNavigate();
-    const customHeaders = {
-        'Content-Type': 'application/json',
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Headers": "*",
-        "Access-Control-Allow-Methods": "*",
-        "Access-Control-Allow-Credentials": "*",
-    }
+
     const checkEmail = async (payload) => {
-        return await axios.post("http://localhost:5000/users/auth/email", payload, {
-            headers: customHeaders,
+        const response = await axios.post("http://127.0.0.1:5000/users/auth/email", payload, {
+            withCredentials: true,
         });
+        return response;
     };
 
     const getUserProfile = async () => {
-        let apiResponse = await axios.get("http://localhost:5000/dashboard", {
-            headers: customHeaders,
+        let apiResponse = await axios.get("http://127.0.0.1:5000/dashboard", {
             withCredentials: true,
         });
-        localStorage.setItem("userProfile", JSON.stringify(apiResponse.message));
+        localStorage.setItem("userProfile", JSON.stringify(apiResponse.data.message));
         setUser(apiResponse.data);
-        navigate("/");
+        navigate("/dashboard");
     }
 
     const register = async (payload) => {
-        await axios.post("http://localhost:5000/users/auth/register", payload, {
-            headers: customHeaders,
+        await axios.post("http://127.0.0.1:5000/users/auth/register", payload, {
             withCredentials: true,
         });
         await getUserProfile();
     }
 
     const login = async (payload) => {
-        await axios.post("http://localhost:5000/users/auth/login", payload, {
-            headers: customHeaders,
-            withCredentials: true,
-        });
-        await getUserProfile();
+        try {
+            const response = await axios.post("http://127.0.0.1:5000/users/auth/login", payload, {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                withCredentials: true,
+                credentials: 'include',
+            });
+            console.log(response.data.message)
+            await getUserProfile();
+            return response;
+        }
+        catch (error) {
+            return error
+        }
     };
     return (
         <>

@@ -13,7 +13,7 @@ mail = Mail()
 def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(config_class)
-    # cors = CORS(app, origins=["http://localhost:5173"], supports_credentials=True)
+    CORS(app, supports_credentials=True)
 
     jwt = JWTManager(app)
 

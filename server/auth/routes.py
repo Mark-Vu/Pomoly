@@ -8,17 +8,13 @@ from flask_jwt_extended import (
         )
 from server import db
 from server.auth.email import generate_verification_code, confirm_verification_code, send_verification_email
-
-
-@bp.route('/users/getinfo', methods=['GET'])
-def test():
-    return {"message:":"success"}
+import re
 
 
 @bp.route('/users/auth/email', methods=["POST"])
 def enter_email():
     data = request.get_json()
-    if "email" not in data:
+    if "email" not in data or not is_email_format(data["email"]):
         return bad_request("Invalid input!")
     email = data["email"].lower().strip()
     user = User.query.filter_by(email=email).first()
@@ -43,7 +39,11 @@ def enter_email():
 @bp.route('/users/auth/register', methods=["POST"])
 def register():
     data = request.get_json()
-    if "email" not in data or "verification_code" not in data or "name" not in data:
+    if "email" not in data or \
+       "verification_code" not in data or \
+       "name" not in data or \
+       not is_email_format(data["email"]):
+
         return bad_request("Invalid input!")
     verification_code = data["verification_code"]
     input_email = data["email"]
@@ -68,7 +68,7 @@ def register():
 @bp.route('/users/auth/login', methods=["POST"])
 def login():
     data = request.get_json()
-    if "email" not in data or "verification_code" not in data:
+    if "email" not in data or not is_email_format(data["email"]) or "verification_code" not in data:
         return bad_request("Invalid input!")
     verification_code = data["verification_code"]
     try:
@@ -107,3 +107,8 @@ def create_jwt_tokens(user_id):
 def save_new_user(new_user):
     db.session.add(new_user)
     db.session.commit()
+
+
+def is_email_format(input_email):
+    pattern = r'^[\w\.-]+@[\w\.-]+\.\w+$'
+    return re.match(pattern, input_email)

@@ -13,28 +13,29 @@ function HomePage() {
         "name": "",
     });
     const { checkEmail, login, register } = useContext(AuthContext);
-    let signInStatus = "checkingEmail"
-    let serverMessage;
-    console.log(formData)
+    const [signInStatus, setSignInStatus] = useState("checkingEmail");
+    const [serverMessage, setServerMessage] = useState("");
     async function loginUser(event) {
         event.preventDefault();
         if (signInStatus === "registerRequired") {
             await register(formData)
         }
         else if (signInStatus === "alreadyRegistered") {
-            await login({
+            const response = await login({
                 "email" : formData.email,
                 "verification_code": formData.verification_code
             })
+            setServerMessage(response.data.message)
         } else {
-            const status = await checkEmail({"email": formData.email});
-            if (status === 200) {
-                signInStatus = "alreadyRegistered"
+            const response = await checkEmail({"email": formData.email});
+
+            if (response.status === 200) {
+                setSignInStatus("alreadyRegistered")
             }
-            if (status === 202) {
-                signInStatus = "registerRequired"
+            if (response.status === 202) {
+                setSignInStatus("registerRequired")
             }
-            serverMessage = status.message;
+            setServerMessage(response.data.message)
         }
     }
 
@@ -46,8 +47,7 @@ function HomePage() {
             }
         })
     }
-
-
+    console.log(signInStatus)
     return (
         <div className="container">
             <div className="nav-bar">
@@ -82,7 +82,7 @@ function HomePage() {
                             </div>
                             <p>{serverMessage}</p>
                             {/*Appear after the user enter their email*/}
-                            {!signInStatus === "checkingEmail" && <div className="input-cover">
+                            {!(signInStatus === "checkingEmail") && <div className="input-cover">
                                 <FontAwesomeIcon icon={faKey} className="input-icon" size="lg"/>
                                 <input
                                     name="verification_code"
