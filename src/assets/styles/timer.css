@@ -19,42 +19,37 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
     width: 100%;
-    background-color: #C36868;
+    background-image: url('../images/backgroundImg.png');
+    background-size: cover;
 }
 .grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
 }
 .wrapper {
-    height: 60%;
     padding: 2rem;
-    width: 65%;
+    width: 60%;
     max-width: 60rem;
-    background-color: #B3BCBB;
+    border: solid 1px white;
     overflow: hidden;
-    /* background-color: red; */
+    margin: 5rem auto;
 }
 .timer--container {
     width: 100%;
     max-width: 50rem;
-    height: 100%;
-    /* gap: 2rem; */
-    /* padding: 0 1rem; */
     justify-content: space-between;
 }
 .container__timer--display {
-    height: 65%;
     width: 100%;
     max-width: 50rem;
     background-color: white;
     padding: 2rem 0;
+    margin-bottom: 1rem;
 }
 
 .flex .timer--display__select--mode {
     width: 100%;
-    height: 20%;
     flex-direction: row;
     gap: 1rem;
 }
@@ -63,7 +58,6 @@
     border: 0;
     outline: 0;
     width: 20%;
-    min-height: 2rem;
     height: max-content;
     background-color:unset;
     cursor: pointer;
@@ -72,22 +66,19 @@
 .timer--display__select--mode .selected__button {
     border: 2px solid black;
     border-radius: 1rem;
-    background-color:#99BCC0;
 }
 
 .timer--display__time {
-    font-size: 11rem;
+    font-size: 10rem;
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;
-    height: 50%;
     letter-spacing: 0.05em;
 }
 
 .flex .timer--display__buttons {
     width: 100%;
-    min-height: 20%;
     flex-direction: row;
     gap:2rem;
 }
@@ -96,7 +87,6 @@
     padding: 0.625rem;
     border-radius: 0.75rem;
     width:7rem;
-    min-height: 3rem;
     height: 50%;
     background-color: white;
     border: 2px solid black;
@@ -120,13 +110,11 @@
 .timer--container .container__timer--edit{
     max-width: 50rem;
     width: 100%;
-    height: 30%;
     flex-direction: row;
     gap: 2rem;
 }
 
 .timer--edit__block {
-    height: 70%;
     width: 13rem;
     max-width: 30rem;
     max-height: 30rem;
@@ -135,33 +123,32 @@
     gap: 0.5rem;
 }
 .timer--edit__block .block__edit--length{
-    background-color: #99BCC0;
-    height: 60%;
+    /* background-color: #99BCC0; */
     width: 100%;
     align-items: center;
-    font-size: 3rem;
+    font-size: 2.2rem;
     display: flex;
+    border: solid 1px white;
+    border-radius: 1;
 }
 .timer--edit__block h2 {
     text-align: center;
     width: 100%;
-    height: 20%;
-    font-size: 1.3em;
+    font-size: 1em;
 }
 .block__edit--length input {
-    height: 100%;
     border: none;
-    background-color: #99BCC0;
     outline: 0;
     font-size: 0.9em;
     width: 100%;
     text-align: center;
+    color:white;
+    background-color: unset;
 }
 
 .edit--length__sign {
     width: 70%;
     color: white;
-    height: auto;
     font-size: 1.1em;
     border: unset;
     background-color: unset;
@@ -180,6 +167,10 @@ input[type=number] {
 
 .timer--edit__block {
     color: white;
+}
+
+.rounded-sm {
+    border-radius: 0.5rem;
 }
 .rounded-md {
     border-radius: 1rem;
@@ -203,16 +194,14 @@ input[type=number] {
 }
 @media screen and (max-width:667px) {
     .timer--display__time {
-        font-size: 9em;
+        font-size: 8.2em;
     }
     .timer--edit__block {
         font-size:small;
         width: 10rem;
-        height: 25%;
     }
     .wrapper {
         width: 90%;
-        height: 90%;
         padding: 0;
     }
     .flex .timer--display__buttons {
@@ -225,20 +214,23 @@ input[type=number] {
         font-size: 0.6em;
     }
     .timer--container .container__timer--edit {
-        height: 45%;
         flex-direction: column;
         gap: 0.7rem;
-        
+        margin-bottom: 1rem;
     }
 
     .edit--length__sign {
         font-size:0.9em;
     }
+    
 }
 
 @media screen and (max-width:414px){
     .timer--display__time {
-        font-size: 7em;
+        font-size: 6em;
+    }
+    .timer--display__select--mode button {
+        font-size: 1em;
     }
 }
 

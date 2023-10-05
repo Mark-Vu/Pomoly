@@ -86,7 +86,7 @@ def login():
 
 # We are using the `refresh=True` options in jwt_required to only allow
 # refresh tokens to access this route.
-@bp.route("/refresh", methods=["POST"])
+@bp.route("/users/auth/token-refresh", methods=["POST"])
 @jwt_required(refresh=True)
 def refresh():
     identity = get_jwt_identity()
