@@ -18,14 +18,15 @@ function HomePage() {
     async function loginUser(event) {
         event.preventDefault();
         if (signInStatus === "registerRequired") {
-            await register(formData)
+            const response = await register(formData)
+            setServerMessage(response)
         }
         else if (signInStatus === "alreadyRegistered") {
             const response = await login({
                 "email" : formData.email,
                 "verification_code": formData.verification_code
             })
-            setServerMessage(response.data.message)
+            setServerMessage(response)
         } else {
             const response = await checkEmail({"email": formData.email});
 

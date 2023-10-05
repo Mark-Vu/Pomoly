@@ -22,6 +22,9 @@ def create_app(config_class=Config):
     
     from server.api import bp as api_blueprint
     app.register_blueprint(api_blueprint)
+    
+    from server.calendar import bp as calendar_blueprint
+    app.register_blueprint(calendar_blueprint)
 
     db.init_app(app)
     mail.init_app(app)
