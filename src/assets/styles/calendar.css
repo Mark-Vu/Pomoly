@@ -5,13 +5,12 @@
     margin: 1.5rem auto;
 }
 .calendar--container {
-    position: relative;
+   position: relative;
     width: 1200px;
     /* margin: 5rem auto; */
     padding: 5px;
     color: #fff;
     display: flex;
-
     border-radius: 10px;
     background-color: #373c4f;
 }

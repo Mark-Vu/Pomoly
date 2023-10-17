@@ -20,8 +20,6 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-    background-image: url('../images/backgroundImg.png');
-    background-size: cover;
 }
 .grid {
     display: grid;

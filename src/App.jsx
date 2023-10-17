@@ -3,8 +3,8 @@ import HomePage from './ components/authentication/HomePage'
 import { Navigate, Route, Routes } from "react-router-dom";
 import {AuthContextProvider} from "./ components/authentication/AuthContext.jsx";
 import ProtectedRoute from "./routes/ProtectedRoute.jsx"
-import SecondPage from './ components/second_page/SecondPage';
-
+import SecondPage from './ components/second_page/SecondPage'; 
+import './assets/styles/app.css'
 export default function App() {
   let isAuthenticated = localStorage.getItem("userProfile");
   return (
@@ -40,7 +40,7 @@ export default function App() {
 }
 function DashboardLayout() {
   return (
-    <div>
+    <div className='app'>
       <Timer />
       <SecondPage />
     </div>

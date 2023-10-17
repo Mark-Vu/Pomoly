@@ -50,3 +50,33 @@ def add_event():
             return {"message": "There is an error while adding event"}, 500  
     else:
         return bad_request("bad request!")
+
+
+@bp.route("/calendar/delete-event", methods=["POST"])
+@jwt_required()
+def delete_event():
+    user_id = get_jwt_identity()
+    user = User.query.get(user_id)
+
+    if not user:
+        return bad_request("User not found")
+
+    data = request.get_json()
+    event_id = data.get("event-id")  
+    if event_id is None:
+        return bad_request("Event ID is required"), 403
+
+    event = Event.query.filter_by(id=event_id, calendar_id=user.calendar.id).first()
+
+    if not event:
+        return bad_request("Event not found or does not belong to the user"), 403
+
+    try:
+        db.session.delete(event)
+        db.session.commit()
+        return {"message": "Event deleted successfully"}, 200
+    except Exception as e:
+        db.session.rollback()
+        return bad_request("Error deleting event"), 500
+
+# Rest of your Flask routes and code

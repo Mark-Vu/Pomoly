@@ -1,0 +1,56 @@
+/* Add this CSS to your 'error.css' file */
+.popup {
+  position: fixed;
+  bottom: -100%; /* Start off-screen */
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  width: 300px;
+  color: white;
+  border-radius: 5px;
+  text-align: center;
+  padding: 15px;
+  transition: all 0.3s ease-in-out;
+  animation: popupAnimation 0.5s ease forwards;
+}
+
+.popup.active {
+  bottom: 50%; /* Move to the middle of the screen */
+  opacity: 1;
+}
+
+.popup.fade-out {
+  animation: fadeOut 0.5s ease forwards;
+}
+
+.alert {
+  background-color: #ac4038;
+}
+
+.success {
+  background-color: #4BB543;
+}
+
+.warning {
+  background-color: #E4A11B;
+}
+@keyframes popupAnimation {
+  from {
+    bottom: -100%; /* Start off-screen */
+  }
+  to {
+    bottom: 50%; /* Move to the middle of the screen */
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    bottom: 50%; /* Start from the middle of the screen */
+    opacity: 1;
+  }
+  to {
+    bottom: -100%; /* Move off-screen */
+    opacity: 0;
+  }
+}
