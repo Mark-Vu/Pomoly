@@ -20,8 +20,6 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-    background-image: url('../images/backgroundImg.png');
-    background-size: cover;
 }
 .grid {
     display: grid;
@@ -39,6 +37,8 @@
     width: 100%;
     max-width: 50rem;
     justify-content: space-between;
+    margin-left: auto;
+    margin-right: auto;
 }
 .container__timer--display {
     width: 100%;

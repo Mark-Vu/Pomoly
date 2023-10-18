@@ -6,35 +6,11 @@ const Block = lazy(() => import('./CalendarBlock.jsx'));
 import '../../../assets/styles/calendar.css'
 import api from '../../authentication/api';
 import Cookies from 'js-cookie';
+import Popup from '../../error/Popup.jsx'
+import {nanoid} from 'nanoid';
+
 export default function Calendar() {
   const [todoList, setTodoList] = React.useState({});
-  // const [todoList, setTodoList] = React.useState({
-  //   "2023-08-16": [
-  //     {
-  //       title: "Go to gym",
-  //       time: "10:00AM",
-  //       id: crypto.randomUUID()
-  //     },
-  //     {
-  //       title: "Study",
-  //       time: "3PM",
-  //       id: crypto.randomUUID()
-  //     }
-  //   ],
-  //   "2023-07-09": [
-  //     {
-  //       title: "Go to gym",
-  //       time: "8AM",
-  //       id: crypto.randomUUID()
-  //     }, 
-  //     {
-  //       title: "Say hello to neighbor",
-  //       time: "10PM",
-  //       id: crypto.randomUUID()
-  //     }
-  //   ]
-  // });
-
 
   React.useEffect(() => {
     async function fetchTodoList() {
@@ -141,7 +117,7 @@ export default function Calendar() {
          
           row.push(
               <Block
-              key={prevMonthDaysText}
+              key={nanoid()}
               text={prevMonthDaysText}
               type="prevMonthDate"
               currentDate={{ ...currentDate, month: currentDate.month - 1 }}
@@ -152,7 +128,7 @@ export default function Calendar() {
           const nextMonthDaysText = day - daysInMonth;
           row.push(
               <Block
-                key={nextMonthDaysText}
+                key={nanoid()}
                 text={nextMonthDaysText}
                 type="nextMonthDate"
                 currentDate={{ ...currentDate, month: currentDate.month + 1 }}
@@ -169,7 +145,7 @@ export default function Calendar() {
           const containTodo = hasTodo(day, currentDate.month, currentDate.year);
           row.push(
               <Block
-                key={dayText}
+                key={nanoid()}
                 text={dayText}
                 type="date"
                 currentDate={{...currentDate, isToday: isToday, hasTodo: containTodo}}
@@ -275,48 +251,94 @@ export default function Calendar() {
   
   async function addEvent(event) {
     event.preventDefault();
-    
-    const formattedDate = formatDate(selectedDay.day, selectedDay.month, selectedDay.year)
+  
+    const formattedDate = formatDate(selectedDay.day, selectedDay.month, selectedDay.year);
     const payload = {
-        date: formattedDate,
-        title: todoForm.title,
-        time: todoForm.time,
-    }
+      date: formattedDate,
+      title: todoForm.title,
+      time: todoForm.time,
+    };
+  
     try {
       const response = await api.post('http://127.0.0.1:5000/calendar/add-event', payload, {
-        withCredentials: true, 
+        withCredentials: true,
         headers: {
           "X-CSRF-TOKEN": Cookies.get('csrf_access_token'),
         },
       });
+      
       const todos = formattedDate in todoList
-      ? todoList[formatDate(selectedDay.day, selectedDay.month, selectedDay.year)]
-      : false;
-        if (todos) {
-          todos.push(payload);
-          setTodoList(prevTodoList => ({
-            ...prevTodoList,
-            [formattedDate] : todos
-          }))
-        } else {
-          setTodoList(prevTodoList => ({
-            ...prevTodoList,
-            [formattedDate]: [
-              payload
-            ]
-          }))
-        }
-        setTodoForm({
-          title: "",
-          time: "",
-        })
-      return response.message;
+        ? todoList[formattedDate]
+        : false;
+  
+      if (todos) {
+        todos.push(payload);
+        setTodoList((prevTodoList) => ({
+          ...prevTodoList,
+          [formattedDate]: todos,
+        }));
+      } else {
+        setTodoList((prevTodoList) => ({
+          ...prevTodoList,
+          [formattedDate]: [payload],
+        }));
+      }
+      setTodoForm({
+        title: "",
+        time: "",
+      });
+      return (
+        <Popup
+          type="alert"
+          message={response.data.message} // You can use the response message here
+          timeout={2000}
+        />
+      );
     } catch (error) {
-      console.error('Error adding event:', error);
+      return (
+        <Popup
+          type="alert"
+          message={error.data.message} // You can use the response message here
+          timeout={2000}
+        />
+      );
     }
   }
+  
 
-  function deleteEvent(id) {
+  async function deleteEvent(id) {
+      try {
+        const payload =  {
+          "event-id": id
+        }
+        // Send a request to delete the event with the given ID on the server
+        await api.post('http://127.0.0.1:5000/calendar/delete-event', payload, {
+          withCredentials: true,
+          headers: {
+            "X-CSRF-TOKEN": Cookies.get('csrf_access_token'),
+          },
+        });
+    
+        // Update the local state (todoList) to reflect the deleted event
+        setTodoList((prevTodoList) => {
+          const updatedTodoList = { ...prevTodoList };
+    
+          // Iterate over the dates in todoList and remove the event with the matching ID
+          for (const date in updatedTodoList) {
+            updatedTodoList[date] = updatedTodoList[date].filter((event) => event.id !== id);
+          }
+    
+          return updatedTodoList;
+        });
+      } catch (error) {
+        <Popup 
+        type="alert" 
+        message={`Server error: ${error.response.data.message || "Unknown error"}`} 
+        timeout={2000}
+        />;
+      }
+    
+    //Update in the UI
     setTodoList((prevTodoList) => {
       const updatedTodoList = {};
   
