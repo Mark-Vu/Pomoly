@@ -13,20 +13,40 @@ def get_notes():
     notes_list = Note.query.filter_by(user_id=user_id).all()
     note_data = []
     for note in notes_list:
+        formattedDate = note.date.strftime('%B %d, %Y')
+        formattedTime = note.last_modified_time.strftime('%H:%M')
         note_data.append(
             {
                 "id": note.id,
-                "date": note.date, 
+                "date": formattedDate, 
                 "title": note.title,
                 "content": note.content,
-                "last_modified_date": note.last_modified_date,
-                "last_modified_time": note.last_modified_time
+                "last_modified_date": formattedDate,
+                "last_modified_time": formattedTime
             }
         )
     
-    return jsonify(note_data), 200
+    return note_data, 200
 
-# @bp.route("/note/add-note", methods=["POST"])
-# @jwt_required
-# def add_note():
-#     pass
+
+@bp.route("/note/add-note", methods=["POST"])
+@jwt_required()
+def add_note():
+    data = request.get_json()
+    user_id = get_jwt_identity()
+    
+    # Create a new Note object
+    new_note = Note(
+        user_id=user_id,
+        title=data.get("title"),
+        content=data.get("content"),
+        date=data.get("date"),  
+        last_modified_date=data.get("last_modified_date"),
+        last_modified_time=data.get("last_modified_time")
+    )   
+    
+
+    db.session.add(new_note)
+    db.session.commit()
+
+    return jsonify({"message": "Note added successfully"}), 201

@@ -53,8 +53,8 @@ class Note(db.Model):
     date = db.Column(db.Date(), nullable=False)
     last_modified_date = db.Column(db.Date(), nullable=False)
     last_modified_time = db.Column(db.Time(), nullable=False)
-    title = db.Column(db.String(), nullable=False)
-    content = db.Column(db.String(), nullable=False)
+    title = db.Column(db.String(), nullable=True)
+    content = db.Column(db.String(), nullable=True)
 
     def __init__(self, user_id, date, title, content, last_modified_date, last_modified_time):
         self.user_id = user_id

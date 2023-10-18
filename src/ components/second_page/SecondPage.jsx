@@ -4,45 +4,71 @@ import ToggleSwitch from './ToggleSwitch';
 import "../../assets/styles/secondPage.css"
 import React, { useState } from 'react';
 import api from '../authentication/api';
+import Cookies from 'js-cookie';
+
 
 const SecondPage = () => {
     const [mode, setMode] = useState("Note")
-    const date = new Date();
 
-    // Get the year, month, and day
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Month is zero-based, so add 1
-    const day = String(date.getDate()).padStart(2, '0');
-
-    // Format the date as "yyyy/mm/dd"
-    const formattedDate = `${year}/${month}/${day}`;
-    const [notes, setNotes] = useState([
-        {
-            id: 1,
-            title: "Untitled",
-            content: "HEYYYY this is my first note",
-            date: formattedDate,
-            last_modified_time: "13:10:45",
-            last_modified_date: formattedDate 
-        }
-    ])
-    // React.useEffect(() => {
-    //     async function fetchNotes() {
-    //       try {
-    //         const response = await api.get("http://127.0.0.1:5000/note/info", {
-    //           withCredentials: true,
-    //         });
-    //         const data = await response.data;
+    const [notes, setNotes] = useState([])
+    React.useEffect(() => {
+        async function fetchNotes() {
+          try {
+            const response = await api.get("http://127.0.0.1:5000/note/info", {
+              withCredentials: true,
+            });
+            const data = await response.data;
     
-    //         // Update the todoList state with the fetched data.
-    //         setNotes(data);
-    //       } catch (error) {
-    //         console.error("Error fetching data:", error);
-    //       }
+            // Update the todoList state with the fetched data.
+            setNotes(data);
+          } catch (error) {
+            console.error("Error fetching data:", error);
+          }
+        }
+          fetchNotes();
+        }, []);
+    //     {
+    //         id: 1,
+    //         title: "Untitled",
+    //         content: "HEYYYY this is my first note",
+    //         date: formattedDate,
+    //         last_modified_time: "13:10:45",
+    //         last_modified_date: formattedDate 
     //     }
-    //       fetchNotes();
-    //     }, []);
+    // ])
 
+    async function saveNewNote(title, text) {
+      const date = new Date();
+      const options = { year: 'numeric', month: 'long', day: 'numeric' };
+      const formattedDate = date.toLocaleString('en-EN', options);
+      
+      const hours = String(date.getHours()).padStart(2, '0');
+      const minutes = String(date.getMinutes()).padStart(2, '0');
+      const formattedTime = `${hours}:${minutes}`;
+      console.log(formattedTime)
+      console.log(formattedDate)
+      const newNote = {
+        title: title,
+        content: text,
+        date: formattedDate,
+        last_modified_time: formattedTime,
+        last_modified_date: formattedDate
+      }
+      try {
+        const response = await api.post('http://127.0.0.1:5000/note/add-note', newNote, {
+          withCredentials: true,
+          headers: {
+            "X-CSRF-TOKEN": Cookies.get('csrf_access_token'),
+          },
+        });
+        setNotes((prevNotes)=> {
+          return [...prevNotes, newNote];
+        })
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    
     const handleModeSwitch = () => {
         const newMode = mode === "Note" ? "Calendar" : "Note";
         setMode(newMode);
@@ -55,7 +81,9 @@ const SecondPage = () => {
                 rightLabel="Calendar"
                 onToggle={handleModeSwitch} 
             />
-            {mode === "Calendar" ? <Calendar /> : <NotesList notes={notes}/>}
+            {mode === "Calendar" ? <Calendar /> : <NotesList 
+                                                    notes={notes} 
+                                                    handleSaveNewNote={saveNewNote}/>}
         </div>
     )
 }

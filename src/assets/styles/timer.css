@@ -37,6 +37,8 @@
     width: 100%;
     max-width: 50rem;
     justify-content: space-between;
+    margin-left: auto;
+    margin-right: auto;
 }
 .container__timer--display {
     width: 100%;

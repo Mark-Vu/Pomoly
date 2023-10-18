@@ -1,13 +1,15 @@
 import '../../assets/styles/notes.css'
 import Note from './Note';
 import AddNote from './AddNote';
-function NotesList( {notes} ) {
+import {nanoid} from 'nanoid';
+
+function NotesList( {notes, handleSaveNewNote} ) {
     return (
         <div className='notes-list-container'>
             <div className='notes-list'>
-                {notes.map((note)=> (
+                {notes && notes.map((note)=> (
                     <Note 
-                        key={note.id} 
+                        key={note.id || nanoid()} 
                         title={note.title} 
                         date={note.date}
                         content={note.content}
@@ -15,7 +17,7 @@ function NotesList( {notes} ) {
                         last_modified_time={note.last_modified_time}
                     />
                 ))}
-                <AddNote/>
+                <AddNote handleSaveNewNote={handleSaveNewNote}/>
             </div >
         </div>
     )
