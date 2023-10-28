@@ -1,7 +1,7 @@
 import axios from "axios";
 import { createContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import api from './api';
 const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
@@ -23,12 +23,11 @@ export const AuthContextProvider = ({ children }) => {
     };
 
     const getUserProfile = async () => {
-        let apiResponse = await axios.get("http://127.0.0.1:5000//api/user-profile", {
+        let apiResponse = await api.get("http://127.0.0.1:5000/api/user-profile", {
             withCredentials: true,
         });
         localStorage.setItem("userProfile", JSON.stringify(apiResponse.data.message));
         setUser(apiResponse.data);
-        navigate("/dashboard");
     }
 
     const register = async (payload) => {
@@ -37,7 +36,7 @@ export const AuthContextProvider = ({ children }) => {
                 withCredentials: true,
             });
             await getUserProfile();
-            
+            window.location.reload();
             return response.data.message; // Return the response data
         } catch (error) {
             return error;
@@ -51,6 +50,7 @@ export const AuthContextProvider = ({ children }) => {
             });
             console.log(response.data.message)
             await getUserProfile();
+            window.location.reload();
             return response.data.message;
         }
         catch (error) {

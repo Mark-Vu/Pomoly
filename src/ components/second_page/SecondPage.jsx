@@ -27,6 +27,7 @@ const SecondPage = () => {
         }
           fetchNotes();
         }, []);
+    // Note 
     //     {
     //         id: 1,
     //         title: "Untitled",
