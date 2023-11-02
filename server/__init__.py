@@ -4,9 +4,10 @@ from flask_jwt_extended import JWTManager
 from flask_mail import Mail
 from server.config import Config
 from flask_cors import CORS
+from flask_migrate import Migrate
 
 db = SQLAlchemy()
-
+migrate = Migrate()
 mail = Mail()
 
 
@@ -16,6 +17,9 @@ def create_app(config_class=Config):
     CORS(app, supports_credentials=True)
 
     jwt = JWTManager(app)
+
+    db.init_app(app)
+    migrate.init_app(app, db)
 
     from server.auth import bp as auth_blueprint
     app.register_blueprint(auth_blueprint)
@@ -29,10 +33,6 @@ def create_app(config_class=Config):
     from server.note import bp as note_blueprint
     app.register_blueprint(note_blueprint)
 
-    db.init_app(app)
     mail.init_app(app)
-
-    with app.app_context():
-        db.create_all()
         
     return app
