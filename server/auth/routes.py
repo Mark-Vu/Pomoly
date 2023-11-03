@@ -74,6 +74,9 @@ def login():
     if "email" not in data or not is_email_format(data["email"]) or "verification_code" not in data:
         return bad_request("Invalid input!")
 
+    input_email = data["email"]
+    verification_code = data["verification_code"]
+
     # Find the user associated with the email
     user = User.query.filter_by(email=input_email).first_or_404()
     # Find the associated verification code
@@ -86,13 +89,13 @@ def login():
         new_verification = VerificationCode()
         new_verification.user = user
         db.session.add(new_verification)
-
+ 
     if verification.confirm_verification_code(verification_code) == "invalid":
         return bad_request("The confirmation code is invalid")
     elif verification.confirm_verification_code(verification_code) == "expired":
         return bad_request("Your confirmation code has expired")
 
-    user = User.query.filter_by(email=email).first_or_404()
+   
     # Creat access and refresh_token
     resp = jsonify({'message': 'ok'})
     access_token, refresh_token = create_jwt_tokens(user.id)
