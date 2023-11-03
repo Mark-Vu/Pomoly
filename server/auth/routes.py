@@ -132,6 +132,14 @@ def refresh():
     return resp, 200
 
 
+@bp.route('/users/auth/token-remove', methods=['POST'])
+def logout():
+    # remove jwt in the cookie and logout user
+    resp = jsonify({'logout': 'ok'})
+    unset_jwt_cookies(resp)
+    return resp, 200
+
+
 def create_jwt_tokens(user_id):
     # With JWT_COOKIE_CSRF_PROTECT set to True, set_access_cookies() and
     # set_refresh_cookies() will now also set the non-httponly CSRF cookies
