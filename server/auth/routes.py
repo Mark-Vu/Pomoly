@@ -4,7 +4,8 @@ from server.models import User, VerificationCode
 from server.api.errors import bad_request
 from flask_jwt_extended import (
     create_access_token, jwt_required, get_jwt_identity,
-    create_refresh_token, set_access_cookies, set_refresh_cookies
+    create_refresh_token, set_access_cookies, set_refresh_cookies, 
+    unset_jwt_cookies
         )
 from server import db
 from server.auth.email import send_verification_email
@@ -28,10 +29,10 @@ def enter_email():
             db.session.add(new_user)
             db.session.commit()
             send_verification_email(email, new_user.verification_code.code)
-
         return {"message": "Please verify your email to register"}, 202
 
     # If there is an account with a name
+    user.verification_code.set_new_code()
     send_verification_email(email, user.verification_code.code)
     return {"message": "Please verify your email to login your account"}, 200
 
@@ -117,8 +118,6 @@ def resend_verification_code():
     user.verification_code.set_new_code()
     send_verification_email(email, user.verification_code.code)
 
-    db.session.commit()
-
     return {"message": "Verification code resent successfully"}, 200
 
 
@@ -135,7 +134,7 @@ def refresh():
     return resp, 200
 
 
-@bp.route('/users/auth/token-remove', methods=['POST'])
+@bp.route('/users/auth/logout', methods=['POST'])
 def logout():
     # remove jwt in the cookie and logout user
     resp = jsonify({'logout': 'ok'})

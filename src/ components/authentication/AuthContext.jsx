@@ -6,9 +6,9 @@ const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
     const [user, setUser] = useState(() => {
-        let userProfle = localStorage.getItem("userProfile");
-        if (userProfle) {
-            return JSON.parse(userProfle);
+        let userProfile = localStorage.getItem("userProfile");
+        if (userProfile) {
+            return JSON.parse(userProfile);
         }
         return null;
     });
@@ -23,13 +23,19 @@ export const AuthContextProvider = ({ children }) => {
     };
 
     const getUserProfile = async () => {
-        let apiResponse = await api.get("http://127.0.0.1:5000/api/user-profile", {
+        try {
+            let apiResponse = await api.get("http://127.0.0.1:5000/api/user-profile", {
             withCredentials: true,
-        });
-        localStorage.setItem("userProfile", JSON.stringify(apiResponse.data.message));
-        setUser(apiResponse.data);
+            });
+            localStorage.setItem("userProfile", JSON.stringify(apiResponse.data));
+            setUser(apiResponse.data);
+        } catch (error) {
+            console.log(error)
+        }
+        
     }
 
+    console.log(user)
     const register = async (payload) => {
         try {
             const response = await axios.post("http://127.0.0.1:5000/users/auth/register", payload, {
@@ -48,7 +54,6 @@ export const AuthContextProvider = ({ children }) => {
             const response = await axios.post("http://127.0.0.1:5000/users/auth/login", payload, {
                 withCredentials: true,
             });
-            console.log(response.data.message)
             await getUserProfile();
             window.location.reload();
             return response.data.message;
@@ -57,9 +62,22 @@ export const AuthContextProvider = ({ children }) => {
             return error
         }
     };
+
+    const logout = async () => {
+        try {
+            const response = await axios.post("http://127.0.0.1:5000/users/auth/logout",{
+                withCredentials: true,
+            });
+            localStorage.removeItem("userProfile")
+            window.location.reload();
+        }
+        catch (error) {
+            return error
+        }
+    } 
     return (
         <>
-        <AuthContext.Provider value={{ user, login, checkEmail, register }}>
+        <AuthContext.Provider value={{ user, login, checkEmail, register, logout, getUserProfile}}>
             {children}
         </AuthContext.Provider>
         </>

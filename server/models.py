@@ -47,6 +47,7 @@ class VerificationCode(db.Model):
     def set_new_code(self):
         self.code = VerificationCode.generate_random_code()
         self.expiration_time = datetime.utcnow() + timedelta(minutes=10)
+        db.session.commit()
     
     @staticmethod
     def generate_random_code(length=6):

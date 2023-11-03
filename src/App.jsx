@@ -5,6 +5,8 @@ import {AuthContextProvider} from "./ components/authentication/AuthContext.jsx"
 import ProtectedRoute from "./routes/ProtectedRoute.jsx"
 import SecondPage from './ components/second_page/SecondPage'; 
 import './assets/styles/app.css'
+import Header from './ components/Header.jsx';
+
 export default function App() {
   let isAuthenticated = localStorage.getItem("userProfile");
   return (
@@ -26,6 +28,7 @@ export default function App() {
             element={
               isAuthenticated ? (
                 <ProtectedRoute accessBy="authenticated">
+
                   <DashboardLayout />
                 </ProtectedRoute>
               ) : (
@@ -41,6 +44,7 @@ export default function App() {
 function DashboardLayout() {
   return (
     <div className='app'>
+      <Header/>
       <Timer />
       <SecondPage />
     </div>
