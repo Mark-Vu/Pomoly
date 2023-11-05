@@ -65,7 +65,7 @@ export const AuthContextProvider = ({ children }) => {
 
     const logout = async () => {
         try {
-            const response = await axios.post("http://127.0.0.1:5000/users/auth/logout",{
+            const response = await api.post("http://127.0.0.1:5000/users/auth/logout",{
                 withCredentials: true,
             });
             localStorage.removeItem("userProfile")
