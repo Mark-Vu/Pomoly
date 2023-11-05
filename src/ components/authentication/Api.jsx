@@ -28,11 +28,6 @@ api.interceptors.response.use(
         } catch (error) {
           // Handle refresh token error or redirect to login
           console.error("Token refresh failed:", error);
-          // unauthenticate user
-          localStorage.removeItem("userProfile");
-
-          // Reload the page
-          window.location.reload();
           throw error;
         }
       }
