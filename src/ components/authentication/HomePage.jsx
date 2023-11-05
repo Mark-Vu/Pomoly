@@ -102,38 +102,57 @@ function HomePage() {
                                 onChange={handleFormChange}
                                 placeholder="Your Email"
                             />
-                            <button type="submit">Sign in</button>
+                            <button type="submit">Continue</button>
                         </form>
                         <p>{serverMessage}</p>
                     </div>
                 ) : (
-                    <form className="input-container" onSubmit={loginUser}>
-                        {signInStatus === "registerRequired" && (
+                    <form className="input-container-2" onSubmit={loginUser}>
+                        {signInStatus === "registerRequired" ? (
                             <>
-                            <h2>Welcome Aboard!</h2>
-                            <p className="form-instructions">Just one more step and you'll be all set!</p>
+                                <h1>Set Up Your Account</h1>
+                                <div className="form-instructions">
+                                    Welcome aboard! Let's get your account ready.
+                                </div>
                                 <input
+                                    className="verified-input"
                                     name="name"
                                     onChange={handleFormChange}
                                     type="text"
-                                    placeholder="name"
+                                    placeholder="Full Name"
                                 />
+                                <div className="form-instructions">
+                                    Now, please enter the verification code we sent to your email.
+                                </div>
+                                <input
+                                    className="verified-input"
+                                    name="verification_code"
+                                    onChange={handleFormChange}
+                                    type="text"
+                                    placeholder="Verification Code"
+                                />
+                                <button type="submit">Complete Registration</button>
+                            </>
+                        ) : (
+                            <>
+                                <h2>Sign In</h2>
+                                <div className="form-instructions">
+                                    Enter the verification code sent to your email.
+                                </div>
+                                <input
+                                    className="verified-input"
+                                    name="verification_code"
+                                    onChange={handleFormChange}
+                                    type="text"
+                                    placeholder="Verification Code"
+                                />
+                                <button type="submit">Sign In</button>
                             </>
                         )}
-                        <div className="input-cover">
-                            <input
-                                name="verification_code"
-                                onChange={handleFormChange}
-                                type="text"
-                                placeholder="verification code"
-                            />
-                        </div>
-                        <button type="submit">Sign in</button>
                     </form>
                 )}
             </div>
         </div>
     );
 }
-
 export default HomePage;
