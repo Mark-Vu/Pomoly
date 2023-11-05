@@ -96,8 +96,8 @@ def login():
         new_verification.user = user
         db.session.add(new_verification)
  
-    if verification.confirm_verification_code(verification_code) == "invalid":
-        return bad_request("The confirmation code is invalid")
+    if verification.confirm_verification_code(verification_code) == "incorrect":
+        return bad_request("The confirmation code is incorrect")
     elif verification.confirm_verification_code(verification_code) == "expired":
         return bad_request("Your confirmation code has expired")
 
