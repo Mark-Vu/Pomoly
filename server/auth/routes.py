@@ -24,11 +24,16 @@ def enter_email():
 
     if user is None or user.name is None:
         # If there is an account with no name or can't find any account in the database
+        
         if user is None:
             new_user = User(email=email)
             db.session.add(new_user)
             db.session.commit()
             send_verification_email(email, new_user.verification_code.code)
+        else:
+            user.verification_code.set_new_code()
+            send_verification_email(email, user.verification_code.code)
+
         return {"message": "Please verify your email to register"}, 202
 
     # If there is an account with a name
