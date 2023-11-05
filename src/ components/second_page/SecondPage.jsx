@@ -3,7 +3,7 @@ import NotesList from '../notes/Noteslist';
 import ToggleSwitch from './ToggleSwitch';
 import "../../assets/styles/secondPage.css"
 import React, { useState } from 'react';
-import api from '../authentication/api';
+import api from '../authentication/Api.jsx';
 import Cookies from 'js-cookie';
 
 

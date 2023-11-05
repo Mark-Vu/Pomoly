@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleRight, faAngleLeft, faPlus, faCircle, faClose } from "@fortawesome/free-solid-svg-icons";
 const Block = lazy(() => import('./CalendarBlock.jsx'));
 import '../../../assets/styles/calendar.css'
-import api from '../../authentication/api';
+import api from '../../authentication/Api.jsx';
 import Cookies from 'js-cookie';
 import Popup from '../../error/Popup.jsx'
 import {nanoid} from 'nanoid';
