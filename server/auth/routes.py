@@ -88,9 +88,7 @@ def login():
     # Find the associated verification code
     verification = VerificationCode.query.filter_by(user_id=user.id).first()
 
-    if verification is not None:
-        verification.set_new_code()
-    else:
+    if verification is None:
         # If no verification code exists, create a new one and associate it with the user.
         new_verification = VerificationCode()
         new_verification.user = user
