@@ -7,8 +7,6 @@ import backgroundImage5 from '../../assets/images/background5.jpg';
 import backgroundImage6 from '../../assets/images/background6.jpg';
 import backgroundImage7 from '../../assets/images/background7.jpg';
 import studyHubLogo from '../../assets/images/studyHubLogo.png';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser } from "@fortawesome/free-solid-svg-icons";
 import '../../assets/styles/homePage.css';
 import AuthContext from "./AuthContext.jsx";
 
@@ -52,6 +50,14 @@ function HomePage() {
         }));
     }
 
+    function goBackToEmailInput() {
+        setSignInStatus("checkingEmail");
+        // Optionally clear the previous form data
+        setFormData({ ...formData, verification_code: "", name: "" });
+        setServerMessage("");
+    }
+
+    
     // Background image handling
     const backgroundImages = [
         backgroundImage1,
@@ -107,9 +113,13 @@ function HomePage() {
                         <p>{serverMessage}</p>
                     </div>
                 ) : (
+                    <>
+                    <button className="back-button" onClick={goBackToEmailInput}>
+                        &#x276E;
+                    </button>
                     <form className="input-container-2" onSubmit={loginUser}>
                         {signInStatus === "registerRequired" ? (
-                            <>
+                            <div className="register">
                                 <h1>Set Up Your Account</h1>
                                 <div className="form-instructions">
                                     Welcome aboard! Let's get your account ready.
@@ -121,9 +131,6 @@ function HomePage() {
                                     type="text"
                                     placeholder="Full Name"
                                 />
-                                <div className="form-instructions">
-                                    Now, please enter the verification code we sent to your email.
-                                </div>
                                 <input
                                     className="verified-input"
                                     name="verification_code"
@@ -131,11 +138,11 @@ function HomePage() {
                                     type="text"
                                     placeholder="Verification Code"
                                 />
-                                <button type="submit">Complete Registration</button>
-                            </>
+                                <button type="submit">Sign In</button>
+                            </div>
                         ) : (
                             <>
-                                <h2>Sign In</h2>
+                                <h1>Welcome back!</h1>
                                 <div className="form-instructions">
                                     Enter the verification code sent to your email.
                                 </div>
@@ -150,6 +157,7 @@ function HomePage() {
                             </>
                         )}
                     </form>
+                    </>
                 )}
             </div>
         </div>
