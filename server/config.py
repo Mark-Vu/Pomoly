@@ -7,7 +7,6 @@ load_dotenv()
 # Db config
 DB_URI = os.environ.get('DB_URI')
 
-
 class Config(object):
     SECRET_KEY = os.environ.get('SECRET_KEY')
     SECURITY_PASSWORD_SALT = os.environ.get('SECURITY_PASSWORD_SALT')
