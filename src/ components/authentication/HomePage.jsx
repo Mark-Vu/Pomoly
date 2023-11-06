@@ -129,7 +129,7 @@ function HomePage() {
                                     name="name"
                                     onChange={handleFormChange}
                                     type="text"
-                                    placeholder="Full Name"
+                                    placeholder="Your Name"
                                 />
                                 <input
                                     className="verified-input"
