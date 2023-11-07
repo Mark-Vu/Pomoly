@@ -9,6 +9,8 @@ import backgroundImage7 from '../../assets/images/background7.jpg';
 import studyHubLogo from '../../assets/images/studyHubLogo.png';
 import '../../assets/styles/homePage.css';
 import AuthContext from "./AuthContext.jsx";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 
 function HomePage() {
     const [formData, setFormData] = useState({
@@ -43,20 +45,26 @@ function HomePage() {
         }
     }
 
+    const [isEmailValid, setIsEmailValid] = useState(true);
+   
     function handleFormChange(event) {
+        const { name, value } = event.target;
         setFormData(prevFormData => ({
             ...prevFormData,
-            [event.target.name]: event.target.value,
+            [name]: value,
         }));
+        
+        // Check for email validity when the email field is updated
+        if (name === 'email') {
+            setIsEmailValid(!value || /\S+@\S+\.\S+/.test(value));
+        }
     }
 
     function goBackToEmailInput() {
         setSignInStatus("checkingEmail");
-        // Optionally clear the previous form data
-        setFormData({ ...formData, verification_code: "", name: "" });
+        setFormData({ ...formData, email: "", verification_code: "", name: "" });
         setServerMessage("");
     }
-
     
     // Background image handling
     const backgroundImages = [
@@ -107,8 +115,15 @@ function HomePage() {
                                 name="email"
                                 onChange={handleFormChange}
                                 placeholder="Your Email"
+                                className={!isEmailValid ? "input-error" : ""}
                             />
-                            <button type="submit">Continue</button>
+                            {formData.email && !isEmailValid && (
+                                <p className="error-message">
+                                    <FontAwesomeIcon icon={faInfoCircle} className="info-icon" />
+                                    Please enter a valid email address
+                                </p>
+                            )}
+                            <button type="submit" disabled={!formData.email.trim()}>Continue</button>
                         </form>
                         <p>{serverMessage}</p>
                     </div>
@@ -138,7 +153,7 @@ function HomePage() {
                                     type="text"
                                     placeholder="Verification Code"
                                 />
-                                <button type="submit">Sign In</button>
+                                <button type="submit" disabled={!formData.name.trim() || !formData.verification_code.trim()}>Sign In</button>
                             </div>
                         ) : (
                             <>
@@ -153,7 +168,7 @@ function HomePage() {
                                     type="text"
                                     placeholder="Verification Code"
                                 />
-                                <button type="submit">Sign In</button>
+                                <button type="submit" disabled={!formData.verification_code.trim()}>Sign In</button>
                             </>
                         )}
                     </form>

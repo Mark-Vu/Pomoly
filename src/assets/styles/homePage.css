@@ -64,7 +64,7 @@ body {
 }
 
 .authentication {
-    height: 50%;
+    height: 65%;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -100,7 +100,7 @@ form button {
     max-width: 130px;
     height: 50px;
     background-color: rgb(160, 70, 243);
-    border-radius: 15px;
+    border-radius: 10px;
     border: 0;
     color: white;
     font-size: 20px;
@@ -205,4 +205,29 @@ input:-webkit-autofill {
 
 .back-button:hover {
     transform: scale(1.1); 
+}
+
+button:disabled {
+    opacity: 0.7; 
+    cursor: default;
+}
+
+button:disabled:hover {
+    filter: none;
+}
+
+button:not(:disabled) {
+    opacity: 1; 
+    cursor: pointer;
+}
+
+.error-message {
+    font-size: 0.8em; 
+    margin-top: 4px; 
+    color: #e9c708; 
+}
+
+.info-icon {
+    font-style: normal; 
+    margin-right: 5px; 
 }
