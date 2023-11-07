@@ -7,10 +7,10 @@ import backgroundImage5 from '../../assets/images/background5.jpg';
 import backgroundImage6 from '../../assets/images/background6.jpg';
 import backgroundImage7 from '../../assets/images/background7.jpg';
 import studyHubLogo from '../../assets/images/studyHubLogo.png';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser } from "@fortawesome/free-solid-svg-icons";
 import '../../assets/styles/homePage.css';
 import AuthContext from "./AuthContext.jsx";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 
 function HomePage() {
     const [formData, setFormData] = useState({
@@ -45,13 +45,27 @@ function HomePage() {
         }
     }
 
+    const [isEmailValid, setIsEmailValid] = useState(true);
+   
     function handleFormChange(event) {
+        const { name, value } = event.target;
         setFormData(prevFormData => ({
             ...prevFormData,
-            [event.target.name]: event.target.value,
+            [name]: value,
         }));
+        
+        // Check for email validity when the email field is updated
+        if (name === 'email') {
+            setIsEmailValid(!value || /\S+@\S+\.\S+/.test(value));
+        }
     }
 
+    function goBackToEmailInput() {
+        setSignInStatus("checkingEmail");
+        setFormData({ ...formData, email: "", verification_code: "", name: "" });
+        setServerMessage("");
+    }
+    
     // Background image handling
     const backgroundImages = [
         backgroundImage1,
@@ -101,39 +115,67 @@ function HomePage() {
                                 name="email"
                                 onChange={handleFormChange}
                                 placeholder="Your Email"
+                                className={!isEmailValid ? "input-error" : ""}
                             />
-                            <button type="submit">Sign in</button>
+                            {formData.email && !isEmailValid && (
+                                <p className="error-message">
+                                    <FontAwesomeIcon icon={faInfoCircle} className="info-icon" />
+                                    Please enter a valid email address
+                                </p>
+                            )}
+                            <button type="submit" disabled={!formData.email.trim()}>Continue</button>
                         </form>
                         <p>{serverMessage}</p>
                     </div>
                 ) : (
-                    <form className="input-container" onSubmit={loginUser}>
-                        {signInStatus === "registerRequired" && (
-                            <>
-                            <h2>Welcome Aboard!</h2>
-                            <p className="form-instructions">Just one more step and you'll be all set!</p>
+                    <>
+                    <button className="back-button" onClick={goBackToEmailInput}>
+                        &#x276E;
+                    </button>
+                    <form className="input-container-2" onSubmit={loginUser}>
+                        {signInStatus === "registerRequired" ? (
+                            <div className="register">
+                                <h1>Set Up Your Account</h1>
+                                <div className="form-instructions">
+                                    Welcome aboard! Let's get your account ready.
+                                </div>
                                 <input
+                                    className="verified-input"
                                     name="name"
                                     onChange={handleFormChange}
                                     type="text"
-                                    placeholder="name"
+                                    placeholder="Your Name"
                                 />
+                                <input
+                                    className="verified-input"
+                                    name="verification_code"
+                                    onChange={handleFormChange}
+                                    type="text"
+                                    placeholder="Verification Code"
+                                />
+                                <button type="submit" disabled={!formData.name.trim() || !formData.verification_code.trim()}>Sign In</button>
+                            </div>
+                        ) : (
+                            <>
+                                <h1>Welcome back!</h1>
+                                <div className="form-instructions">
+                                    Enter the verification code sent to your email.
+                                </div>
+                                <input
+                                    className="verified-input"
+                                    name="verification_code"
+                                    onChange={handleFormChange}
+                                    type="text"
+                                    placeholder="Verification Code"
+                                />
+                                <button type="submit" disabled={!formData.verification_code.trim()}>Sign In</button>
                             </>
                         )}
-                        <div className="input-cover">
-                            <input
-                                name="verification_code"
-                                onChange={handleFormChange}
-                                type="text"
-                                placeholder="verification code"
-                            />
-                        </div>
-                        <button type="submit">Sign in</button>
                     </form>
+                    </>
                 )}
             </div>
         </div>
     );
 }
-
 export default HomePage;
