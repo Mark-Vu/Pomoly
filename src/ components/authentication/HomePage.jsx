@@ -6,8 +6,6 @@ import backgroundImage4 from '../../assets/images/background4.jpg';
 import backgroundImage5 from '../../assets/images/background5.jpg';
 import backgroundImage6 from '../../assets/images/background6.jpg';
 import backgroundImage7 from '../../assets/images/background7.jpg';
-import backgroundImage8 from '../../assets/images/background8.jpg';
-import backgroundImage9 from '../../assets/images/background9.jpg';
 import studyHubLogo from '../../assets/images/studyHubLogo.png';
 import '../../assets/styles/homePage.css';
 import AuthContext from "./AuthContext.jsx";
