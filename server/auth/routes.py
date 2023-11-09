@@ -77,7 +77,7 @@ def register():
 @bp.route('/users/auth/login', methods=["POST"])
 def login():
     data = request.get_json()
-    if "email" not in data or not is_email_format(data["email"]) or "verification_code" not in data:
+    if "email" not in data or "verification_code" not in data or not is_email_format(data["email"]):
         return bad_request("Invalid input!")
 
     input_email = data["email"]
@@ -85,22 +85,16 @@ def login():
 
     # Find the user associated with the email
     user = User.query.filter_by(email=input_email).first_or_404()
+
     # Find the associated verification code
     verification = VerificationCode.query.filter_by(user_id=user.id).first()
 
-    if verification is None:
-        # If no verification code exists, create a new one and associate it with the user.
-        new_verification = VerificationCode()
-        new_verification.user = user
-        db.session.add(new_verification)
- 
     if verification.confirm_verification_code(verification_code) == "incorrect":
         return bad_request("The confirmation code is incorrect")
     elif verification.confirm_verification_code(verification_code) == "expired":
         return bad_request("Your confirmation code has expired")
 
-   
-    # Creat access and refresh_token
+    # Create access and refresh tokens
     resp = jsonify({'message': 'ok'})
     access_token, refresh_token = create_jwt_tokens(user.id)
     set_access_cookies(resp, access_token)
