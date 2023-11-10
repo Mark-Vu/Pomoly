@@ -1,0 +1,22 @@
+.bottom-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 1.1rem;
+    border: 3px solid white;
+    width: 11rem;
+    font-size: 2rem;
+    border-radius: 30px;
+    height: 3rem;
+}
+
+.fa-icon {
+    height: 100%;
+    width: 2.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+

@@ -1,20 +1,14 @@
-import  Timer  from './ components/timer/Timer';
-import HomePage from './ components/authentication/HomePage';
 import { Navigate, Route, Routes } from "react-router-dom";
+import React, { useState } from 'react';
 import {AuthContextProvider} from "./ components/authentication/AuthContext.jsx";
 import ProtectedRoute from "./routes/ProtectedRoute.jsx"
-import SecondPage from './ components/second_page/SecondPage'; 
 import './assets/styles/app.css'
-import Header from './ components/Header.jsx';
-import Settings from './ components/Settings.jsx';
-import React, { useState } from 'react';
-import backgroundImage1 from './assets/images/background1.jpg';
-import backgroundImage2 from './assets/images/background2.jpg';
-import backgroundImage3 from './assets/images/background3.jpg';
-import backgroundImage4 from './assets/images/background4.jpg';
-import backgroundImage5 from './assets/images/background5.jpg';
-import backgroundImage6 from './assets/images/background6.jpg';
-import backgroundImage7 from './assets/images/background7.jpg';
+import Settings from './ components/home_page/Settings.jsx';
+import BottomBar from './ components/home_page/BottomBar.jsx';
+import Calendar from './ components/calendar/Calendar.jsx';
+import NotesList from './ components/notes/Noteslist';
+import  Timer  from './ components/timer/Timer';
+import HomePage from './ components/authentication/HomePage';
 
 export default function App() {
   let isAuthenticated = localStorage.getItem("userProfile");
@@ -52,19 +46,40 @@ export default function App() {
 }
 
 function DashboardLayout() {
-  const [showTimer, setShowTimer] = useState(true);
+  const [activeComponent, setActiveComponent] = useState('timer');
+  const [showSettings, setShowSettings] = useState(false);
 
-  const toggleView = () => {
-    setShowTimer(!showTimer);
+  // Handlers for the BottomBar component clicks
+  const showTimer = () => {
+    setActiveComponent('timer');
+  };
+
+  const showCalendar = () => {
+    setActiveComponent('calendar');
+  };
+
+  const showNotesList = () => {
+    setActiveComponent('noteslist');
+  };
+
+  const toggleSettings = () => {
+    setShowSettings(!showSettings);
   };
 
   return (
     <div className='app'>
-      {/* <Header /> */}
-      <button onClick={toggleView} className="toggle-view-button">
-        {showTimer ? 'Show Second Page' : 'Show Timer'}
-      </button>
-      {showTimer ? <Timer /> : <SecondPage />}
+      {activeComponent === 'timer' && <Timer />}
+      {activeComponent === 'calendar' && <Calendar />}
+      {activeComponent === 'noteslist' && <NotesList />}
+
+      {showSettings && <Settings onClose={toggleSettings} />}
+
+      <BottomBar onHomeClick={showTimer} onCalendarClick={showCalendar} onNoteClick={showNotesList}/>
+
+      {/* Remove the toggle view button as it's now redundant with the bottom bar */}
+      {/* <button onClick={toggleSettings} className="settings-button">
+        Settings
+      </button> */}
     </div>
   );
 }
