@@ -4,7 +4,6 @@
     align-items: center;
     min-height: 100vh;
 }
-/* Add these styles to your CSS file */
 
 .flip-container {
     perspective: 1000px;

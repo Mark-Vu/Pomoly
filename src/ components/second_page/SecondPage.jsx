@@ -6,7 +6,6 @@ import React, { useState } from 'react';
 import api from '../authentication/Api.jsx';
 import Cookies from 'js-cookie';
 
-
 const SecondPage = () => {
     const [mode, setMode] = useState("Note")
 
