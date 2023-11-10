@@ -6,10 +6,6 @@
     color: white;
 }
 
-:root {
-    --primary-clr: #b38add;
-}
-
 .flex {
     display: flex;
     flex-direction: column;

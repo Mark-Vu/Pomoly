@@ -48,17 +48,20 @@ export default function App() {
 function DashboardLayout() {
   const [activeComponent, setActiveComponent] = useState('timer');
   const [showSettings, setShowSettings] = useState(false);
-
+  const [selected, setSelected] = useState('timer');
   // Handlers for the BottomBar component clicks
   const showTimer = () => {
+    setSelected('timer');
     setActiveComponent('timer');
   };
 
   const showCalendar = () => {
+    setSelected('calendar');
     setActiveComponent('calendar');
   };
 
   const showNotesList = () => {
+    setSelected('noteslist');
     setActiveComponent('noteslist');
   };
 
@@ -74,7 +77,7 @@ function DashboardLayout() {
 
       {showSettings && <Settings onClose={toggleSettings} />}
 
-      <BottomBar onHomeClick={showTimer} onCalendarClick={showCalendar} onNoteClick={showNotesList}/>
+      <BottomBar selected={selected} onHomeClick={showTimer} onCalendarClick={showCalendar} onNoteClick={showNotesList}/>
 
       {/* Remove the toggle view button as it's now redundant with the bottom bar */}
       {/* <button onClick={toggleSettings} className="settings-button">
