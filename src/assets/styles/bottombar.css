@@ -10,11 +10,12 @@
     border-radius: 30px;
     height: 3rem;
     background-color: rgb(49, 0, 95);
+    color: white;
 }
 
 .fa-icon {
     height: 100%;
-    width: 3rem;
+    width: 2.9rem;
     cursor: pointer;
     display: flex;
     align-items: center;

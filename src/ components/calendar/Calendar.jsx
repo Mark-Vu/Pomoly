@@ -366,12 +366,12 @@ export default function Calendar() {
             <div className="month">
               <FontAwesomeIcon icon={faAngleLeft} style={{ cursor: 'pointer' }} onClick={togglePrevMonth} />
               <div className="date">
-                {getMonthName(currentDate.month)} {currentDate.year}
+                {getMonthName(currentDate.month)} <span className="year">{currentDate.year}</span>
               </div>
               <FontAwesomeIcon icon={faAngleRight} style={{ cursor: 'pointer' }} onClick={toggleNextMonth} />
             </div>
             <div className="weekdays">
-              <div>Sun</div>
+              <div className='sun'>Sun</div>
               <div>Mon</div>
               <div>Tue</div>
               <div>Wed</div>

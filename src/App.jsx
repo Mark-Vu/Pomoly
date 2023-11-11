@@ -9,6 +9,8 @@ import Calendar from './ components/calendar/Calendar.jsx';
 import NotesList from './ components/notes/Noteslist';
 import  Timer  from './ components/timer/Timer';
 import HomePage from './ components/authentication/HomePage';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCog } from '@fortawesome/free-solid-svg-icons';
 
 export default function App() {
   let isAuthenticated = localStorage.getItem("userProfile");
@@ -76,13 +78,14 @@ function DashboardLayout() {
       {activeComponent === 'noteslist' && <NotesList />}
 
       {showSettings && <Settings onClose={toggleSettings} />}
-
-      <BottomBar selected={selected} onHomeClick={showTimer} onCalendarClick={showCalendar} onNoteClick={showNotesList}/>
-
-      {/* Remove the toggle view button as it's now redundant with the bottom bar */}
-      {/* <button onClick={toggleSettings} className="settings-button">
-        Settings
-      </button> */}
+      <div className="footer">
+        <div className="bottom-line">
+          <BottomBar selected={selected} onHomeClick={showTimer} onCalendarClick={showCalendar} onNoteClick={showNotesList}/>
+          <button onClick={toggleSettings} className="settings-button">
+            <FontAwesomeIcon icon={faCog} /> 
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

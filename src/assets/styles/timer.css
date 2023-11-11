@@ -3,7 +3,6 @@
     padding: 0;
     margin: 0;
     font-family: 'Oxygen';
-    color: white;
 }
 
 .flex {
@@ -64,6 +63,7 @@
     background-color: transparent;
     cursor: pointer;
     border-radius: 1rem;
+    color: white;
     transition: background-color 0.3s ease, border 0.3s ease;
 }
 
@@ -103,10 +103,12 @@
     cursor: pointer;
     background-color: transparent;
     border: none;
+    color: white;
 }
 
 .reset {
     transform: scaleX(-1);
+    color: white;
 }
 
 .timer--display__buttons button:hover {
