@@ -358,6 +358,20 @@ export default function Calendar() {
   React.useEffect(() => {
     setCalendarDays(renderCalendar());
   }, [currentDate, todoList])
+
+  const [month, setMonth] = useState('');
+  const [year, setYear] = useState('');
+
+  function handleMonthChange(e) {
+    const value = e.target.value;
+    setMonth(value.replace(/[^0-9]/g, '').slice(0, 2));
+  }
+
+  function handleYearChange(e) {
+    const value = e.target.value;
+    setYear(value.replace(/[^0-9]/g, '').slice(0, 4));
+  }
+
   return (
     <section className="calendar--wrapper">
       <div className="calendar--container">
@@ -366,7 +380,7 @@ export default function Calendar() {
             <div className="month">
               <FontAwesomeIcon icon={faAngleLeft} style={{ cursor: 'pointer' }} onClick={togglePrevMonth} />
               <div className="date">
-                {getMonthName(currentDate.month)} <span className="year">{currentDate.year}</span>
+                <span className="year">{getMonthName(currentDate.month)} {currentDate.year}</span>
               </div>
               <FontAwesomeIcon icon={faAngleRight} style={{ cursor: 'pointer' }} onClick={toggleNextMonth} />
             </div>
@@ -384,7 +398,22 @@ export default function Calendar() {
             </Suspense>
             <div className="goto-today">
               <div className="goto">
-                <input type="text" placeholder="mm/yyyy" className="date-input" />
+                <input 
+                  type="text" 
+                  placeholder="MM" 
+                  className="month-input" 
+                  value={month}
+                  onChange={handleMonthChange}
+                  onInput={(e) => e.target.value = e.target.value.slice(0, 2)} 
+                />
+                <input 
+                  type="text" 
+                  placeholder="YYYY" 
+                  className="year-input" 
+                  value={year}
+                  onChange={handleYearChange}
+                  onInput={(e) => e.target.value = e.target.value.slice(0, 4)} 
+                />
                 <button className="goto-btn">Go</button>
               </div>
               <button className="today-btn" onClick={selectToday}>Today</button>
@@ -416,9 +445,6 @@ export default function Calendar() {
           <div className={isAddEvent ? "add-event-wrapper active" : "add-event-wrapper"}>
             <div className="add-event-header">
               <div className="title">Add Event</div>
-              <i className='close'>
-                <FontAwesomeIcon icon={faClose} onClick={toggleAddEvent}/>
-              </i>
             </div>
             <div className="add-event-body">
               <form>
@@ -450,7 +476,7 @@ export default function Calendar() {
           </div>
         </div>
         <button className="add-event" onClick={toggleAddEvent}>
-            <FontAwesomeIcon icon={faPlus} />
+          <FontAwesomeIcon icon={isAddEvent ? faClose : faPlus} />
         </button>
       </div>
     </section>
