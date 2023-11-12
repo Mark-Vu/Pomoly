@@ -359,17 +359,45 @@ export default function Calendar() {
     setCalendarDays(renderCalendar());
   }, [currentDate, todoList])
 
+  /*----------------------------RESTRICT MONTH YEAR INPUT-------------------------------*/
   const [month, setMonth] = useState('');
   const [year, setYear] = useState('');
 
   function handleMonthChange(e) {
-    const value = e.target.value;
-    setMonth(value.replace(/[^0-9]/g, '').slice(0, 2));
+    let value = e.target.value;
+    const month = value.replace(/[^0-9]/g, '');
+    if (month === '' || month === '0' || (month.length === 1 && month >= '1') || (month.length === 2 && month >= '01' && month <= '12')) {
+      setMonth(month);
+    }
   }
 
   function handleYearChange(e) {
     const value = e.target.value;
     setYear(value.replace(/[^0-9]/g, '').slice(0, 4));
+  }
+
+  /*----------------------------GO TO FUNCTION-------------------------------*/
+  const [inputMonth, setInputMonth] = useState('');
+  const [inputYear, setInputYear] = useState('');
+
+  function handleGoClick() {
+    // Convert inputMonth to a number and subtract 1 because JavaScript months are 0-indexed
+    const monthNumber = parseInt(inputMonth, 10) - 1;
+    const yearNumber = parseInt(inputYear, 10);
+
+    // Validate the inputs
+    if (!isNaN(monthNumber) && !isNaN(yearNumber) && monthNumber >= 0 && monthNumber < 12) {
+      setCurrentDate({
+        ...currentDate,
+        month: monthNumber,
+        year: yearNumber
+      });
+      // Reset the input fields
+      setInputMonth('');
+      setInputYear('');
+    } else {
+      alert("Please enter a valid month (01-12) and year (YYYY).");
+    }
   }
 
   return (
@@ -396,28 +424,28 @@ export default function Calendar() {
             <Suspense fallback={<div>Loading</div>}>
               <div className="days">{calendarDays}</div>
             </Suspense>
-            <div className="goto-today">
-              <div className="goto">
-                <input 
-                  type="text" 
-                  placeholder="MM" 
-                  className="month-input" 
-                  value={month}
-                  onChange={handleMonthChange}
-                  onInput={(e) => e.target.value = e.target.value.slice(0, 2)} 
-                />
-                <input 
-                  type="text" 
-                  placeholder="YYYY" 
-                  className="year-input" 
-                  value={year}
-                  onChange={handleYearChange}
-                  onInput={(e) => e.target.value = e.target.value.slice(0, 4)} 
-                />
-                <button className="goto-btn">Go</button>
-              </div>
-              <button className="today-btn" onClick={selectToday}>Today</button>
-            </div>
+ <div className="goto-today">
+        <div className="goto">
+          <input 
+            type="text" 
+            placeholder="MM" 
+            className="month-input" 
+            value={inputMonth}
+            onChange={(e) => setInputMonth(e.target.value)}
+            maxLength="2" 
+          />
+          <input 
+            type="text" 
+            placeholder="YYYY" 
+            className="year-input" 
+            value={inputYear}
+            onChange={(e) => setInputYear(e.target.value)}
+            maxLength="4" 
+          />
+          <button className="goto-btn" onClick={handleGoClick}>Go</button>
+        </div>
+        <button className="today-btn" onClick={selectToday}>Today</button>
+      </div>
           </div>
         </div>
         <div className="right">
