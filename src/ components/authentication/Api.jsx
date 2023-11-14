@@ -1,39 +1,48 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-const api = axios.create({});
+const api = axios.create({
+  withCredentials: true
+});
 
-// Add a response interceptor
+
 api.interceptors.response.use(
-    (response) => response,
-    async (error) => {
-      const originalRequest = error.config;
-  
-      // If the error status is 401 and there is no originalRequest._retry flag,
-      // it means the token has expired and we need to refresh it
-      if (error.response.status === 401 && !originalRequest._retry) {
-        originalRequest._retry = true;
-  
-        try {
-          await axios.post("http://127.0.0.1:5000/users/auth/token-refresh", {}, {
-            withCredentials: true,
-            credentials: 'same-origin',
-            // Include csrf refresh token to receive new jwt tokens
-            headers: {
-              "X-CSRF-TOKEN": Cookies.get('csrf_refresh_token'),
-            },
-          });
-          // Retry the original request with the new token
-          return axios(originalRequest);
-        } catch (error) {
-          // Handle refresh token error or redirect to login
-          console.error("Token refresh failed:", error);
-          throw error;
-        }
+  async (response) => {
+    return response;
+  },
+  async (error) => {
+    const originalRequest = error.config;
+
+    // Check if it's a token expiry error
+    if (error.response.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+
+      try {
+        // Attempt to refresh the token
+        await axios.post("http://127.0.0.1:5000/users/auth/token-refresh", {}, {
+          withCredentials: true,
+          headers: {
+            "X-CSRF-TOKEN": Cookies.get('csrf_refresh_token'),
+            
+          },
+        });
+
+        // Set the new csrf access token to the original request
+        originalRequest.headers['X-CSRF-TOKEN'] = Cookies.get('csrf_access_token');
+        return api(originalRequest);
+      } catch (error) {
+        // This means the session expired, we ask the user that the session expired 
+        // TODO: popup alert saying the session exired, user press anything -> logout
+        
+        localStorage.removeItem("userProfile");
+        window.location.reload();
+        throw refreshError;
       }
-  
-      return Promise.reject(error);
     }
-  );
-  
-export default api
+
+    // For all other errors, reject the promise
+    return Promise.reject(error);
+  }
+);
+
+export default api;

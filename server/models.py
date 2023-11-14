@@ -35,6 +35,7 @@ class VerificationCode(db.Model):
         self.set_new_code()
 
     def confirm_verification_code(self, input_code):
+        input_code = " ".join(input_code.split())
         current_time = datetime.utcnow()
         if self.code == input_code:
             if current_time <= self.expiration_time:

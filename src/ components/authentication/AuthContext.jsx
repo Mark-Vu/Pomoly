@@ -35,7 +35,6 @@ export const AuthContextProvider = ({ children }) => {
         
     }
 
-    console.log(user)
     const register = async (payload) => {
         try {
             const response = await axios.post("http://127.0.0.1:5000/users/auth/register", payload, {

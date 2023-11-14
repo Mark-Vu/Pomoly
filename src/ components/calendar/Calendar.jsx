@@ -9,26 +9,8 @@ import Cookies from 'js-cookie';
 import Popup from '../error/Popup.jsx'
 import {nanoid} from 'nanoid';
 
-export default function Calendar() {
-  const [todoList, setTodoList] = React.useState({});
-
-  React.useEffect(() => {
-    async function fetchTodoList() {
-      try {
-        const response = await api.get("http://127.0.0.1:5000/calendar/info", {
-          withCredentials: true,
-        });
-        const data = await response.data;
-
-        // Update the todoList state with the fetched data.
-        setTodoList(data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    }
-
-      fetchTodoList();
-    }, []);
+export default function Calendar({todoList, handleSetTodo}) {
+  
 
   const today=new Date()
   const todayDate = today.getDate();
@@ -273,12 +255,12 @@ export default function Calendar() {
   
       if (todos) {
         todos.push(payload);
-        setTodoList((prevTodoList) => ({
+        handleSetTodo((prevTodoList) => ({
           ...prevTodoList,
           [formattedDate]: todos,
         }));
       } else {
-        setTodoList((prevTodoList) => ({
+        handleSetTodo((prevTodoList) => ({
           ...prevTodoList,
           [formattedDate]: [payload],
         }));
@@ -320,7 +302,7 @@ export default function Calendar() {
         });
     
         // Update the local state (todoList) to reflect the deleted event
-        setTodoList((prevTodoList) => {
+        handleSetTodo((prevTodoList) => {
           const updatedTodoList = { ...prevTodoList };
     
           // Iterate over the dates in todoList and remove the event with the matching ID
@@ -339,7 +321,7 @@ export default function Calendar() {
       }
     
     //Update in the UI
-    setTodoList((prevTodoList) => {
+    handleSetTodo((prevTodoList) => {
       const updatedTodoList = {};
   
       Object.keys(prevTodoList).forEach(date => {

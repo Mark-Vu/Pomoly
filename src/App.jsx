@@ -11,6 +11,8 @@ import  Timer  from './ components/timer/Timer';
 import HomePage from './ components/authentication/HomePage';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog } from '@fortawesome/free-solid-svg-icons';
+import api from "./ components/authentication/Api.jsx";
+
 
 export default function App() {
   let isAuthenticated = localStorage.getItem("userProfile");
@@ -51,6 +53,24 @@ function DashboardLayout() {
   const [activeComponent, setActiveComponent] = useState('timer');
   const [showSettings, setShowSettings] = useState(false);
   const [selected, setSelected] = useState('timer');
+
+  const [todoList, setTodoList] = React.useState({});
+  React.useEffect(() => {
+    async function fetchTodoList() {
+      try {
+        const response = await api.get("http://127.0.0.1:5000/calendar/info", {
+          withCredentials: true,
+        });
+        const data = await response.data;
+        setTodoList(data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    }
+
+      fetchTodoList();
+    }, []);
+
   // Handlers for the BottomBar component clicks
   const showTimer = () => {
     setSelected('timer');
@@ -74,7 +94,7 @@ function DashboardLayout() {
   return (
     <div className='app'>
       {activeComponent === 'timer' && <Timer />}
-      {activeComponent === 'calendar' && <Calendar />}
+      {activeComponent === 'calendar' && <Calendar todoList={todoList} handleSetTodo={setTodoList}/>}
       {activeComponent === 'noteslist' && <NotesList />}
 
       {showSettings && <Settings onClose={toggleSettings} />}
