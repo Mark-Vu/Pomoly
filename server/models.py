@@ -87,12 +87,12 @@ class Note(db.Model):
     __tablename__ = 'notes'
 
     id = db.Column(db.Integer(), primary_key=True)
-    user_id = db.Column(db.Integer(), db.ForeignKey('users.id'), nullable=False)
     date = db.Column(db.Date(), nullable=False)
     last_modified_date = db.Column(db.Date(), nullable=False)
     last_modified_time = db.Column(db.Time(), nullable=False)
     title = db.Column(db.String(), nullable=True)
     content = db.Column(db.String(), nullable=True)
+    user_id = db.Column(db.Integer(), db.ForeignKey('users.id', ondelete='CASCADE'), nullable=False)
 
     def __init__(self, user_id, date, title, content, last_modified_date, last_modified_time):
         self.user_id = user_id
