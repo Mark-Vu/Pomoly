@@ -195,7 +195,7 @@
     position: absolute;
     width: 50px;
     height: 50px;
-    background-color: #fda3f6;
+    background-color: rgb(246, 168, 253);
     color: white;
     border-radius: 50%; 
     box-sizing: border-box; 
@@ -249,29 +249,17 @@
     position: relative;
 }
 
-.calendar .days .event::after {
-    content: "";
-    position: absolute;
-    bottom: 10%;
-    left: 50%;
-    width: 75%;
-    height: 6px;
-    border-radius: 30px;
-    transform: translateX(-50%);
+.calendar .days .event {
+    background-color: #efdfff;
 }
 
-.calendar .days .day:hover.event::after {
-    background-color: #fff;
-}
+
 
 .calendar .days .active.event::after {
     background-color: #fff;
     bottom: 20%;
 }
 
-.calendar .days .active.event {
-    padding-bottom: 10px;
-}
   
 .calendar .goto-today {
     width: 100%;
@@ -349,7 +337,7 @@
     padding: 0 40px;
     padding-left: 70px;
     margin-top: 50px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     text-transform: capitalize;
 }
 
@@ -361,12 +349,13 @@
 
 .right .today-date .event-date {
     height: 100%;
-    font-size: 1.1rem;
+    font-size: 1.3rem;
     font-weight: 400;
     color: #ffffff;
     display: flex;
     align-items: center;
     font-family: 'Overpass';
+    margin-top: 10px;
 }
 
 .events {
@@ -378,74 +367,99 @@
     display: flex;
     flex-direction: column;
     padding-left: 4px;
+    line-height: 1.5rem;
+    scrollbar-width: thin; 
+    scrollbar-color: rgb(198, 175, 252) #f1f1f1;
 }
 
-  .events .event {
-      position: relative;
-      width: 95%;
-      min-height: 70px;
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-      gap: 5px;
-      padding: 0 20px;
-      padding-left: 50px;
-      background: linear-gradient(90deg, #3f4458, transparent);
-      cursor: pointer;
-  }
-  /* even event */
-  .events .event:nth-child(even) {
-      background: transparent;
-  }
-  .events .event:hover {
-      background: linear-gradient(90deg, var(--primary-clr), transparent);
-  }
-  .events .event .title {
-      display: flex;
-      align-items: center;
-      pointer-events: none;
-  }
-  .events .event .title .event-title {
-      font-size: 1rem;
-      font-weight: 400;
-      margin-left: 20px;
-  }
-  .events .event i {
-      color: var(--primary-clr);
-      font-size: 0.5rem;
+/* For Webkit browsers */
+.events::-webkit-scrollbar {
+    width: 10px; 
+}
+  
+.events::-webkit-scrollbar-track {
+    background: rgba(241, 241, 241, 0.589); 
+}
+  
+.events::-webkit-scrollbar-thumb {
+    background: rgb(198, 175, 252); 
+}
+  
+.events::-webkit-scrollbar-thumb:hover {
+    background: rgba(184, 155, 253, 0.897); 
+}
+  
+.events .event {
+    position: relative;
+    width: 95%;
+    min-height: 70px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 5px;
+    padding: 0 20px;
+    padding-left: 50px;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.185), transparent);
+    color: white;
+    cursor: pointer;
+}
+
+.events .event:nth-child(even) {
+    background: transparent;
+}
+
+.events .event:hover {
+    background: linear-gradient(90deg, #4d246e, transparent);
+    color:white;
+}
+
+.events .event .title {
+    display: flex;
+    align-items: center;
+    pointer-events: none;
   }
 
-  .events .event:hover i {
-  }
+.events .event .title .event-title {
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-left: 20px;
+}
 
-  .events .event .event-time {
-      font-size: 0.8rem;
-      font-weight: 400;
-      color: #878895;
-      margin-left: 15px;
-      pointer-events: none;
-  }
-  .events .event:hover .event-time {
+.events .event i {
+    color: #b49bf9;
+    font-size: 0.8rem;
+}
 
-  }
-  /* add tick in event after */
-  .events .event::after {
-      content: "✓";
-      position: absolute;
-      top: 50%;
-      right: 0;
-      font-size: 3rem;
-      line-height: 1;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      opacity: 0.3;
-      color: var(--primary-clr);
-      transform: translateY(-50%);
-  }
-  .events .event:hover::after {
-      display: flex;
-  }
+.events .event:hover i {
+    color: white;
+}
+
+.events .event .event-time {
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: #ffffff;
+    margin-left: 17px;
+    pointer-events: none;
+}
+
+.events .event::after {
+    content: "\2713";
+    position: absolute;
+    top: 50%;
+    right: 0;
+    font-size: 3rem;
+    line-height: 1;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.5;
+    color: white;
+    transform: translateY(-50%);
+}
+
+.events .event:hover::after {
+    display: flex;
+}
   
 .add-event {
     position: absolute;
@@ -469,16 +483,17 @@
     transform: scale(1.1);
 }
 
-  .events .no-event {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.5rem;
-      font-weight: 500;
-      color: #878895;
-  }
+.events .no-events {
+    padding: 0 40px;
+    height: 100px;
+    padding-left: 70px;
+    margin-top: 110px;
+    overflow: hidden;
+    font-size: 1.8rem;
+    font-weight: 500;
+    color: #ffffff;
+    line-height: 2.2rem;
+}
 
 .add-event-wrapper {
     position: absolute;

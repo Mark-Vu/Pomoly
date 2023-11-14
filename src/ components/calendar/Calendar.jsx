@@ -363,25 +363,39 @@ export default function Calendar({todoList, handleSetTodo}) {
   const [inputYear, setInputYear] = useState('');
 
   function handleGoClick() {
-    // Convert inputMonth to a number and subtract 1 because JavaScript months are 0-indexed
     const monthNumber = parseInt(inputMonth, 10) - 1;
     const yearNumber = parseInt(inputYear, 10);
 
-    // Validate the inputs
     if (!isNaN(monthNumber) && !isNaN(yearNumber) && monthNumber >= 0 && monthNumber < 12) {
       setCurrentDate({
         ...currentDate,
         month: monthNumber,
         year: yearNumber
       });
-      // Reset the input fields
       setInputMonth('');
       setInputYear('');
     } else {
       alert("Please enter a valid month (01-12) and year (YYYY).");
     }
   }
-
+  /*----------------------------RANDOM NO EVENT TEXT-------------------------------*/ 
+  function getRandomNoEventText() {
+    const noEventTexts = [
+      "Your day is a blank canvas, ready for new experiences!",
+      "Looks like you've got some free time today!",
+      "Nothing on the agenda. Enjoy your free time!",
+      "All clear! Time to relax or try something new.",
+      "Take it easy! There are no events scheduled for today.",
+      "A clear schedule means endless possibilities.",
+      "Breathe easy—no events to see here.",
+      "Your day is wide open. What will you create?",
+      "Seize the day! It's all yours to enjoy.",
+      "Embrace the calm. No events are on the horizon."
+    ];
+    const randomIndex = Math.floor(Math.random() * noEventTexts.length);
+    return noEventTexts[randomIndex];
+  }
+  
   return (
     <section className="calendar--wrapper">
       <div className="calendar--container">
@@ -406,28 +420,28 @@ export default function Calendar({todoList, handleSetTodo}) {
             <Suspense fallback={<div>Loading</div>}>
               <div className="days">{calendarDays}</div>
             </Suspense>
- <div className="goto-today">
-        <div className="goto">
-          <input 
-            type="text" 
-            placeholder="MM" 
-            className="month-input" 
-            value={inputMonth}
-            onChange={(e) => setInputMonth(e.target.value)}
-            maxLength="2" 
-          />
-          <input 
-            type="text" 
-            placeholder="YYYY" 
-            className="year-input" 
-            value={inputYear}
-            onChange={(e) => setInputYear(e.target.value)}
-            maxLength="4" 
-          />
-          <button className="goto-btn" onClick={handleGoClick}>Go</button>
-        </div>
-        <button className="today-btn" onClick={selectToday}>Today</button>
-      </div>
+            <div className="goto-today">
+              <div className="goto">
+                <input 
+                  type="text" 
+                  placeholder="MM" 
+                  className="month-input" 
+                  value={inputMonth}
+                  onChange={(e) => setInputMonth(e.target.value)}
+                  maxLength="2" 
+                />
+                <input 
+                  type="text" 
+                  placeholder="YYYY" 
+                  className="year-input" 
+                  value={inputYear}
+                  onChange={(e) => setInputYear(e.target.value)}
+                  maxLength="4" 
+                />
+                <button className="goto-btn" onClick={handleGoClick}>Go</button>
+              </div>
+              <button className="today-btn" onClick={selectToday}>Today</button>
+            </div>
           </div>
         </div>
         <div className="right">
@@ -437,19 +451,25 @@ export default function Calendar({todoList, handleSetTodo}) {
           </div>
           <div className="Todos">
             <div className='events'>
-            {displayTodos && displayTodos.map((event) => (
-            <div className="event" key={event.id} onClick={()=>deleteEvent(event.id)}>
-              <div className="title">
-                <i>
-                <FontAwesomeIcon icon={faCircle}/>
-                </i>
-                <h3 className="event-title">{event.title}</h3>
-              </div>
-              <div className="event-time">
-                <span className="event-time">{event.time}</span>
-              </div>
-            </div>
-            ))}
+              {displayTodos && displayTodos.length > 0 ? (
+                displayTodos.map((event) => (
+                  <div className="event" key={event.id} onClick={() => deleteEvent(event.id)}>
+                    <div className="title">
+                      <i>
+                        <FontAwesomeIcon icon={faCircle}/>
+                      </i>
+                      <h3 className="event-title">{event.title}</h3>
+                    </div>
+                    <div className="event-time">
+                      <span className="event-time">{event.time}</span>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className="no-events">
+                  {getRandomNoEventText()}
+                </div>
+              )}
             </div>
           </div>
           <div className={isAddEvent ? "add-event-wrapper active" : "add-event-wrapper"}>
