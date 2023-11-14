@@ -1,4 +1,4 @@
-import { lazy, Suspense, useState } from 'react';
+import { lazy, Suspense, useState, useEffect } from 'react';
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleRight, faAngleLeft, faPlus, faCircle, faClose } from "@fortawesome/free-solid-svg-icons";
@@ -346,16 +346,13 @@ export default function Calendar({todoList, handleSetTodo}) {
   const [year, setYear] = useState('');
 
   function handleMonthChange(e) {
-    let value = e.target.value;
-    const month = value.replace(/[^0-9]/g, '');
-    if (month === '' || month === '0' || (month.length === 1 && month >= '1') || (month.length === 2 && month >= '01' && month <= '12')) {
-      setMonth(month);
+    let value = e.target.value.replace(/[^0-9]/g, '');
+    if (value === '0' || (value.length === 2 && parseInt(value, 10) > 12)) {
+      value = '';
+    } else if (value.length === 1 && parseInt(value, 10) > 1) {
+      value = `0${value}`;
     }
-  }
-
-  function handleYearChange(e) {
-    const value = e.target.value;
-    setYear(value.replace(/[^0-9]/g, '').slice(0, 4));
+    setInputMonth(value);
   }
 
   /*----------------------------GO TO FUNCTION-------------------------------*/
@@ -378,7 +375,10 @@ export default function Calendar({todoList, handleSetTodo}) {
       alert("Please enter a valid month (01-12) and year (YYYY).");
     }
   }
+
   /*----------------------------RANDOM NO EVENT TEXT-------------------------------*/ 
+  const [noEventText, setNoEventText] = useState(getRandomNoEventText());
+
   function getRandomNoEventText() {
     const noEventTexts = [
       "Your day is a blank canvas, ready for new experiences!",
@@ -395,7 +395,14 @@ export default function Calendar({todoList, handleSetTodo}) {
     const randomIndex = Math.floor(Math.random() * noEventTexts.length);
     return noEventTexts[randomIndex];
   }
-  
+
+  useEffect(() => {
+    const formattedDate = formatDate(selectedDay.day, selectedDay.month, selectedDay.year);
+    if (!(formattedDate in todoList && todoList[formattedDate].length > 0)) {
+      setNoEventText(getRandomNoEventText());
+    }
+  }, [selectedDay, todoList]);  
+
   return (
     <section className="calendar--wrapper">
       <div className="calendar--container">
@@ -427,7 +434,7 @@ export default function Calendar({todoList, handleSetTodo}) {
                   placeholder="MM" 
                   className="month-input" 
                   value={inputMonth}
-                  onChange={(e) => setInputMonth(e.target.value)}
+                  onChange={handleMonthChange}
                   maxLength="2" 
                 />
                 <input 
@@ -467,7 +474,7 @@ export default function Calendar({todoList, handleSetTodo}) {
                 ))
               ) : (
                 <div className="no-events">
-                  {getRandomNoEventText()}
+                   {noEventText}
                 </div>
               )}
             </div>
