@@ -34,7 +34,6 @@ def get_notes():
 def add_note():
     data = request.get_json()
     user_id = get_jwt_identity()
-    
     # Create a new Note object
     new_note = Note(
         user_id=user_id,

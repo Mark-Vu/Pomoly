@@ -5,7 +5,7 @@ from datetime import timedelta
 load_dotenv()
 
 # Db config
-DB_URI = f'postgresql://rpwfjpre:xD_YkaDhL5X94cEYuWWyC5bSK5rcBgfD@batyr.db.elephantsql.com/rpwfjpre'
+DB_URI = os.environ.get('DB_URI')
 
 
 class Config(object):

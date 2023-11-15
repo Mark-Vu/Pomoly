@@ -17,7 +17,7 @@ def client():
     yield client
 
 def test_enter_email(client):
-    email = 'example@gmail.com'
+    email = 'dohoaan2003@gmail.com'
     data = {'email': email}
 
     # Make a POST request
@@ -40,7 +40,7 @@ def test_enter_email(client):
     print("================================================================================")
 
 def test_verification_code_in_db(client):
-    email = 'example@gmail.com'
+    email = 'dohoaan2003@gmail.com'
     data = {'email': email}
 
     # Make a POST request
@@ -61,7 +61,7 @@ def test_verification_code_in_db(client):
         
 
 def test_resend_verification_code_with_print(client):
-    email = 'example@gmail.com'
+    email = 'dohoaan2003@gmail.com'
     data = {'email': email}
 
     with app.app_context():
