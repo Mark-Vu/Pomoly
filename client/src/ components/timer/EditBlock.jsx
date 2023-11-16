@@ -1,3 +1,4 @@
+import React from "react";
 export default function EditBlock(props) {
     const { minute, lengthType, handleDecrease, handleIncrease, onChange, name} = props;
     return (

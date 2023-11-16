@@ -1,8 +1,8 @@
-from server.api import bp
+from src.api import bp
 from flask_jwt_extended import get_jwt_identity, jwt_required
-from server.models import User
-from server.models import Calendar
-from server import db
+from src.models import User
+from src.models import Calendar
+from src import db
 
 @bp.route("/api/user-profile", methods=["GET"])
 @jwt_required()

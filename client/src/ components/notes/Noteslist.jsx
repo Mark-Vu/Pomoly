@@ -2,6 +2,7 @@ import '../../assets/styles/notes.css'
 import Note from './Note';
 import AddNote from './AddNote';
 import {nanoid} from 'nanoid';
+import React from 'react';
 
 function NotesList( {noteList, saveNewNote, deleteNote} ) {
     console.log(noteList)

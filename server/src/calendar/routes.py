@@ -1,8 +1,8 @@
 from . import bp
 from flask_jwt_extended import jwt_required, get_jwt_identity
-from server.models import User, Calendar, Event
-from server import db
-from server.api.errors import bad_request
+from src.models import User, Calendar, Event
+from src import db
+from src.api.errors import bad_request
 from flask import request
 
 @bp.route("/calendar", methods=["GET"])

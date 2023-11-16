@@ -1,4 +1,5 @@
 import { MdDeleteForever } from 'react-icons/md';
+import React from 'react';
 
 function Note( {props, deleteNote} ) {
     return (

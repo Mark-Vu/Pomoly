@@ -55,7 +55,7 @@ class VerificationCode(db.Model):
         code_characters = string.ascii_uppercase + string.digits
         code = ''.join(random.choice(code_characters) for _ in range(length))
         return code
-    # The function for sending the email is under server/auth/email.py
+    # The function for sending the email is under src/auth/email.py
 
 class Calendar(db.Model):
     __tablename__ = 'calendars'
