@@ -242,64 +242,29 @@ export default function Calendar({todoList, handleSetTodo}) {
     };
   
     try {
-      const response = await api.post('http://127.0.0.1:5000/calendar/add-event', payload, {
-        withCredentials: true,
-        headers: {
-          "X-CSRF-TOKEN": Cookies.get('csrf_access_token'),
-        },
+      const response = await api.put('/calendar', payload);
+      console.log(response.data.message)
+      handleSetTodo(prevTodoList => {
+        const existingTodos = prevTodoList[formattedDate] || [];
+        return {
+          ...prevTodoList,
+          [formattedDate]: [...existingTodos, {...payload, id:response.data.event_id}]
+        };
       });
-      
-      const todos = formattedDate in todoList
-        ? todoList[formattedDate]
-        : false;
   
-      if (todos) {
-        todos.push(payload);
-        handleSetTodo((prevTodoList) => ({
-          ...prevTodoList,
-          [formattedDate]: todos,
-        }));
-      } else {
-        handleSetTodo((prevTodoList) => ({
-          ...prevTodoList,
-          [formattedDate]: [payload],
-        }));
-      }
       setTodoForm({
         title: "",
         time: "",
       });
-      return (
-        <Popup
-          type="alert"
-          message={response.data.message} // You can use the response message here
-          timeout={2000}
-        />
-      );
     } catch (error) {
-      return (
-        <Popup
-          type="alert"
-          message={error.data.message} // You can use the response message here
-          timeout={2000}
-        />
-      );
+      console.log(error)
     }
   }
   
 
   async function deleteEvent(id) {
       try {
-        const payload =  {
-          "event-id": id
-        }
-        // Send a request to delete the event with the given ID on the server
-        await api.post('http://127.0.0.1:5000/calendar/delete-event', payload, {
-          withCredentials: true,
-          headers: {
-            "X-CSRF-TOKEN": Cookies.get('csrf_access_token'),
-          },
-        });
+        const response =  await api.delete(`/calendar/${id}`);
     
         // Update the local state (todoList) to reflect the deleted event
         handleSetTodo((prevTodoList) => {
@@ -312,12 +277,9 @@ export default function Calendar({todoList, handleSetTodo}) {
     
           return updatedTodoList;
         });
+        console.log(response.data.message)
       } catch (error) {
-        <Popup 
-        type="alert" 
-        message={`Server error: ${error.response.data.message || "Unknown error"}`} 
-        timeout={2000}
-        />;
+        console.log(error)
       }
     
     //Update in the UI

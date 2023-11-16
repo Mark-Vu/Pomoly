@@ -2,9 +2,12 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 
 const api = axios.create({
-  withCredentials: true
+  withCredentials: true,
+  baseURL:"http://127.0.0.1:5000",
+  headers:{
+    'X-CSRF-TOKEN': Cookies.get('csrf_access_token')
+  }
 });
-
 
 api.interceptors.response.use(
   async (response) => {
@@ -19,11 +22,10 @@ api.interceptors.response.use(
 
       try {
         // Attempt to refresh the token
-        await axios.post("http://127.0.0.1:5000/users/auth/token-refresh", {}, {
+        await api.post("/users/auth/token-refresh", {}, {
           withCredentials: true,
           headers: {
             "X-CSRF-TOKEN": Cookies.get('csrf_refresh_token'),
-            
           },
         });
 
@@ -31,16 +33,16 @@ api.interceptors.response.use(
         originalRequest.headers['X-CSRF-TOKEN'] = Cookies.get('csrf_access_token');
         return api(originalRequest);
       } catch (error) {
-        // This means the session expired, we ask the user that the session expired 
-        // TODO: popup alert saying the session exired, user press anything -> logout
-        
-        localStorage.removeItem("userProfile");
-        window.location.reload();
-        throw refreshError;
+        // If the original request FAIL AGAIN -> session expired
+        // TODO: popup alert saying the session exired, user press anything -> logout  
+        // Right now these two function below need more testing, so cant be pushed 
+        // localStorage.removeItem("userProfile");
+        // window.location.reload();
+        console.log(error)
+        console.log("DUMMAAA")
       }
     }
 
-    // For all other errors, reject the promise
     return Promise.reject(error);
   }
 );

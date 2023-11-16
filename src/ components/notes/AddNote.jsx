@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 
-function AddNote( {handleSaveNewNote} ) {
+function AddNote( {saveNewNote} ) {
     const [title, setTitle] = React.useState('Untitled Note')
     const [content, setContent] = React.useState('')
     const contentRef = useRef(); // Create a reference to the content textarea
@@ -22,7 +22,7 @@ function AddNote( {handleSaveNewNote} ) {
     }
 
     function handleSaveClick() {
-        handleSaveNewNote(title, content)
+        saveNewNote(title, content)
         setTitle('Untitled Note');
         setContent('');
     }
