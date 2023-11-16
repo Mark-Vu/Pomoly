@@ -122,6 +122,20 @@ def resend_verification_code():
 @bp.route("/users/auth/token-refresh", methods=["POST"])
 @jwt_required(refresh=True)
 def refresh():
+    """
+    Endpoint to refresh JWT access tokens using a valid CSRF refresh token.
+
+    Requires headers: {
+        'X-CSRF-TOKEN': csrf_access_token (in cookies),
+        'X-CSRF-TOKEN': csrf_refresh_token (in cookies)
+    }
+
+    Returns a new access token in JSON response and sets 'csrf_access_token' in cookies.
+    Response Codes: 200 (Success), 401 (Unauthorized - Invalid/Expired refresh token).
+
+    Usage: Call this endpoint with a valid refresh token to obtain a new access token.
+    """
+
     # We are using the `refresh=True` options in jwt_required to only allow
     # refresh tokens to access this route.
     identity = get_jwt_identity()
