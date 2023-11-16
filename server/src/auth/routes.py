@@ -1,14 +1,14 @@
 from . import bp
 from flask import request, jsonify
-from server.models import User, VerificationCode
-from server.api.errors import bad_request
+from src.models import User, VerificationCode
+from src.api.errors import bad_request
 from flask_jwt_extended import (
     create_access_token, jwt_required, get_jwt_identity,
     create_refresh_token, set_access_cookies, set_refresh_cookies, 
     unset_jwt_cookies
         )
-from server import db
-from server.auth.email import send_verification_email
+from src import db
+from src.auth.email import send_verification_email
 import re
 
 

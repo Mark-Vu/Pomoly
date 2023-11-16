@@ -1,5 +1,5 @@
 from flask import current_app
-from server.email import send_email
+from src.email import send_email
 
 
 
