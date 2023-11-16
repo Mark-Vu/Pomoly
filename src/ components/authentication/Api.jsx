@@ -4,10 +4,18 @@ import Cookies from 'js-cookie';
 const api = axios.create({
   withCredentials: true,
   baseURL:"http://127.0.0.1:5000",
-  headers:{
-    'X-CSRF-TOKEN': Cookies.get('csrf_access_token')
-  }
 });
+
+
+api.interceptors.request.use((config) => {
+  const csrfToken = Cookies.get('csrf_access_token');
+  if (csrfToken) {
+    config.headers['X-CSRF-TOKEN'] = csrfToken;
+  }
+
+  return config;
+})
+
 
 api.interceptors.response.use(
   async (response) => {
@@ -39,7 +47,6 @@ api.interceptors.response.use(
         // localStorage.removeItem("userProfile");
         // window.location.reload();
         console.log(error)
-        console.log("DUMMAAA")
       }
     }
 
