@@ -37,8 +37,10 @@ api.interceptors.response.use(
           },
         });
 
-        // Set the new csrf access token to the original request
-        originalRequest.headers['X-CSRF-TOKEN'] = Cookies.get('csrf_access_token');
+        // Set the new csrf access token to the all the requests
+        const newAccessToken = Cookies.get('csrf_access_token');
+        originalRequest.headers['X-CSRF-TOKEN'] = newAccessToken;
+        api.defaults.headers['X-CSRF-TOKEN'] = newAccessToken;
         return api(originalRequest);
       } catch (error) {
         // If the original request FAIL AGAIN -> session expired
