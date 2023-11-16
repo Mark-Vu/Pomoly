@@ -67,7 +67,6 @@ export const AuthContextProvider = ({ children }) => {
             return error
         }
     };
-
     const logout = async () => {
         try {
             const response = await api.post("/users/auth/logout",{
