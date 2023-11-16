@@ -3,32 +3,14 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleRight, faAngleLeft, faPlus, faCircle, faClose } from "@fortawesome/free-solid-svg-icons";
 const Block = lazy(() => import('./CalendarBlock.jsx'));
-import '../../../assets/styles/calendar.css'
-import api from '../../authentication/Api.jsx';
+import '../../assets/styles/calendar.css'
+import api from '../authentication/Api.jsx';
 import Cookies from 'js-cookie';
-import Popup from '../../error/Popup.jsx'
+import Popup from '../error/Popup.jsx'
 import {nanoid} from 'nanoid';
 
-export default function Calendar() {
-  const [todoList, setTodoList] = React.useState({});
-
-  React.useEffect(() => {
-    async function fetchTodoList() {
-      try {
-        const response = await api.get("http://127.0.0.1:5000/calendar/info", {
-          withCredentials: true,
-        });
-        const data = await response.data;
-
-        // Update the todoList state with the fetched data.
-        setTodoList(data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    }
-
-      fetchTodoList();
-    }, []);
+export default function Calendar({todoList, handleSetTodo}) {
+  
 
   const today=new Date()
   const todayDate = today.getDate();
@@ -260,67 +242,32 @@ export default function Calendar() {
     };
   
     try {
-      const response = await api.post('http://127.0.0.1:5000/calendar/add-event', payload, {
-        withCredentials: true,
-        headers: {
-          "X-CSRF-TOKEN": Cookies.get('csrf_access_token'),
-        },
+      const response = await api.put('/calendar', payload);
+      console.log(response.data.message)
+      handleSetTodo(prevTodoList => {
+        const existingTodos = prevTodoList[formattedDate] || [];
+        return {
+          ...prevTodoList,
+          [formattedDate]: [...existingTodos, {...payload, id:response.data.event_id}]
+        };
       });
-      
-      const todos = formattedDate in todoList
-        ? todoList[formattedDate]
-        : false;
   
-      if (todos) {
-        todos.push(payload);
-        setTodoList((prevTodoList) => ({
-          ...prevTodoList,
-          [formattedDate]: todos,
-        }));
-      } else {
-        setTodoList((prevTodoList) => ({
-          ...prevTodoList,
-          [formattedDate]: [payload],
-        }));
-      }
       setTodoForm({
         title: "",
         time: "",
       });
-      return (
-        <Popup
-          type="alert"
-          message={response.data.message} // You can use the response message here
-          timeout={2000}
-        />
-      );
     } catch (error) {
-      return (
-        <Popup
-          type="alert"
-          message={error.data.message} // You can use the response message here
-          timeout={2000}
-        />
-      );
+      console.log(error)
     }
   }
   
 
   async function deleteEvent(id) {
       try {
-        const payload =  {
-          "event-id": id
-        }
-        // Send a request to delete the event with the given ID on the server
-        await api.post('http://127.0.0.1:5000/calendar/delete-event', payload, {
-          withCredentials: true,
-          headers: {
-            "X-CSRF-TOKEN": Cookies.get('csrf_access_token'),
-          },
-        });
+        const response =  await api.delete(`/calendar/${id}`);
     
         // Update the local state (todoList) to reflect the deleted event
-        setTodoList((prevTodoList) => {
+        handleSetTodo((prevTodoList) => {
           const updatedTodoList = { ...prevTodoList };
     
           // Iterate over the dates in todoList and remove the event with the matching ID
@@ -330,16 +277,13 @@ export default function Calendar() {
     
           return updatedTodoList;
         });
+        console.log(response.data.message)
       } catch (error) {
-        <Popup 
-        type="alert" 
-        message={`Server error: ${error.response.data.message || "Unknown error"}`} 
-        timeout={2000}
-        />;
+        console.log(error)
       }
     
     //Update in the UI
-    setTodoList((prevTodoList) => {
+    handleSetTodo((prevTodoList) => {
       const updatedTodoList = {};
   
       Object.keys(prevTodoList).forEach(date => {
@@ -358,6 +302,48 @@ export default function Calendar() {
   React.useEffect(() => {
     setCalendarDays(renderCalendar());
   }, [currentDate, todoList])
+
+  /*----------------------------RESTRICT MONTH YEAR INPUT-------------------------------*/
+  const [month, setMonth] = useState('');
+  const [year, setYear] = useState('');
+
+  function handleMonthChange(e) {
+    let value = e.target.value;
+    const month = value.replace(/[^0-9]/g, '');
+    if (month === '' || month === '0' || (month.length === 1 && month >= '1') || (month.length === 2 && month >= '01' && month <= '12')) {
+      setMonth(month);
+    }
+  }
+
+  function handleYearChange(e) {
+    const value = e.target.value;
+    setYear(value.replace(/[^0-9]/g, '').slice(0, 4));
+  }
+
+  /*----------------------------GO TO FUNCTION-------------------------------*/
+  const [inputMonth, setInputMonth] = useState('');
+  const [inputYear, setInputYear] = useState('');
+
+  function handleGoClick() {
+    // Convert inputMonth to a number and subtract 1 because JavaScript months are 0-indexed
+    const monthNumber = parseInt(inputMonth, 10) - 1;
+    const yearNumber = parseInt(inputYear, 10);
+
+    // Validate the inputs
+    if (!isNaN(monthNumber) && !isNaN(yearNumber) && monthNumber >= 0 && monthNumber < 12) {
+      setCurrentDate({
+        ...currentDate,
+        month: monthNumber,
+        year: yearNumber
+      });
+      // Reset the input fields
+      setInputMonth('');
+      setInputYear('');
+    } else {
+      alert("Please enter a valid month (01-12) and year (YYYY).");
+    }
+  }
+
   return (
     <section className="calendar--wrapper">
       <div className="calendar--container">
@@ -366,12 +352,12 @@ export default function Calendar() {
             <div className="month">
               <FontAwesomeIcon icon={faAngleLeft} style={{ cursor: 'pointer' }} onClick={togglePrevMonth} />
               <div className="date">
-                {getMonthName(currentDate.month)} {currentDate.year}
+                <span className="year">{getMonthName(currentDate.month)} {currentDate.year}</span>
               </div>
               <FontAwesomeIcon icon={faAngleRight} style={{ cursor: 'pointer' }} onClick={toggleNextMonth} />
             </div>
             <div className="weekdays">
-              <div>Sun</div>
+              <div className='sun'>Sun</div>
               <div>Mon</div>
               <div>Tue</div>
               <div>Wed</div>
@@ -382,13 +368,28 @@ export default function Calendar() {
             <Suspense fallback={<div>Loading</div>}>
               <div className="days">{calendarDays}</div>
             </Suspense>
-            <div className="goto-today">
-              <div className="goto">
-                <input type="text" placeholder="mm/yyyy" className="date-input" />
-                <button className="goto-btn">Go</button>
-              </div>
-              <button className="today-btn" onClick={selectToday}>Today</button>
-            </div>
+ <div className="goto-today">
+        <div className="goto">
+          <input 
+            type="text" 
+            placeholder="MM" 
+            className="month-input" 
+            value={inputMonth}
+            onChange={(e) => setInputMonth(e.target.value)}
+            maxLength="2" 
+          />
+          <input 
+            type="text" 
+            placeholder="YYYY" 
+            className="year-input" 
+            value={inputYear}
+            onChange={(e) => setInputYear(e.target.value)}
+            maxLength="4" 
+          />
+          <button className="goto-btn" onClick={handleGoClick}>Go</button>
+        </div>
+        <button className="today-btn" onClick={selectToday}>Today</button>
+      </div>
           </div>
         </div>
         <div className="right">
@@ -416,9 +417,6 @@ export default function Calendar() {
           <div className={isAddEvent ? "add-event-wrapper active" : "add-event-wrapper"}>
             <div className="add-event-header">
               <div className="title">Add Event</div>
-              <i className='close'>
-                <FontAwesomeIcon icon={faClose} onClick={toggleAddEvent}/>
-              </i>
             </div>
             <div className="add-event-body">
               <form>
@@ -450,7 +448,7 @@ export default function Calendar() {
           </div>
         </div>
         <button className="add-event" onClick={toggleAddEvent}>
-            <FontAwesomeIcon icon={faPlus} />
+          <FontAwesomeIcon icon={isAddEvent ? faClose : faPlus} />
         </button>
       </div>
     </section>

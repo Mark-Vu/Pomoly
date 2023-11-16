@@ -6,7 +6,7 @@ from server.api.errors import bad_request
 from flask import request, jsonify
 
 
-@bp.route("/note/info" , methods=["GET"])
+@bp.route("/note" , methods=["GET"])
 @jwt_required()
 def get_notes():
     user_id = get_jwt_identity()
@@ -29,7 +29,7 @@ def get_notes():
     return note_data, 200
 
 
-@bp.route("/note/add-note", methods=["POST"])
+@bp.route("/note", methods=["PUT"])
 @jwt_required()
 def add_note():
     data = request.get_json()
@@ -48,5 +48,24 @@ def add_note():
 
     db.session.add(new_note)
     db.session.commit()
+    resp = {
+        "message":"Note added successfully",
+        "note_id":new_note.id
+    }
+    return jsonify(resp), 201
 
-    return jsonify({"message": "Note added successfully"}), 201
+
+@bp.route("/note/<note_id>", methods=["DELETE"])
+@jwt_required()
+def delete_note(note_id):
+    user_id = get_jwt_identity()
+    note = Note.query.filter_by(id=note_id, user_id=user_id).first()
+
+    # If note not found or does not belong to user
+    if note is None:
+        return jsonify({"message": "Note not found"}), 404
+    
+    db.session.delete(note)
+    db.session.commit()
+
+    return jsonify({"message": "Note deleted successfully"}), 200

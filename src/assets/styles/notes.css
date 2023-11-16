@@ -78,4 +78,5 @@ textarea {
 
 .old-note-delete-icon {
     justify-self: end; /* Align the delete icon to the end of the right column */
+    cursor: pointer;
 }

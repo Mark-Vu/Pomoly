@@ -1,4 +1,3 @@
-import axios from "axios";
 import { createContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from './Api.jsx';
@@ -16,7 +15,7 @@ export const AuthContextProvider = ({ children }) => {
     const navigate = useNavigate();
 
     const checkEmail = async (payload) => {
-        const response = await axios.post("http://127.0.0.1:5000/users/auth/email", payload, {
+        const response = await api.post("/users/auth/email", payload, {
             withCredentials: true,
         });
         return response;
@@ -24,7 +23,7 @@ export const AuthContextProvider = ({ children }) => {
 
     const getUserProfile = async () => {
         try {
-            let apiResponse = await api.get("http://127.0.0.1:5000/api/user-profile", {
+            let apiResponse = await api.get("/api/user-profile", {
             withCredentials: true,
             });
             localStorage.setItem("userProfile", JSON.stringify(apiResponse.data));
@@ -35,10 +34,9 @@ export const AuthContextProvider = ({ children }) => {
         
     }
 
-    console.log(user)
     const register = async (payload) => {
         try {
-            const response = await axios.post("http://127.0.0.1:5000/users/auth/register", payload, {
+            const response = await api.post("/users/auth/register", payload, {
                 withCredentials: true,
             });
             await getUserProfile();
@@ -51,7 +49,7 @@ export const AuthContextProvider = ({ children }) => {
 
     const login = async (payload) => {
         try {
-            const response = await axios.post("http://127.0.0.1:5000/users/auth/login", payload, {
+            const response = await api.post("/users/auth/login", payload, {
                 withCredentials: true,
             });
             await getUserProfile();
@@ -65,7 +63,7 @@ export const AuthContextProvider = ({ children }) => {
 
     const logout = async () => {
         try {
-            const response = await api.post("http://127.0.0.1:5000/users/auth/logout",{
+            const response = await api.post("/users/auth/logout",{
                 withCredentials: true,
             });
             localStorage.removeItem("userProfile")

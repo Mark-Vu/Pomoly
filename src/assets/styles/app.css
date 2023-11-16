@@ -1,4 +1,38 @@
 .app {
-    background-image: url('../images/backgroundImg.png');
+    background-image: url('../images/background1.jpg');
+    background-position: center center;
+    background-repeat: no-repeat;
     background-size: cover;
+    width: 100vw;
+    height: 100vh;
+    transition: background-size 1s ease;
+}
+
+.settings-button {
+    background-color: rgb(49, 0, 95);
+    font-size: 1.8rem;
+    border-radius: 10px;
+    height: 2.8rem;
+    width: 2.8rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    color: white;
+}
+
+.settings-button:hover {
+    background: radial-gradient(circle, #a280db 20%, #986ee2 50%, #8349e6 75%, white 100%);
+}
+
+.footer {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+}
+.bottom-line {
+    display: flex;
+    flex-direction: row;
+    gap: 0.8rem;
 }

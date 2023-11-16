@@ -1,6 +1,9 @@
 import React from 'react';
 import EditBlock from './EditBlock.jsx';
 import '../../assets/styles/timer.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlay, faPause, faUndo } from "@fortawesome/free-solid-svg-icons";
+
 export default function Timer() {
   let defaultWorkMin = 25;
   let defaultBreakMin = 5;
@@ -166,8 +169,12 @@ export default function Timer() {
           </div>
           <h1 className="timer--display__time">{`${timerMinuteDisplay}:${timerSecondDisplay}`}</h1>
           <div className="timer--display__buttons flex">
-            <button onClick={togglePause}>{isPaused ? 'Start' : 'Pause'}</button>
-            <button onClick={resetTime}>Reset</button>
+            <button onClick={togglePause}>
+              {isPaused ? <FontAwesomeIcon icon={faPlay} /> : <FontAwesomeIcon icon={faPause} />}
+            </button>
+            <button onClick={resetTime}>
+              <FontAwesomeIcon icon={faUndo} className="reset" />
+            </button>
           </div>
         </div>
         <div className="container__timer--edit flex ">

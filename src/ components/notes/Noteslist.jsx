@@ -3,21 +3,19 @@ import Note from './Note';
 import AddNote from './AddNote';
 import {nanoid} from 'nanoid';
 
-function NotesList( {notes, handleSaveNewNote} ) {
+function NotesList( {noteList, saveNewNote, deleteNote} ) {
+    console.log(noteList)
     return (
         <div className='notes-list-container'>
             <div className='notes-list'>
-                {notes && notes.map((note)=> (
+                {noteList && noteList.map((note) => (
                     <Note 
-                        key={note.id || nanoid()} 
-                        title={note.title} 
-                        date={note.date}
-                        content={note.content}
-                        last_modified_date={note.last_modified_date}
-                        last_modified_time={note.last_modified_time}
+                        key={note.id || nanoid()}
+                        props={note} 
+                        deleteNote={deleteNote}
                     />
                 ))}
-                <AddNote handleSaveNewNote={handleSaveNewNote}/>
+                <AddNote saveNewNote={saveNewNote}/>
             </div >
         </div>
     )

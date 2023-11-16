@@ -5,7 +5,7 @@ from server import db
 from server.api.errors import bad_request
 from flask import request
 
-@bp.route("/calendar/info", methods=["GET"])
+@bp.route("/calendar", methods=["GET"])
 @jwt_required()
 def get_user_calendar():
     user_id = get_jwt_identity()
@@ -26,7 +26,7 @@ def get_user_calendar():
     return calendar_events, 200
 
 
-@bp.route("/calendar/add-event", methods=["POST"])
+@bp.route("/calendar", methods=["PUT"])
 @jwt_required()
 def add_event():
     user_id = get_jwt_identity()
@@ -44,25 +44,26 @@ def add_event():
                               time=event_time)
             user.calendar.events.append(new_event)
             db.session.commit()
-            
-            return {"message": "Event added successfully"}, 200
+            resp = {
+                "message": "Event added successfully",
+                "event_id": new_event.id
+            }
+            return resp, 201
         except Exception as e:
             return {"message": "There is an error while adding event"}, 500  
     else:
         return bad_request("bad request!")
 
 
-@bp.route("/calendar/delete-event", methods=["POST"])
+@bp.route("/calendar/<event_id>", methods=["DELETE"])
 @jwt_required()
-def delete_event():
+def delete_event(event_id):
     user_id = get_jwt_identity()
     user = User.query.get(user_id)
 
     if not user:
         return bad_request("User not found")
 
-    data = request.get_json()
-    event_id = data.get("event-id")  
     if event_id is None:
         return bad_request("Event ID is required"), 403
 
