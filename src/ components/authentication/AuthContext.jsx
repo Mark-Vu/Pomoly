@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import api from './Api.jsx';
 const AuthContext = createContext();
 
+
 export const AuthContextProvider = ({ children }) => {
     const [user, setUser] = useState(() => {
         let userProfile = localStorage.getItem("userProfile");
@@ -20,6 +21,12 @@ export const AuthContextProvider = ({ children }) => {
         });
         return response;
     };
+
+    const resendVerificationCode = async (payload) => {
+        await api.post('/users/auth/verification-code/resend', payload, {
+            withCredentials: true,
+        });
+    }
 
     const getUserProfile = async () => {
         try {
@@ -75,7 +82,7 @@ export const AuthContextProvider = ({ children }) => {
     } 
     return (
         <>
-        <AuthContext.Provider value={{ user, login, checkEmail, register, logout, getUserProfile}}>
+        <AuthContext.Provider value={{ user, login, checkEmail, register, logout, getUserProfile, resendVerificationCode }}>
             {children}
         </AuthContext.Provider>
         </>

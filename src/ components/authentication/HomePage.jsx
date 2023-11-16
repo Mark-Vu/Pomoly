@@ -19,7 +19,7 @@ function HomePage() {
         name: "",
     });
 
-    const { checkEmail, login, register } = useContext(AuthContext);
+    const { checkEmail, login, register, resendVerificationCode } = useContext(AuthContext);
     const [signInStatus, setSignInStatus] = useState("checkingEmail");
     const [serverMessage, setServerMessage] = useState("");
 
@@ -169,6 +169,11 @@ function HomePage() {
                                     placeholder="Verification Code"
                                 />
                                 <button type="submit" disabled={!formData.verification_code.trim()}>Sign In</button>
+                                <button 
+                                    onClick={()=>resendVerificationCode({"email":formData.email})}
+                                >
+                                    Resend
+                                </button>
                             </>
                         )}
                     </form>
