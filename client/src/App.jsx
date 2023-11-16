@@ -6,9 +6,9 @@ import './assets/styles/app.css'
 import Settings from './ components/home_page/Settings.jsx';
 import BottomBar from './ components/home_page/BottomBar.jsx';
 import Calendar from './ components/calendar/Calendar.jsx';
-import NotesList from './ components/notes/Noteslist';
-import  Timer  from './ components/timer/Timer';
-import HomePage from './ components/authentication/HomePage';
+import NotesList from './ components/notes/Noteslist.jsx';
+import  Timer  from './ components/timer/Timer.jsx';
+import HomePage from './ components/authentication/HomePage.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog } from '@fortawesome/free-solid-svg-icons';
 import api from "./ components/authentication/Api.jsx";
