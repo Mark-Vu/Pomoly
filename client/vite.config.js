@@ -5,6 +5,7 @@ import react from '@vitejs/plugin-react-swc'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
+
+  // IF USE DEPLOYMENT BACKEND, REPLACE THE plugins above with the one below
   // plugins: [react(), mkcert()],
-  // server: { https: true }
 })
