@@ -19,7 +19,7 @@ class Config(object):
     JWT_TOKEN_LOCATION = ["cookies"]  # Storing jwt token in  cookie to prevent XSS
     JWT_COOKIE_SECURE = True  # Only allow cookies to be sent over Https
     JWT_COOKIE_CSRF_PROTECT = True  # Enabling sending CSRF tokens over cookie
-    # JWT_COOKIE_SAMESITE = "None" 
+    JWT_COOKIE_SAMESITE = "None" 
     
     # mail settings
     MAIL_SERVER = 'smtp.googlemail.com'
