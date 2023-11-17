@@ -60,7 +60,7 @@ export const AuthContextProvider = ({ children }) => {
                 withCredentials: true,
             });
             await getUserProfile();
-            window.location.reload();
+            // window.location.reload();
             return response.data.message;
         }
         catch (error) {

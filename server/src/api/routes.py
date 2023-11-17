@@ -14,3 +14,7 @@ def get_user_profile():
         "name":user.name
     }
     return response, 200
+
+@bp.route("/", methods=["GET"])
+def welcome():
+    return "<h1>Welcome to StudyHub</h1>"
