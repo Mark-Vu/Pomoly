@@ -69,8 +69,8 @@ def register():
     # Create access and refresh tokens
     resp = jsonify({'message': 'ok'})
     access_token, refresh_token = create_jwt_tokens(user.id)
-    set_access_cookies(resp, access_token)
-    set_refresh_cookies(resp, refresh_token)
+    set_access_cookies(resp, access_token, samesite="None")
+    set_refresh_cookies(resp, refresh_token, samesite="None")
     return resp, 200
 
 
@@ -97,8 +97,8 @@ def login():
     # Create access and refresh tokens
     resp = jsonify({'message': 'ok'})
     access_token, refresh_token = create_jwt_tokens(user.id)
-    set_access_cookies(resp, access_token)
-    set_refresh_cookies(resp, refresh_token)
+    set_access_cookies(resp, access_token, samesite="None")
+    set_refresh_cookies(resp, refresh_token, samesite="None")
     return resp, 200
 
 
