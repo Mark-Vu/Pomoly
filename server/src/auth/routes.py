@@ -5,7 +5,7 @@ from src.api.errors import bad_request
 from flask_jwt_extended import (
     create_access_token, jwt_required, get_jwt_identity,
     create_refresh_token, set_access_cookies, set_refresh_cookies, 
-    unset_jwt_cookies
+    unset_jwt_cookies, get_csrf_token
         )
 from src import db
 from src.auth.email import send_verification_email
@@ -67,8 +67,11 @@ def register():
     db.session.commit()
 
     # Create access and refresh tokens
-    resp = jsonify({'message': 'ok'})
     access_token, refresh_token = create_jwt_tokens(user.id)
+    resp = jsonify({
+        'access_csrf': get_csrf_token(access_token),
+        'refresh_csrf': get_csrf_token(refresh_token)
+    })
     set_access_cookies(resp, access_token)
     set_refresh_cookies(resp, refresh_token)
     return resp, 200
@@ -94,9 +97,13 @@ def login():
     elif verification.confirm_verification_code(verification_code) == "expired":
         return bad_request("Your confirmation code has expired")
 
-    # Create access and refresh tokens
-    resp = jsonify({'message': 'ok'})
+    # Create access and refresh tokens\
     access_token, refresh_token = create_jwt_tokens(user.id)
+    resp = jsonify({
+        'access_csrf': get_csrf_token(access_token),
+        'refresh_csrf': get_csrf_token(refresh_token)
+    })
+
     set_access_cookies(resp, access_token)
     set_refresh_cookies(resp, refresh_token)
     return resp, 200
@@ -126,11 +133,10 @@ def refresh():
     Endpoint to refresh JWT access tokens using a valid CSRF refresh token.
 
     Requires headers: {
-        'X-CSRF-TOKEN': csrf_access_token (in cookies),
-        'X-CSRF-TOKEN': csrf_refresh_token (in cookies)
+        'X-CSRF-TOKEN': csrf_refresh_token (in local storage)
     }
 
-    Returns a new access token in JSON response and sets 'csrf_access_token' in cookies.
+    Returns 'csrf_access_token' in JSON response.
     Response Codes: 200 (Success), 401 (Unauthorized - Invalid/Expired refresh token).
 
     Usage: Call this endpoint with a valid refresh token to obtain a new access token.
@@ -140,7 +146,9 @@ def refresh():
     # refresh tokens to access this route.
     identity = get_jwt_identity()
     access_token = create_access_token(identity=identity)
-    resp = jsonify({'message': 'ok'})
+    resp = jsonify({
+        'access_csrf': get_csrf_token(access_token)
+    })
     set_access_cookies(resp, access_token)
     return resp, 200
 
