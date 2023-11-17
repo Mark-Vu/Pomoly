@@ -8,6 +8,7 @@ import api from '../authentication/Api.jsx';
 import Cookies from 'js-cookie';
 import Popup from '../error/Popup.jsx'
 import {nanoid} from 'nanoid';
+import clockIcon from '../../assets/images/clock.png'
 
 export default function Calendar({todoList, handleSetTodo}) {
   
@@ -333,9 +334,10 @@ export default function Calendar({todoList, handleSetTodo}) {
   }
   
   // Check if the selected day has todo
-  const displayTodos =(formatDate(selectedDay.day, selectedDay.month, selectedDay.year)) in todoList
-  ? todoList[formatDate(selectedDay.day, selectedDay.month, selectedDay.year)]
-  : false;
+  const formattedDate = formatDate(selectedDay.day, selectedDay.month, selectedDay.year);
+  const displayTodos = formattedDate in todoList
+  ? sortEventsByTime([...todoList[formattedDate]])
+  : [];
   /*-----------------------------------------------------------*/
   React.useEffect(() => {
     setCalendarDays(renderCalendar());
@@ -403,6 +405,14 @@ export default function Calendar({todoList, handleSetTodo}) {
     }
   }, [selectedDay, todoList]);  
 
+  /*----------------------------ORDER EVENT BY TIME-------------------------------*/ 
+  function sortEventsByTime(events) {
+  return events.sort((a, b) => {
+    // Assuming the time is in 'HH:mm' format
+    return a.time.localeCompare(b.time);
+  });
+}
+
   return (
     <section className="calendar--wrapper">
       <div className="calendar--container">
@@ -458,24 +468,20 @@ export default function Calendar({todoList, handleSetTodo}) {
           </div>
           <div className="Todos">
             <div className='events'>
-              {displayTodos && displayTodos.length > 0 ? (
-                displayTodos.map((event) => (
-                  <div className="event" key={event.id} onClick={() => deleteEvent(event.id)}>
-                    <div className="title">
-                      <i>
-                        <FontAwesomeIcon icon={faCircle}/>
-                      </i>
-                      <h3 className="event-title">{event.title}</h3>
-                    </div>
-                    <div className="event-time">
-                      <span className="event-time">{event.time}</span>
-                    </div>
-                  </div>
-                ))
+              {displayTodos.length > 0 ? (
+                  displayTodos.map((event) => (
+                      <div className="event" key={event.id} onClick={() => deleteEvent(event.id)}>
+                          <div className="title">
+                              <FontAwesomeIcon icon={faCircle}/>
+                              <h3 className="event-title">{event.title}</h3>
+                          </div>
+                          <div className="event-time">
+                              <span>{event.time}</span>
+                          </div>
+                      </div>
+                  ))
               ) : (
-                <div className="no-events">
-                   {noEventText}
-                </div>
+                  <div className="no-events">{noEventText}</div>
               )}
             </div>
           </div>
@@ -485,29 +491,32 @@ export default function Calendar({todoList, handleSetTodo}) {
             </div>
             <div className="add-event-body">
               <form>
-              <div className="add-event-input">
-                <input 
-                type="text" 
-                placeholder="Event Name" 
-                className="event-name" 
-                onChange={todoFormOnChange}
-                name="title"
-                value={todoForm.title}
-                />
-              </div>
-              <div className="add-event-input">
-                <input 
-                type="text" 
-                placeholder="Event Time From" 
-                className="event-time-from"
-                onChange={todoFormOnChange} 
-                name="time"
-                value={todoForm.time}
-                />
-              </div> 
-              <div className="add-event-footer">
-              <button className="add-event-btn" onClick={addEvent}>Add Event</button>
-              </div> 
+                <div className="add-event-input">
+                  <input 
+                  type="text" 
+                  placeholder="Event Name" 
+                  className="event-name" 
+                  onChange={todoFormOnChange}
+                  name="title"
+                  value={todoForm.title}
+                  />
+                </div>
+                <div className="add-event-input">
+                  <label htmlFor="timeInput" className={!todoForm.time ? "time-placeholder" : ""}>
+                    {!todoForm.time && "From"}
+                  </label>
+                  <input 
+                    type="time" 
+                    className={todoForm.time ? "event-time-filled" : "event-time-from"}
+                    onChange={todoFormOnChange} 
+                    name="time"
+                    value={todoForm.time}
+                  />
+                  <div className="clock-icon"></div>
+                </div> 
+                <div className="add-event-footer">
+                <button className="add-event-btn" onClick={addEvent}>Add</button>
+                </div> 
               </form>
             </div>
           </div>
