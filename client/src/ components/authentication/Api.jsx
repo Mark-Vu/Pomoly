@@ -1,22 +1,15 @@
 import React from 'react';
 import axios from 'axios';
-import Cookies from 'js-cookie';
 
 const api = axios.create({
   withCredentials: true,
   baseURL:"http://127.0.0.1:5000",
-  // baseURL:"https://studyhub-backend-git-connection-mark-vus-projects.vercel.app"                         
+  // baseURL:"https://studyhub-backend.vercel.app/",
+  headers: {
+    'X-CSRF-TOKEN':localStorage.getItem('csrf_access_token')
+  }
 });
 
-
-api.interceptors.request.use((config) => {
-  const csrfToken = Cookies.get('csrf_access_token');
-  if (csrfToken) {
-    config.headers['X-CSRF-TOKEN'] = csrfToken;
-  }
-
-  return config;
-})
 
 
 api.interceptors.response.use(
@@ -31,16 +24,19 @@ api.interceptors.response.use(
       originalRequest._retry = true;
 
       try {
+        console.log('csrf refresh: ' + localStorage.getItem('csrf_refresh_token'))
         // Attempt to refresh the token
-        await api.post("/users/auth/token-refresh", {}, {
+        const res = await api.post("/users/auth/token-refresh", {}, {
           withCredentials: true,
           headers: {
-            "X-CSRF-TOKEN": Cookies.get('csrf_refresh_token'),
+            "X-CSRF-TOKEN": localStorage.getItem('csrf_refresh_token'),
           },
         });
 
         // Set the new csrf access token to the all the requests
-        const newAccessToken = Cookies.get('csrf_access_token');
+
+        const newAccessToken = res.data.access_csrf;
+        localStorage.setItem('csrf_access_token', newAccessToken);
         originalRequest.headers['X-CSRF-TOKEN'] = newAccessToken;
         api.defaults.headers['X-CSRF-TOKEN'] = newAccessToken;
         return api(originalRequest);

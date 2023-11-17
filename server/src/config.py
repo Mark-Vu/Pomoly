@@ -20,7 +20,8 @@ class Config(object):
     JWT_COOKIE_SECURE = True  # Only allow cookies to be sent over Https
     JWT_COOKIE_CSRF_PROTECT = True  # Enabling sending CSRF tokens over cookie
     JWT_COOKIE_SAMESITE = "None" 
-    
+    JWT_CSRF_IN_COOKIES = False
+
     # mail settings
     MAIL_SERVER = 'smtp.googlemail.com'
     MAIL_PORT = 465
