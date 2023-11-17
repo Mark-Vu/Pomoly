@@ -4,8 +4,8 @@ import Cookies from 'js-cookie';
 
 const api = axios.create({
   withCredentials: true,
-  // baseURL:"http://127.0.0.1:5000",
-  baseURL:"https://studyhub-backend.vercel.app"                         
+  baseURL:"http://127.0.0.1:5000",
+  // baseURL:"https://studyhub-backend-git-connection-mark-vus-projects.vercel.app"                         
 });
 
 
