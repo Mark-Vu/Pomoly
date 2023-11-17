@@ -17,9 +17,9 @@ class Config(object):
     JWT_ACCESS_TOKEN_EXPIRES = timedelta(minutes=20);
     JWT_REFRESH_TOKEN_EXPIRES = timedelta(days=90); # Session expired after 90 days
     JWT_TOKEN_LOCATION = ["cookies"]  # Storing jwt token in  cookie to prevent XSS
-    JWT_COOKIE_SECURE = True  # Only allow cookies to be sent over Http
+    JWT_COOKIE_SECURE = True  # Only allow cookies to be sent over Https
     JWT_COOKIE_CSRF_PROTECT = True  # Enabling sending CSRF tokens over cookie
-    JWT_COOKIE_SAMESITE = "LAX"  # Only allow to send cookie to the same site
+    JWT_COOKIE_SAMESITE = "None" 
     
     # mail settings
     MAIL_SERVER = 'smtp.googlemail.com'
