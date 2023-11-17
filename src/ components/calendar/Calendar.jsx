@@ -270,6 +270,7 @@ export default function Calendar({todoList, handleSetTodo}) {
         title: "",
         time: "",
       });
+      setIsAddEvent(false);
       return (
         <Popup
           type="alert"
@@ -287,7 +288,6 @@ export default function Calendar({todoList, handleSetTodo}) {
       );
     }
   }
-  
 
   async function deleteEvent(id) {
       try {
