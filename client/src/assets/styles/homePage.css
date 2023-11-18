@@ -113,11 +113,8 @@ form button {
     transition: 0.2s ease-out;
 }
 
-form button:hover {
-    filter: brightness(85%);  
-}
-
-.input-container button:hover {
+.input-container button:hover, 
+.input-container-2 button:hover {
     filter: brightness(85%);
 }
 
