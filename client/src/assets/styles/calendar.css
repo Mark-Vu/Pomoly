@@ -254,12 +254,6 @@
     background-color: #efdfff;
 }
 
-.calendar .days .active.event::after {
-    background-color: #fff;
-    bottom: 20%;
-}
-
-  
 .calendar .goto-today {
     width: 100%;
     height: 50px;
@@ -425,6 +419,10 @@
     margin-left: 20px;
 }
 
+.title svg {
+    color: #b49bf9;
+}
+
 .events .event i {
     color: #b49bf9;
     font-size: 0.8rem;
@@ -440,6 +438,7 @@
     color: #ffffff;
     margin-left: 17px;
     pointer-events: none;
+    font-family: 'Overpass';
 }
 
 .events .event::after {
@@ -590,10 +589,12 @@
 
 .add-event-body .add-event-input .event-time-from {
     color: #ad9dbbb2; 
+    font-family: 'Overpass';
 }
 
 .add-event-body .add-event-input .event-time-filled {
-    color: #4d246e; 
+    color: #4d246ee0;
+    font-family: 'Overpass'; 
 }
 
 .add-event-body .add-event-input input::placeholder {

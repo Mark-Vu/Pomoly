@@ -1,10 +1,12 @@
-import { lazy, Suspense, useState } from 'react';
+import { lazy, Suspense, useState, useEffect } from 'react';
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleRight, faAngleLeft, faPlus, faCircle, faClose } from "@fortawesome/free-solid-svg-icons";
 const Block = lazy(() => import('./CalendarBlock.jsx'));
 import '../../assets/styles/calendar.css'
 import api from '../authentication/Api.jsx';
+import Cookies from 'js-cookie';
+import Popup from '../error/Popup.jsx'
 import {nanoid} from 'nanoid';
 
 export default function Calendar({todoList, handleSetTodo}) {
@@ -293,9 +295,9 @@ export default function Calendar({todoList, handleSetTodo}) {
   }
   
   // Check if the selected day has todo
-  const displayTodos =(formatDate(selectedDay.day, selectedDay.month, selectedDay.year)) in todoList
-  ? todoList[formatDate(selectedDay.day, selectedDay.month, selectedDay.year)]
-  : false;
+  const formattedDate = formatDate(selectedDay.day, selectedDay.month, selectedDay.year);
+  const eventsForSelectedDay = formattedDate in todoList ? todoList[formattedDate] : [];
+  const sortedEvents = sortEventsByTime(eventsForSelectedDay);
   /*-----------------------------------------------------------*/
   React.useEffect(() => {
     setCalendarDays(renderCalendar());
@@ -341,6 +343,40 @@ export default function Calendar({todoList, handleSetTodo}) {
       alert("Please enter a valid month (01-12) and year (YYYY).");
     }
   }
+  /*----------------------------RANDOM NO EVENT TEXT-------------------------------*/ 
+  const [noEventText, setNoEventText] = useState(getRandomNoEventText());
+
+  function getRandomNoEventText() {
+    const noEventTexts = [
+      "Your day is a blank canvas, ready for new experiences!",
+      "Looks like you've got some free time today!",
+      "Nothing on the agenda. Enjoy your free time!",
+      "All clear! Time to relax or try something new.",
+      "Take it easy! There are no events scheduled for today.",
+      "A clear schedule means endless possibilities.",
+      "Breathe easy—no events to see here.",
+      "Your day is wide open. What will you create?",
+      "Seize the day! It's all yours to enjoy.",
+      "Embrace the calm. No events are on the horizon."
+    ];
+    const randomIndex = Math.floor(Math.random() * noEventTexts.length);
+    return noEventTexts[randomIndex];
+  }
+
+  useEffect(() => {
+    const formattedDate = formatDate(selectedDay.day, selectedDay.month, selectedDay.year);
+    if (!(formattedDate in todoList && todoList[formattedDate].length > 0)) {
+      setNoEventText(getRandomNoEventText());
+    }
+  }, [selectedDay, todoList]);  
+
+  /*----------------------------SORT EVENT BY TIME-------------------------------*/ 
+  function sortEventsByTime(events) {
+    return events.sort((a, b) => {
+      // Assuming the time is in 'HH:mm' format
+      return a.time.localeCompare(b.time);
+    });
+  }
 
   return (
     <section className="calendar--wrapper">
@@ -366,7 +402,7 @@ export default function Calendar({todoList, handleSetTodo}) {
             <Suspense fallback={<div>Loading</div>}>
               <div className="days">{calendarDays}</div>
             </Suspense>
- <div className="goto-today">
+      <div className="goto-today">
         <div className="goto">
           <input 
             type="text" 
@@ -396,21 +432,23 @@ export default function Calendar({todoList, handleSetTodo}) {
             <div className="event-date">{dayMonthYear}</div>
           </div>
           <div className="Todos">
-            <div className='events'>
-            {displayTodos && displayTodos.map((event) => (
-            <div className="event" key={event.id} onClick={()=>deleteEvent(event.id)}>
-              <div className="title">
-                <i>
-                <FontAwesomeIcon icon={faCircle}/>
-                </i>
-                <h3 className="event-title">{event.title}</h3>
-              </div>
-              <div className="event-time">
-                <span className="event-time">{event.time}</span>
-              </div>
-            </div>
-            ))}
-            </div>
+          <div className='events'>
+            {sortedEvents.length > 0 ? (
+              sortedEvents.map((event) => (
+                <div className="event" key={event.id} onClick={() => deleteEvent(event.id)}>
+                  <div className="title">
+                    <FontAwesomeIcon icon={faCircle}/>
+                    <h3 className="event-title">{event.title}</h3>
+                  </div>
+                  <div className="event-time">
+                    <span>{event.time}</span>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="no-events">{noEventText}</div>
+            )}
+          </div>
           </div>
           <div className={isAddEvent ? "add-event-wrapper active" : "add-event-wrapper"}>
             <div className="add-event-header">
@@ -418,29 +456,32 @@ export default function Calendar({todoList, handleSetTodo}) {
             </div>
             <div className="add-event-body">
               <form>
-              <div className="add-event-input">
-                <input 
-                type="text" 
-                placeholder="Event Name" 
-                className="event-name" 
-                onChange={todoFormOnChange}
-                name="title"
-                value={todoForm.title}
-                />
-              </div>
-              <div className="add-event-input">
-                <input 
-                type="text" 
-                placeholder="Event Time From" 
-                className="event-time-from"
-                onChange={todoFormOnChange} 
-                name="time"
-                value={todoForm.time}
-                />
-              </div> 
-              <div className="add-event-footer">
-              <button className="add-event-btn" onClick={addEvent}>Add</button>
-              </div> 
+                <div className="add-event-input">
+                  <input 
+                  type="text" 
+                  placeholder="Event Name" 
+                  className="event-name" 
+                  onChange={todoFormOnChange}
+                  name="title"
+                  value={todoForm.title}
+                  />
+                </div>
+                <div className="add-event-input">
+                  <label htmlFor="timeInput" className={!todoForm.time ? "time-placeholder" : ""}>
+                    {!todoForm.time && "From"}
+                  </label>
+                  <input 
+                    type="time" 
+                    className={todoForm.time ? "event-time-filled" : "event-time-from"}
+                    onChange={todoFormOnChange} 
+                    name="time"
+                    value={todoForm.time}
+                  />
+                  <div className="clock-icon"></div>
+                </div> 
+                <div className="add-event-footer">
+                <button className="add-event-btn" onClick={addEvent}>Add</button>
+                </div> 
               </form>
             </div>
           </div>
