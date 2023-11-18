@@ -3,17 +3,11 @@ import axios from 'axios';
 
 const api = axios.create({
   withCredentials: true,
-  // DEVELOPMENT BACKEND:
-  baseURL:"http://127.0.0.1:5000",
-
-  // PRODUCTION BACKEND:
-  // baseURL:"https://studyhub-backend.vercel.app/",
+  baseURL: import.meta.env.VITE_API_URL,
   headers: {
-    'X-CSRF-TOKEN':localStorage.getItem('csrf_access_token')
+    'X-CSRF-TOKEN': localStorage.getItem('csrf_access_token')
   }
 });
-
-
 
 api.interceptors.response.use(
   async (response) => {
