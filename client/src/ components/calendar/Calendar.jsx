@@ -5,8 +5,6 @@ import { faAngleRight, faAngleLeft, faPlus, faCircle, faClose } from "@fortaweso
 const Block = lazy(() => import('./CalendarBlock.jsx'));
 import '../../assets/styles/calendar.css'
 import api from '../authentication/Api.jsx';
-import Cookies from 'js-cookie';
-import Popup from '../error/Popup.jsx'
 import {nanoid} from 'nanoid';
 
 export default function Calendar({todoList, handleSetTodo}) {
