@@ -439,7 +439,7 @@ export default function Calendar({todoList, handleSetTodo}) {
                 />
               </div> 
               <div className="add-event-footer">
-              <button className="add-event-btn" onClick={addEvent}>Add Event</button>
+              <button className="add-event-btn" onClick={addEvent}>Add</button>
               </div> 
               </form>
             </div>
