@@ -23,7 +23,17 @@
     padding-bottom: 0;
     display: flex;
     flex-direction: column;
+    right: -100%; 
+    transition: right 0.5s ease;
 }
+  
+.settings-container.slide-in {
+    right: 0;
+}
+  
+.settings-container.slide-out {
+    right: -100%; 
+} 
 
 .close-tab {
     height: 60px;
@@ -51,6 +61,7 @@
 .left-settings .tabs {
     display: flex;
     flex-direction: column;
+    gap: 5px;
 }
 
 .left-settings .tabs button {
@@ -59,4 +70,44 @@
     text-align: left;
 }
 
+.tabs .tab {
+    padding: 10px;
+    display: flex;
+    gap: 20px;
+    margin-right: 22px;
+}
 
+.tabs .tab:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+.tabs .tab.active {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+}
+
+.tabs .tab img {
+    width: 20px;
+    height: 20px;
+}
+
+.tabs .tab button {
+    color: white;
+    font-size: 1.1rem;
+}
+
+.right-settings {
+    padding-left: 45px;
+}
+
+.profile-header {
+    margin-bottom: 15px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+}
+
+.profile-header h1 {
+    font-size: 45px;
+}

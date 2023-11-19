@@ -18,42 +18,52 @@ function Logout() {
     }
   }
 
-  return (
-    <div>
-      <button onClick={handleLogout}>
-        Logout
-      </button>
-      <div>{user.name}</div>
-    </div> 
-  );
-}
-
-function Settings({ onClose }) {
   const [activeTab, setActiveTab] = useState('logout');
 
   return (
     <>
-      <div className="settings-overlay" onClick={onClose}></div>
-      <div className="settings-container">
+      <div className="profile-header">
+        <h1>Profile</h1>
+      </div>
+      <div className="user-name">
+        {user.name}
+      </div>
+      <div className="user-email">{user.email}</div>
+      <button className="logout-btn" onClick={handleLogout}>
+        Sign Out
+      </button>
+    </> 
+  );
+}
+
+function Settings({ onClose, showSettings }) {
+  const [activeTab, setActiveTab] = useState('logout');
+
+  return (
+    <>
+      {showSettings && (
+        <div className="settings-overlay" onClick={onClose}></div>
+      )}
+      <div className={`settings-container ${showSettings ? 'slide-in' : 'slide-out'}`}>
         <div className="close-tab">
           <FontAwesomeIcon icon={ faClose } style={{ cursor: 'pointer' }} onClick={onClose} />
         </div>
         <div className="main-settings">
           <div className="left-settings">
-            <div className="tabs">
-              <div className="tab">
-                <img src={profile} alt="Profile" />
-                <button onClick={() => setActiveTab('logout')} className={activeTab === 'logout' ? 'active' : ''}>
-                  Profile
-                </button>
-              </div>
-              <div className="tab">
-                <img src={paintbrush} alt="Paintbrush" />
-                <button onClick={() => setActiveTab('background')} className={activeTab === 'background' ? 'active' : ''}>
-                  Background
-                </button>
-              </div>
+          <div className="tabs">
+            <div className={`tab ${activeTab === 'logout' ? 'active' : ''}`} onClick={() => setActiveTab('logout')}>
+              <img src={profile} alt="Profile" />
+              <button>
+                Profile
+              </button>
             </div>
+            <div className={`tab ${activeTab === 'background' ? 'active' : ''}`} onClick={() => setActiveTab('background')}>
+              <img src={paintbrush} alt="Paintbrush" />
+              <button>
+                Background
+              </button>
+            </div>
+          </div>
           </div>
           <div className="right-settings">
             <div className="tab-content">

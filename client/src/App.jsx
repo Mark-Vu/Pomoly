@@ -153,7 +153,9 @@ function DashboardLayout() {
       {activeComponent === 'calendar' && <Calendar todoList={todoList} handleSetTodo={setTodoList}/>}
       {activeComponent === 'noteslist' && <NotesList noteList={noteList} saveNewNote={saveNewNote} deleteNote={deleteNote}/>}
 
-      {showSettings && <Settings onClose={toggleSettings} />}
+      {showSettings && <div className="settings-overlay" onClick={toggleSettings}></div>}
+      <Settings showSettings={showSettings} onClose={toggleSettings} />
+
       <div className="footer">
         <div className="bottom-line">
           <BottomBar 
