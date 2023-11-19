@@ -22,16 +22,38 @@ function Logout() {
 
   return (
     <>
-      <div className="profile-header">
-        <h1>Profile</h1>
+    <div className="profile-header">
+      <h1>Profile</h1>
+    </div>
+    <div className="main-profile">
+      <div className="input-group">
+        <label htmlFor="username">Name</label>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          placeholder="Enter your username"
+          value={user.name || ''}
+          // onChange={/* function to handle name change */}
+          readOnly // not editable
+        />
       </div>
-      <div className="user-name">
-        {user.name}
+      <div className="input-group">
+        <label htmlFor="email">Email</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="Enter your email"
+          value={user.email || ''}
+          // onChange={/* function to handle email change */}
+          readOnly // not editable
+        />
       </div>
-      <div className="user-email">{user.email}</div>
-      <button className="logout-btn" onClick={handleLogout}>
-        Sign Out
-      </button>
+    </div>
+    <button className="logout-btn" onClick={handleLogout}>
+      Sign Out
+    </button>
     </> 
   );
 }
