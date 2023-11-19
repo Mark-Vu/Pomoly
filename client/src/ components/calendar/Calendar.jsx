@@ -324,6 +324,16 @@ export default function Calendar({todoList, handleSetTodo}) {
   const [inputMonth, setInputMonth] = useState('');
   const [inputYear, setInputYear] = useState('');
 
+  function handleMonthChange(e) {
+    let value = e.target.value.replace(/[^0-9]/g, '');
+    if (value === '0' || (value.length === 2 && parseInt(value, 10) > 12)) {
+      value = '';
+    } else if (value.length === 1 && parseInt(value, 10) > 1) {
+      value = `0${value}`;
+    }
+    setInputMonth(value);
+  }
+
   function handleGoClick() {
     // Convert inputMonth to a number and subtract 1 because JavaScript months are 0-indexed
     const monthNumber = parseInt(inputMonth, 10) - 1;
@@ -402,28 +412,28 @@ export default function Calendar({todoList, handleSetTodo}) {
             <Suspense fallback={<div>Loading</div>}>
               <div className="days">{calendarDays}</div>
             </Suspense>
-      <div className="goto-today">
-        <div className="goto">
-          <input 
-            type="text" 
-            placeholder="MM" 
-            className="month-input" 
-            value={inputMonth}
-            onChange={(e) => setInputMonth(e.target.value)}
-            maxLength="2" 
-          />
-          <input 
-            type="text" 
-            placeholder="YYYY" 
-            className="year-input" 
-            value={inputYear}
-            onChange={(e) => setInputYear(e.target.value)}
-            maxLength="4" 
-          />
-          <button className="goto-btn" onClick={handleGoClick}>Go</button>
-        </div>
-        <button className="today-btn" onClick={selectToday}>Today</button>
-      </div>
+              <div className="goto-today">
+                <div className="goto">
+                  <input 
+                    type="text" 
+                    placeholder="MM" 
+                    className="month-input" 
+                    value={inputMonth}
+                    onChange={handleMonthChange}
+                    maxLength="2" 
+                  />
+                  <input 
+                    type="text" 
+                    placeholder="YYYY" 
+                    className="year-input" 
+                    value={inputYear}
+                    onChange={(e) => setInputYear(e.target.value)}
+                    maxLength="4" 
+                  />
+                  <button className="goto-btn" onClick={handleGoClick}>Go</button>
+                </div>
+                <button className="today-btn" onClick={selectToday}>Today</button>
+              </div>
           </div>
         </div>
         <div className="right">

@@ -68,12 +68,12 @@
 }
 
 .timer--display__select--mode button:hover{
-    background-color: rgb(142, 22, 255);
+    background-color: #b49bf9;
     border: none;
 }
 
 .timer--display__select--mode .selected__button {
-    background-color: rgb(142, 22, 255);
+    background-color: #b49bf9;
     border: none;
 }
 
