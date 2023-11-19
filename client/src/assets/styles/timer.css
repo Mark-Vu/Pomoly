@@ -68,12 +68,12 @@
 }
 
 .timer--display__select--mode .selected__button {
-    background: radial-gradient(ellipse, #a280db 20%, #986ee2 50%, #8349e6 100%);
+    background: rgb(142, 22, 255);
     border: none;
 }
 
 .timer--display__select--mode button:hover{
-    background: radial-gradient(ellipse, #a280db 20%, #986ee2 50%, #8349e6 100%);
+    background: rgb(142, 22, 255);
     border: none;
 }
 
@@ -136,7 +136,6 @@
     gap: 0.5rem;
     font-size: 1.25rem;
     background: rgba(51, 51, 51, 0.4);
-    
 }
 
 .timer--edit__block .block__edit--length{
@@ -162,6 +161,7 @@
     text-align: center;
     color:white;
     background-color: transparent;
+    font-family: 'Overpass';
 }
 
 .edit--length__sign {
@@ -171,6 +171,7 @@
     border: unset;
     background-color: transparent;
     cursor: pointer;
+    font-family: 'Overpass';
 }
 
 /* Input field without displaying arrow */
