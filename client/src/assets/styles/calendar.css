@@ -478,6 +478,7 @@
     border-radius: 50%;
     background-color: transparent;
     cursor: pointer;
+    transition: 0.3s ease-out;
 }
 
 .add-event:hover {

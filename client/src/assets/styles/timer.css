@@ -67,13 +67,13 @@
     transition: background-color 0.3s ease, border 0.3s ease;
 }
 
-.timer--display__select--mode button:hover{
-    background-color: #b49bf9;
+.timer--display__select--mode .selected__button {
+    background: radial-gradient(ellipse, #a280db 20%, #986ee2 50%, #8349e6 100%);
     border: none;
 }
 
-.timer--display__select--mode .selected__button {
-    background-color: #b49bf9;
+.timer--display__select--mode button:hover{
+    background: radial-gradient(ellipse, #a280db 20%, #986ee2 50%, #8349e6 100%);
     border: none;
 }
 
