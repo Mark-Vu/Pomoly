@@ -370,15 +370,17 @@
 
 /* For Webkit browsers */
 .events::-webkit-scrollbar {
-    width: 10px; 
+    width: 8px; 
 }
   
 .events::-webkit-scrollbar-track {
-    background: rgba(241, 241, 241, 0.589); 
+    background: transparent; 
 }
   
 .events::-webkit-scrollbar-thumb {
-    background: rgb(198, 175, 252); 
+    background: rgba(255, 255, 255, 0.445); 
+    border-radius: 20px;
+    border: 6px solid transparent;
 }
   
 .events::-webkit-scrollbar-thumb:hover {

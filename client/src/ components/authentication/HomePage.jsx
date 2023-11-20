@@ -6,6 +6,7 @@ import backgroundImage4 from '../../assets/images/background4.jpg';
 import backgroundImage5 from '../../assets/images/background5.jpg';
 import backgroundImage6 from '../../assets/images/background6.jpg';
 import backgroundImage7 from '../../assets/images/background7.jpg';
+import backgroundImage8 from '../../assets/images/background8.jpg';
 import studyHubLogo from '../../assets/images/studyHubLogo.png';
 import '../../assets/styles/homePage.css';
 import AuthContext from "./AuthContext.jsx";
@@ -54,7 +55,6 @@ function HomePage() {
             [name]: value,
         }));
         
-        // Check for email validity when the email field is updated
         if (name === 'email') {
             setIsEmailValid(!value || /\S+@\S+\.\S+/.test(value));
         }
@@ -74,7 +74,8 @@ function HomePage() {
         backgroundImage4,
         backgroundImage5,
         backgroundImage6,
-        backgroundImage7,
+        backgroundImage7, 
+        backgroundImage8, 
     ];
 
     const [currentBackgroundImage, setCurrentBackgroundImage] = useState('');

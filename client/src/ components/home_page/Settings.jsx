@@ -58,9 +58,9 @@ function Logout() {
   );
 }
 
-function Settings({ onClose, showSettings }) {
+function Settings({ onClose, showSettings, onChangeBackground }) {
   const [activeTab, setActiveTab] = useState('logout');
-
+  const testFunction = () => console.log('Test function called');
   return (
     <>
       {showSettings && (
@@ -90,7 +90,7 @@ function Settings({ onClose, showSettings }) {
           <div className="right-settings">
             <div className="tab-content">
               {activeTab === 'logout' && <Logout />}
-              {activeTab === 'background' && <BackgroundOptions />}
+              {activeTab === 'background' && <BackgroundOptions onChangeBackground={onChangeBackground} />}
             </div>
           </div>
         </div>
