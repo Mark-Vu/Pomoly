@@ -13,6 +13,7 @@ class Config(object):
     SECURITY_PASSWORD_SALT = os.environ.get('SECURITY_PASSWORD_SALT')
     SQLALCHEMY_DATABASE_URI= DB_URI
     CORS_SUPPORTS_CREDENTIALS=True
+    
     # JWT config
     JWT_ACCESS_TOKEN_EXPIRES = timedelta(minutes=20);
     JWT_REFRESH_TOKEN_EXPIRES = timedelta(days=90); # Session expired after 90 days

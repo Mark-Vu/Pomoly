@@ -1,40 +1,25 @@
 import React, { createContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import api from './Api.jsx';
 const AuthContext = createContext();
 
 
 export const AuthContextProvider = ({ children }) => {
-    const [user, setUser] = useState(() => {
-        let userProfile = localStorage.getItem("userProfile");
-        if (userProfile) {
-            return JSON.parse(userProfile);
-        }
-        return null;
-    });
-    console.log(user)
-    const navigate = useNavigate();
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem("userProfile")) || null);
 
     const checkEmail = async (payload) => {
-        const response = await api.post("/users/auth/email", payload, {
-            withCredentials: true,
-        });
+        const response = await api.post("/users/auth/email", payload);
         return response;
     };
 
     const resendVerificationCode = async (payload) => {
-        await api.post('/users/auth/verification-code/resend', payload, {
-            withCredentials: true,
-        });
+        await api.post('/users/auth/verification-code/resend', payload);
     }
 
-    const getUserProfile = async () => {
+    const fetchUserProfile = async () => {
         try {
-            let apiResponse = await api.get("/api/user-profile", {
-            withCredentials: true,
-            });
-            localStorage.setItem("userProfile", JSON.stringify(apiResponse.data));
-            setUser(apiResponse.data);
+            let response = await api.get("/users/info");
+            localStorage.setItem("userProfile", JSON.stringify(response.data));
+            setUser(response.data);
         } catch (error) {
             console.log(error)
         }
@@ -43,14 +28,12 @@ export const AuthContextProvider = ({ children }) => {
 
     const register = async (payload) => {
         try {
-            const response = await api.post("/users/auth/register", payload, {
-                withCredentials: true,
-            });
+            const response = await api.post("/users/auth/register", payload);
             const data = response.data
             save_csrf_tokens(data.access_csrf, data.refresh_csrf)
-            await getUserProfile();
+            await fetchUserProfile();
             window.location.reload();
-            return response.data.message; // Return the response data
+            return response.data.message; 
         } catch (error) {
             return error;
         }
@@ -62,12 +45,10 @@ export const AuthContextProvider = ({ children }) => {
     }
     const login = async (payload) => {
         try {
-            const response = await api.post("/users/auth/login", payload, {
-                withCredentials: true,
-            });
+            const response = await api.post("/users/auth/login", payload);
             const data = response.data
             save_csrf_tokens(data.access_csrf, data.refresh_csrf)
-            await getUserProfile();
+            await fetchUserProfile();
             window.location.reload();
             return response.data.message;
         }
@@ -78,9 +59,7 @@ export const AuthContextProvider = ({ children }) => {
 
     const logout = async () => {
         try {
-            const response = await api.post("/users/auth/logout",{
-                withCredentials: true,
-            });
+            await api.post("/users/auth/logout");
             localStorage.removeItem("userProfile")
             localStorage.removeItem("csrf_access_token")
             localStorage.removeItem("csrf_refresh_token")
@@ -92,7 +71,7 @@ export const AuthContextProvider = ({ children }) => {
     } 
     return (
         <>
-        <AuthContext.Provider value={{ user, login, checkEmail, register, logout, getUserProfile, resendVerificationCode }}>
+        <AuthContext.Provider value={{ user, login, checkEmail, register, logout, fetchUserProfile, resendVerificationCode }}>
             {children}
         </AuthContext.Provider>
         </>

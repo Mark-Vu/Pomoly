@@ -12,14 +12,11 @@ import HomePage from './ components/authentication/HomePage.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog } from '@fortawesome/free-solid-svg-icons';
 import api from "./ components/authentication/Api.jsx";
-import { Cookies } from 'react-cookie';
 
 
 export default function App() {
-  const cookies = new Cookies();
   let isAuthenticated = localStorage.getItem("userProfile");
-  console.log('csrf refresh: ' + localStorage.getItem('csrf_refresh_token'))
-  console.log('csrf access: ' + localStorage.getItem('csrf_access_token'))
+  
   return (
     <>
         <AuthContextProvider>
