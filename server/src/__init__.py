@@ -5,6 +5,7 @@ from flask_mail import Mail
 from src.config import Config
 from flask_cors import CORS
 from flask_migrate import Migrate
+import os
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -14,10 +15,15 @@ mail = Mail()
 def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(config_class)
-    CORS(app, supports_credentials=True)
+    
+    if os.environ.get("PRODUCTION") == "false":
+        # Allow all origins in development
+        CORS(app, supports_credentials=True)
+    else:
+        # Restrict origins in production
+        CORS(app, origins=["https://studyhub-frontend.vercel.app"], supports_credentials=True)
 
-    jwt = JWTManager(app)
-
+    JWTManager(app)
     db.init_app(app)
     migrate.init_app(app, db)
 
@@ -26,6 +32,9 @@ def create_app(config_class=Config):
     
     from src.api import bp as api_blueprint
     app.register_blueprint(api_blueprint)
+
+    from src.user import bp as user_blueprint
+    app.register_blueprint(user_blueprint)
     
     from src.calendar import bp as calendar_blueprint
     app.register_blueprint(calendar_blueprint)
