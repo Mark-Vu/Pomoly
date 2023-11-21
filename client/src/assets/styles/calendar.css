@@ -384,7 +384,7 @@
 }
   
 .events::-webkit-scrollbar-thumb:hover {
-    background: rgba(184, 155, 253, 0.897); 
+    background: rgba(255, 255, 255, 0.897); 
 }
   
 .events .event {

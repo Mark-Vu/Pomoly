@@ -8,21 +8,33 @@ import backgroundImage7 from '../../assets/images/background7.jpg';
 import backgroundImage8 from '../../assets/images/background8.jpg';
 import '../../assets/styles/background.css';
 
+const backgrounds = [
+  { src: backgroundImage1, name: 'Urban Sunset' },
+  { src: backgroundImage2, name: 'Urban Calm' },
+  { src: backgroundImage3, name: 'Springtime Bloom' },
+  { src: backgroundImage4, name: 'Ancient Pathway' },
+  { src: backgroundImage5, name: 'Sunny Dorm' },
+  { src: backgroundImage6, name: 'Café Twilight' },
+  { src: backgroundImage7, name: 'Springtime Rail' },
+  { src: backgroundImage8, name: 'Evening Serenade' },
+];
+
 function BackgroundOptions({ onChangeBackground }) {
-    return (
-    <div className="background-options">
+  return (
+      <div className="background-options">
       <div className="background-header">
         <h1>Background</h1>
       </div>
       <div className="backgrounds">
-        {[backgroundImage1, backgroundImage2, backgroundImage3, backgroundImage4, backgroundImage5, backgroundImage6, backgroundImage7, backgroundImage8].map((bgImage, index) => (
-          <div key={index} className="background-item" onClick={() => onChangeBackground(bgImage)}>
-            <img src={bgImage} alt={`Background ${index + 1}`} />
+        {backgrounds.map((background, index) => (
+          <div key={index} className="background-item" onClick={() => onChangeBackground(background.src)}>
+            <img src={background.src} alt={background.name} />
+            <div className="background-name">{background.name}</div>
           </div>
         ))}
       </div>
     </div>
-    );
+  );
 }
 
 export default BackgroundOptions;
