@@ -10,10 +10,11 @@ from flask_jwt_extended import (
 from src import db
 from src.auth.email import send_verification_email
 import re
+import asyncio
 
 
 @bp.route('/users/auth/email', methods=["POST"])
-def enter_email():
+async def enter_email():
     data = request.get_json()
 
     if "email" not in data or not is_email_format(data["email"]):
@@ -29,16 +30,16 @@ def enter_email():
             new_user = User(email=email)
             db.session.add(new_user)
             db.session.commit()
-            send_verification_email(email, new_user.verification_code.code)
+            await send_verification_email(email, new_user.verification_code.code)
         else:
             user.verification_code.set_new_code()
-            send_verification_email(email, user.verification_code.code)
+            await send_verification_email(email, user.verification_code.code)
 
         return {"message": "Please verify your email to register"}, 202
 
     # If there is an account with a name
     user.verification_code.set_new_code()
-    send_verification_email(email, user.verification_code.code)
+    await send_verification_email(email, user.verification_code.code)
     return {"message": "Please verify your email to login your account"}, 200
 
 
@@ -110,7 +111,7 @@ def login():
 
 
 @bp.route('/users/auth/verification-code/resend', methods=["POST"])
-def resend_verification_code():
+async def resend_verification_code():
     # Get the user's email from the request data
     data = request.get_json()
     if "email" not in data or not is_email_format(data["email"]):
@@ -120,7 +121,7 @@ def resend_verification_code():
 
     user = User.query.filter_by(email=email).first_or_404()
     user.verification_code.set_new_code()
-    send_verification_email(email, user.verification_code.code)
+    await send_verification_email(email, user.verification_code.code)
 
     return {"message": "Verification code resent successfully"}, 200
 
