@@ -13,7 +13,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog } from '@fortawesome/free-solid-svg-icons';
 import api from "./ components/authentication/Api.jsx";
 
-
 export default function App() {
   let isAuthenticated = localStorage.getItem("userProfile");
   
@@ -143,15 +142,29 @@ function DashboardLayout() {
   const toggleSettings = () => {
     setShowSettings(!showSettings);
   };
+  
+  const [backgroundImage, setBackgroundImage] = useState(() => {
+    return localStorage.getItem('userBackground') || backgroundImage1;
+  });
+
+  const handleChangeBackground = (newBackground) => {
+    setBackgroundImage(newBackground);
+    localStorage.setItem('userBackground', newBackground);
+  };
 
   return (
-    <div className='app'>
+    <div className='app' style={{ backgroundImage: `url(${backgroundImage})` }}>
       {activeComponent === 'timer' && <Timer />}
       {activeComponent === 'calendar' && <Calendar todoList={todoList} handleSetTodo={setTodoList}/>}
       {activeComponent === 'noteslist' && <NotesList noteList={noteList} saveNewNote={saveNewNote} deleteNote={deleteNote}/>}
 
       {showSettings && <div className="settings-overlay" onClick={toggleSettings}></div>}
-      <Settings showSettings={showSettings} onClose={toggleSettings} />
+
+      <Settings 
+        showSettings={showSettings} 
+        onClose={toggleSettings} 
+        onChangeBackground={handleChangeBackground} 
+      />
 
       <div className="footer">
         <div className="bottom-line">

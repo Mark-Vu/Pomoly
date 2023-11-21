@@ -256,6 +256,7 @@ export default function Calendar({todoList, handleSetTodo}) {
         title: "",
         time: "",
       });
+      setIsAddEvent(false); 
     } catch (error) {
       console.log(error)
     }
