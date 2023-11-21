@@ -9,16 +9,22 @@ def send_async_email(app, msg):
         mail.send(msg)
 
 
-def send_email(subject, sender, recipients, text_body, attachments=None, sync=False):
-    try:
-        msg = Message(subject, sender=sender, recipients=recipients)
-    except:
-        print("Email credentials not accepted")
-    msg.body = text_body
-    if attachments:
-        for attachment in attachments:
-            msg.attach(*attachment)
-    if sync:
-        mail.send(msg)
-    else:
+def send_email(subject, sender, recipients, text_body, attachments=None, sync=False, production=False):
+    if production:
+        msg = Message('Pomoly: Verify your account', recipients=recipients)
+        msg.body = text_body
+        msg.html = f'<p>{text_body}</p>'
         Thread(target=send_async_email, args=(current_app._get_current_object(), msg)).start()
+    else:
+        try:
+            msg = Message(subject, sender=sender, recipients=recipients)
+        except:
+            print("Email credentials not accepted")
+        msg.body = text_body
+        if attachments:
+            for attachment in attachments:
+                msg.attach(*attachment)
+        if sync:
+            mail.send(msg)
+        else:
+            Thread(target=send_async_email, args=(current_app._get_current_object(), msg)).start()
