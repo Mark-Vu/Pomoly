@@ -8,3 +8,4 @@ Flask-JWT-Extended == 4.5.3
 Flask-Mail == 0.9.1
 watchdog == 3.0.0
 Flask-Migrate == 4.0.5
+asyncio == 3.4.3

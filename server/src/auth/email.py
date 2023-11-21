@@ -2,10 +2,10 @@ from flask import current_app
 from src.email import send_email
 import os
 from dotenv import load_dotenv
-
+import asyncio
 load_dotenv()
 
-def send_verification_email(user_email, verification_code):
+async def send_verification_email(user_email, verification_code):
     subject = "Verify your email"
     sender = current_app.config["MAIL_DEFAULT_SENDER"]  # Update with your email address
     recipients = [user_email]
