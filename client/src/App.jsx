@@ -12,7 +12,7 @@ import HomePage from './ components/authentication/HomePage.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog } from '@fortawesome/free-solid-svg-icons';
 import api from "./ components/authentication/Api.jsx";
-import backgroundIm1 from "./assets/images/backgroundIm1.jpg"
+import background1 from "./assets/images/background1.jpg"
 
 export default function App() {
   let isAuthenticated = localStorage.getItem("userProfile");
@@ -145,7 +145,7 @@ function DashboardLayout() {
   };
   
   const [backgroundImage, setBackgroundImage] = useState(() => {
-    return localStorage.getItem('userBackground') || backgroundIm1;
+    return localStorage.getItem('userBackground') || background1;
   });
 
   const handleChangeBackground = (newBackground) => {
