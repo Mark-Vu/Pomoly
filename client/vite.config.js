@@ -6,10 +6,9 @@ import react from '@vitejs/plugin-react-swc'
 export default defineConfig(({ command, mode }) => {
   let plugins = [react()];
 
-  // if (mode === 'production') {
-  //   plugins.push(mkcert());
-  // }
-  plugins.push(mkcert());
+  if (mode === 'production') {
+    plugins.push(mkcert());
+  }
   return {
     plugins: plugins
   };
