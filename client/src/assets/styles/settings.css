@@ -24,6 +24,7 @@
     display: flex;
     flex-direction: column;
     right: -100%; 
+    align-items: flex-start;
     transition: right 0.5s ease;
 }
   
@@ -36,7 +37,12 @@
 } 
 
 .close-tab {
+    min-height: 60px;
     height: 60px;
+    box-sizing: border-box;
+    width: 100%;
+    display: flex;
+    align-items: center;
 }
 
 .close-tab svg {
@@ -55,6 +61,7 @@
     flex-direction: row;
     height: 100%;
     width: 100%;
+    box-sizing: border-box;
 }
 
 .left-settings {
