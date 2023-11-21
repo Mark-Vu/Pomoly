@@ -11,5 +11,5 @@ async def send_verification_email(user_email, verification_code):
     recipients = [user_email]
     text_body = f"Your verification code is: {verification_code}"
     production=False if os.environ['PRODUCTION'] == "false" else True
-    send_email(subject=subject, sender=sender, recipients=recipients, text_body=text_body, production=production)
+    await send_email(subject=subject, sender=sender, recipients=recipients, text_body=text_body, production=production)
     
