@@ -21,7 +21,7 @@ def create_app(config_class=Config):
         CORS(app, supports_credentials=True)
     else:
         # Restrict origins in production
-        CORS(app, origins=["https://studyhub-frontend.vercel.app"], supports_credentials=True)
+        CORS(app, origins=["https://pomoly.vercel.app/"], supports_credentials=True)
 
     JWTManager(app)
     db.init_app(app)
