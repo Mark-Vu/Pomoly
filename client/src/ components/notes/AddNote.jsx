@@ -32,7 +32,7 @@ function AddNote( {saveNewNote} ) {
             <textarea
                 rows='1'
                 cols='10'
-                style={{fontWeight: 'bold', fontSize: '1.5em'}}
+                style={{fontWeight: 'bold', fontSize: '1.5rem'}}
                 onChange={handleTitleChange}
                 onKeyDown={handleTitleKeyPress}
                 value={title}
@@ -41,14 +41,14 @@ function AddNote( {saveNewNote} ) {
                 ref={contentRef} // Attach the reference to the content textarea
                 rows='7'
                 cols='10'
-                placeholder="Type to add a note..."
+                placeholder="Jot down your thoughts here..."
+                style={{fontWeight: 'bold', fontSize: '1rem'}}
                 onChange={handleContentChange}
                 value={content}
             ></textarea>
         
             <div className="note-footer">
-                <small>200 remaining</small>
-                <button className="save" onClick={handleSaveClick}>Save</button>
+                <button className="save" onClick={handleSaveClick}>Add</button>
             </div>
         </div>
     )

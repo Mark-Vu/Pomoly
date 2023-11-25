@@ -1,3 +1,8 @@
+.notes-list-container {
+    width: 100%;
+    height: 100%;
+}
+
 .notes-list {
     margin: 1.5rem auto;
     max-width: 1200px;
@@ -6,7 +11,7 @@
     padding: 1rem;
     display: flex;
     border-radius: 10px;
-    background-color: #373c4f;
+    background-color: transparent;
     display: grid;
     grid-gap: 1em;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -32,37 +37,41 @@
 }
 
 .new {
-    background-color: #67d7cc;
-    grid-template-rows: auto 1fr auto;
-}
-
-.note-textarea {
-    display: flex;
-    flex-direction: column;
+    background-color: #b49bf9;
+    width: 300px;
+    height: 300px;
 }
 
 .save {
-    background-color:beige;
+    background-color:rgb(255, 255, 255);
     border: none;
     border-radius: 0.25rem;
     padding: 5px 10px 5px 10px;
+    width: 70px;
+    height: 30px;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: transform 0.1s ease-out;
+}
+
+.save:active {
+    filter: brightness(0.85);
 }
 
 textarea {
     border: none;
     resize: none;
-    background-color: #67d7cc;
+    background-color: #b49bf9;
 }
 
 textarea {
     outline: none;
 }
 
-
 .new .note-footer {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: flex-end;
+    align-items: flex-end;
 }
 
 .old-note-footer {
@@ -79,4 +88,55 @@ textarea {
 .old-note-delete-icon {
     justify-self: end; /* Align the delete icon to the end of the right column */
     cursor: pointer;
+}
+
+.panel {
+    transition: transform 0.5s ease-in-out;
+    height: 100%;
+    width: 400px;
+    background-color: transparent;
+    position: absolute;
+}
+  
+.hide {
+    transform: translateX(-350px); 
+}
+  
+.show {
+    transform: translateX(0%);
+}
+  
+.panel-btn {
+    position: absolute;
+    bottom: 15%;
+    right: -64.5px;
+    transform: rotate(90deg);
+    border: none;
+    width: 180px;
+    height: 50px;
+    font-size: 1.2rem;
+    border-radius: 8px 8px 0 0;
+    font-weight: 600;
+    background-color: #b49bf9;
+    color: white;
+    transition: left 0.3s ease-in;
+}
+
+.panel-content {
+    width: 350px;
+    background-color: rgba(51, 51, 51, 0.4);;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+    padding: 10px;
+}
+
+.panel-content h1 {
+    font-size: 1.8rem;
+}
+
+.new textarea::placeholder {
+    color: rgba(0, 0, 0, 0.527);
 }
