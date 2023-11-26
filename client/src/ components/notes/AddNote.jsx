@@ -1,9 +1,9 @@
 import React, { useRef } from 'react';
 
-function AddNote( {saveNewNote} ) {
+function AddNote( { saveNewNote, bgColor, titleColor, contentColor } ) {
     const [title, setTitle] = React.useState('Untitled Note')
     const [content, setContent] = React.useState('')
-    const contentRef = useRef(); // Create a reference to the content textarea
+    const contentRef = useRef(); 
 
     function handleTitleChange(event) {
         setTitle(event.target.value);
@@ -28,23 +28,24 @@ function AddNote( {saveNewNote} ) {
     }
     
     return (
-        <div className="note new">
+        <div className="note new" style={{ backgroundColor: bgColor }}>
             <textarea
                 rows='1'
                 cols='10'
-                style={{fontWeight: 'bold', fontSize: '1.5rem'}}
+                style={{fontWeight: 'bold', fontSize: '1.5rem', color: titleColor}}
                 onChange={handleTitleChange}
                 onKeyDown={handleTitleKeyPress}
                 value={title}
             ></textarea>
             <textarea
-                ref={contentRef} // Attach the reference to the content textarea
+                ref={contentRef}
                 rows='7'
                 cols='10'
                 placeholder="Jot down your thoughts here..."
-                style={{fontWeight: 'bold', fontSize: '1rem'}}
+                style={{fontSize: '1rem', color: contentColor}}
                 onChange={handleContentChange}
                 value={content}
+                className='new-content'
             ></textarea>
         
             <div className="note-footer">

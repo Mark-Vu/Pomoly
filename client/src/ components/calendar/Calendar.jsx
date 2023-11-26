@@ -489,7 +489,20 @@ export default function Calendar({todoList, handleSetTodo}) {
                     value={todoForm.time}
                   />
                   <div className="clock-icon"></div>
-                </div> 
+                </div>
+                <div className="add-event-input">
+                  <label htmlFor="timeInput" className={!todoForm.time ? "time-placeholder" : ""}>
+                    {!todoForm.time && "To"}
+                  </label>
+                  <input 
+                    type="time" 
+                    className={todoForm.time ? "event-time-filled" : "event-time-to"}
+                    onChange={todoFormOnChange} 
+                    name="time"
+                    value={todoForm.time}
+                  />
+                  <div className="clock-icon"></div>
+                </div>  
                 <div className="add-event-footer">
                 <button className="add-event-btn" onClick={addEvent}>Add</button>
                 </div> 
