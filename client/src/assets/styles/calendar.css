@@ -445,6 +445,14 @@
     font-family: 'Overpass';
 }
 
+.events .event .event-time span {
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: #ffffff;
+    pointer-events: none;
+    font-family: 'Overpass';
+}
+
 .events .event::after {
     content: "\2713";
     position: absolute;
