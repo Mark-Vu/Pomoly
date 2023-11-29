@@ -40,8 +40,6 @@ def add_event():
         event_time_from = data.get("timeFrom")
         event_time_to = data.get("timeTo")
         try:
-            event_time_from = datetime.strptime(event_time_from_str, '%H:%M').time() if event_time_from_str else None
-            event_time_to = datetime.strptime(event_time_to_str, '%H:%M').time() if event_time_to_str else None
             new_event = Event(calendar_id=calendar_id, 
                               title=event_title, 
                               date=event_date, 

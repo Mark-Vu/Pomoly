@@ -75,8 +75,8 @@ class Event(db.Model):
     calendar_id = db.Column(db.Integer(), db.ForeignKey('calendars.id', ondelete='CASCADE'), nullable=False)
     title = db.Column(db.String(), nullable=False)
     date = db.Column(db.Date(), nullable=False)
-    time_from = db.Column(db.Time, nullable=True)  
-    time_to = db.Column(db.Time, nullable=True)
+    time_from = db.Column(db.String(), nullable=True)  
+    time_to = db.Column(db.String(), nullable=True)
     
 
     def __init__(self, calendar_id, title, date, time_from, time_to):
