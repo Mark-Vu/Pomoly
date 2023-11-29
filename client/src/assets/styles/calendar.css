@@ -518,7 +518,7 @@
 }
 
 .add-event-wrapper.active {
-    max-height: 300px;
+    max-height: 320px;
 }
 
 .add-event-header {
@@ -630,6 +630,7 @@
     border-radius: 5px;
     cursor: pointer;
     transition: transform 0.3s ease-out; 
+    margin-bottom: 5px;
 }
 
 .add-event-footer .add-event-btn:hover {
