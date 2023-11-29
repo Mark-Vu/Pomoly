@@ -20,7 +20,8 @@ def get_user_calendar():
             calendar_events[date_str] = []
         calendar_events[date_str].append({
             "title": event.title,
-            "time": event.time,
+            "timeFrom": event.time_from,
+            "timeTo": event.time_to,
             "id": event.id
         })
     return calendar_events, 200
@@ -36,12 +37,16 @@ def add_event():
         data = request.get_json()
         event_title = data.get("title")
         event_date = data.get("date")
-        event_time = data.get("time")
+        event_time_from = data.get("timeFrom")
+        event_time_to = data.get("timeTo")
         try:
+            event_time_from = datetime.strptime(event_time_from_str, '%H:%M').time() if event_time_from_str else None
+            event_time_to = datetime.strptime(event_time_to_str, '%H:%M').time() if event_time_to_str else None
             new_event = Event(calendar_id=calendar_id, 
                               title=event_title, 
                               date=event_date, 
-                              time=event_time)
+                              time_from=event_time_from,
+                              time_to=event_time_to)
             user.calendar.events.append(new_event)
             db.session.commit()
             resp = {
@@ -79,5 +84,3 @@ def delete_event(event_id):
     except Exception as e:
         db.session.rollback()
         return bad_request("Error deleting event"), 500
-
-# Rest of your Flask routes and code

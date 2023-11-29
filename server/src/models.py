@@ -57,6 +57,7 @@ class VerificationCode(db.Model):
         return code
     # The function for sending the email is under src/auth/email.py
 
+
 class Calendar(db.Model):
     __tablename__ = 'calendars'
 
@@ -74,13 +75,16 @@ class Event(db.Model):
     calendar_id = db.Column(db.Integer(), db.ForeignKey('calendars.id', ondelete='CASCADE'), nullable=False)
     title = db.Column(db.String(), nullable=False)
     date = db.Column(db.Date(), nullable=False)
-    time = db.Column(db.String(), nullable=True)
+    time_from = db.Column(db.Time, nullable=True)  
+    time_to = db.Column(db.Time, nullable=True)
     
-    def __init__(self, calendar_id, title, date, time):
+
+    def __init__(self, calendar_id, title, date, time_from, time_to):
         self.calendar_id = calendar_id
         self.title = title
         self.date = date
-        self.time = time
+        self.time_from = time_from
+        self.time_to = time_to
 
 
 class Note(db.Model):
