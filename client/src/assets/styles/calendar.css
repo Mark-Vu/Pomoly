@@ -445,6 +445,14 @@
     font-family: 'Overpass';
 }
 
+.events .event .event-time span {
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: #ffffff;
+    pointer-events: none;
+    font-family: 'Overpass';
+}
+
 .events .event::after {
     content: "\2713";
     position: absolute;
@@ -510,16 +518,21 @@
     background-color: rgb(247, 230, 242);
     transform: translateX(-50%);
     transition: max-height 0.5s ease;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 10px 0 10px;
 }
 
 .add-event-wrapper.active {
-    max-height: 300px;
+    max-height: 320px;
 }
 
 .add-event-header {
-    margin-top: 10px;
+    margin-top: 12px;
     width: 100%;
-    height: 50px;
+    height: 45px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -542,19 +555,19 @@
 }
 
 .add-event-body .add-event-input {
-    width: 90%;
-    margin-right: 20px;
-    height: 70px;
+    width: 93%;
+    height: 55px;
     display: flex;
     background-color: white;
-    border-radius: 20px;
+    border-radius: 15px;
     display: flex;
     flex-direction: row;
     position: relative;
 }
 
-.add-event-input:nth-child(1) {
-    margin-bottom: 10px;
+.add-event-input:nth-child(1),
+.add-event-input:nth-child(2) {
+    margin-bottom: 8px;
 }
 
 .time-placeholder {
@@ -592,7 +605,8 @@
     display: inline-block;
 }
 
-.add-event-body .add-event-input .event-time-from {
+.add-event-body .add-event-input .event-time-from,
+.add-event-body .add-event-input .event-time-to {
     color: #ad9dbbb2; 
     font-family: 'Overpass';
 }
@@ -624,6 +638,7 @@
     border-radius: 5px;
     cursor: pointer;
     transition: transform 0.3s ease-out; 
+    margin-bottom: 5px;
 }
 
 .add-event-footer .add-event-btn:hover {

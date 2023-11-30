@@ -215,7 +215,8 @@ export default function Calendar({todoList, handleSetTodo}) {
   const [isAddEvent, setIsAddEvent] = React.useState(false)
   const [todoForm, setTodoForm] = React.useState({
     title: "",
-    time: "",
+    timeFrom: "",
+    timeTo: "",
   })
 
   function todoFormOnChange(event) {
@@ -238,7 +239,8 @@ export default function Calendar({todoList, handleSetTodo}) {
     const payload = {
       date: formattedDate,
       title: todoForm.title,
-      time: todoForm.time,
+      timeFrom: todoForm.timeFrom || "00:00",
+      timeTo: todoForm.timeTo || "23: 59",
     };
   
     try {
@@ -254,7 +256,8 @@ export default function Calendar({todoList, handleSetTodo}) {
   
       setTodoForm({
         title: "",
-        time: "",
+        timeFrom: "",
+        timeTo: "",
       });
       setIsAddEvent(false); 
     } catch (error) {
@@ -384,10 +387,14 @@ export default function Calendar({todoList, handleSetTodo}) {
   /*----------------------------SORT EVENT BY TIME-------------------------------*/ 
   function sortEventsByTime(events) {
     return events.sort((a, b) => {
-      // Assuming the time is in 'HH:mm' format
-      return a.time.localeCompare(b.time);
+      // Check if 'timeFrom' is null or not a string, and handle accordingly
+      const timeA = a.timeFrom && typeof a.timeFrom === 'string' ? a.timeFrom : '';
+      const timeB = b.timeFrom && typeof b.timeFrom === 'string' ? b.timeFrom : '';
+  
+      return timeA.localeCompare(timeB);
     });
   }
+  
 
   return (
     <section className="calendar--wrapper">
@@ -452,7 +459,7 @@ export default function Calendar({todoList, handleSetTodo}) {
                     <h3 className="event-title">{event.title}</h3>
                   </div>
                   <div className="event-time">
-                    <span>{event.time}</span>
+                   <span>{event.timeFrom} - {event.timeTo}</span> 
                   </div>
                 </div>
               ))
@@ -478,18 +485,31 @@ export default function Calendar({todoList, handleSetTodo}) {
                   />
                 </div>
                 <div className="add-event-input">
-                  <label htmlFor="timeInput" className={!todoForm.time ? "time-placeholder" : ""}>
-                    {!todoForm.time && "From"}
+                  <label htmlFor="timeInput" className={!todoForm.timeFrom ? "time-placeholder" : ""}>
+                    {!todoForm.timeFrom && "From"}
                   </label>
                   <input 
                     type="time" 
-                    className={todoForm.time ? "event-time-filled" : "event-time-from"}
+                    className={todoForm.timeFrom ? "event-time-filled" : "event-time-from"}
                     onChange={todoFormOnChange} 
-                    name="time"
-                    value={todoForm.time}
+                    name="timeFrom"
+                    value={todoForm.timeFrom}
                   />
                   <div className="clock-icon"></div>
-                </div> 
+                </div>
+                <div className="add-event-input">
+                  <label htmlFor="timeInput" className={!todoForm.timeTo ? "time-placeholder" : ""}>
+                    {!todoForm.timeTo && "To"}
+                  </label>
+                  <input 
+                    type="time" 
+                    className={todoForm.timeTo ? "event-time-filled" : "event-time-to"}
+                    onChange={todoFormOnChange} 
+                    name="timeTo"
+                    value={todoForm.timeTo}
+                  />
+                  <div className="clock-icon"></div>
+                </div>  
                 <div className="add-event-footer">
                 <button className="add-event-btn" onClick={addEvent}>Add</button>
                 </div> 

@@ -136,9 +136,9 @@ function HomePage() {
                     <form className="input-container-2" onSubmit={loginUser}>
                         {signInStatus === "registerRequired" ? (
                             <div className="register">
-                                <h1>Set Up Your Account</h1>
+                                <h1>Welcome Aboard!</h1>
                                 <div className="form-instructions">
-                                    Welcome aboard! Let's get your account ready.
+                                    Please enter your name and check your email for verification code.
                                 </div>
                                 <input
                                     className="verified-input"
