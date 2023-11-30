@@ -7,7 +7,7 @@ import backgroundImage5 from '../../assets/images/background5.jpg';
 import backgroundImage6 from '../../assets/images/background6.jpg';
 import backgroundImage7 from '../../assets/images/background7.jpg';
 import backgroundImage8 from '../../assets/images/background8.jpg';
-import studyHubLogo from '../../assets/images/studyHubLogo.png';
+import pomolyLogo from '../../assets/images/white_logo.svg';
 import '../../assets/styles/homePage.css';
 import AuthContext from "./AuthContext.jsx";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -102,12 +102,12 @@ function HomePage() {
         <div className="container" style={containerStyle}>
             <div className="dark-overlay"></div>
             <div className="nav-bar">
-                <img src={studyHubLogo} alt="StudyHub Logo" />
+                <img src={pomolyLogo} alt="Pomoly Logo" />
             </div>
             <div className="home-content">
                 {signInStatus === "checkingEmail" ? (
                     <div className="authentication">
-                        <h1>Welcome to StudyHub</h1>
+                        <h1>Welcome to Pomoly</h1>
                         <div className="slogan">Experience the Symphony of Productivity and Focus</div>
                         <h2>Let's start with your email</h2>
                         <form className="input-container" onSubmit={loginUser}>
