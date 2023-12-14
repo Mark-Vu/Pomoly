@@ -6,5 +6,9 @@
     "start": "concurrently \"npm run server\" \"npm run client\"",
     "server": "cd server/src && flask run --debug",
     "client": "cd client && npm run dev"
+  },
+  "dependencies": {
+    "blurhash": "^2.0.5",
+    "react-blurhash": "^0.3.0"
   }
 }
