@@ -15,7 +15,7 @@ function Note( {props, deleteNote, bgColor, titleColor, contentColor} ) {
             <div className="old-note-footer">
                 <div className="note-details">
                     <small>Created: {props.date}</small>
-                    <small className='note-modified'>Modified: {props.last_modified_date} - {props.last_modified_time}</small>
+                    {/* <small className='note-modified'>Modified: {props.last_modified_date} - {props.last_modified_time}</small> */}
                 </div>
             </div>
         </div>

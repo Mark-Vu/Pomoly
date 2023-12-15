@@ -36,6 +36,7 @@ function AddNote( { saveNewNote, bgColor, titleColor, contentColor } ) {
                 onChange={handleTitleChange}
                 onKeyDown={handleTitleKeyPress}
                 value={title}
+                className='new-title'
             ></textarea>
             <textarea
                 ref={contentRef}

@@ -86,18 +86,20 @@ function NotesList({ noteList, saveNewNote, deleteNote }) {
           )}
         </div>
       </div>
-
-      <div className='notes-list'>
-        {noteList && noteList.map((note) => (
-          <Note
-            key={note.id || nanoid()}
-            props={note}
-            deleteNote={deleteNote}
-            bgColor={bgColor}
-            titleColor={titleColor}
-            contentColor={contentColor}
-          />
-        ))}
+      
+      <div className="notes-container">
+        <div className='notes-list'>
+          {noteList && noteList.map((note) => (
+            <Note
+              key={note.id || nanoid()}
+              props={note}
+              deleteNote={deleteNote}
+              bgColor={bgColor}
+              titleColor={titleColor}
+              contentColor={contentColor}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );
