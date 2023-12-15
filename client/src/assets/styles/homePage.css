@@ -263,7 +263,7 @@ button:not(:disabled) {
     }
 }
 @media screen and (max-width: 1270px) {
-    h1 {
+    .container h1 {
         font-size: 35px !important;
     } 
 
@@ -276,7 +276,7 @@ button:not(:disabled) {
         margin-top: 0.5rem;
     }
 
-    input {
+    .container input {
         font-size: 18px;
         height: 50px;
     }
@@ -302,7 +302,7 @@ button:not(:disabled) {
 }
 
 @media screen and (max-width: 920px) {
-    h1 {
+    .container h1 {
         font-size: 35px;
     } 
 
@@ -314,7 +314,7 @@ button:not(:disabled) {
         font-size: 16px;
     }
 
-    input {
+    .container input {
         font-size: 16px;
     }
 
@@ -333,7 +333,7 @@ button:not(:disabled) {
 }
 
 @media screen and (max-width: 735px) {
-    h1 {
+    .container h1 {
         font-size: 30px !important;
     } 
 
@@ -345,7 +345,7 @@ button:not(:disabled) {
         font-size: 15px;
     }
 
-    input {
+    .container input {
         font-size: 15px;
         height: 45px;
     }
@@ -371,7 +371,7 @@ button:not(:disabled) {
         width: 90%;
     }
 
-    h1 {
+    .container h1 {
         font-size: 25px !important;
     } 
 
@@ -383,7 +383,7 @@ button:not(:disabled) {
         font-size: 14px;
     }
 
-    input {
+    .container input {
         font-size: 14px;
         height: 40px;
     }

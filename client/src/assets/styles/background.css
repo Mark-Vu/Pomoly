@@ -38,6 +38,7 @@
 .background-header h1 {
     font-size: 45px;
 }
+
 .hash-container {
     border-radius: 15px;
     overflow: hidden;
@@ -87,4 +88,10 @@
     font-size: 1.1rem;
     margin-top: 12px;
     letter-spacing: 0.06em;
+}
+
+@media screen and (max-width: 600px) {
+    .background-header h1 {
+        font-size: 35px;
+    }
 }
