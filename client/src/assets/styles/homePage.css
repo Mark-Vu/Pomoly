@@ -53,8 +53,8 @@ body {
     justify-content: center;
     height: 50%;
     min-height: 500px;
-    max-height: 700px;
-    max-width: 1400px;
+    max-height: 600px;
+    max-width: 1000px;
     width: 50%;
     background: rgba(0, 0, 0, 0.4); 
     box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
@@ -257,6 +257,11 @@ button:not(:disabled) {
     }
 }
 
+@media screen and (min-width: 1500px) {
+    .nav-bar img {
+        width: 200px;
+    }
+}
 @media screen and (max-width: 1270px) {
     h1 {
         font-size: 35px !important;
@@ -361,7 +366,7 @@ button:not(:disabled) {
     }
 }
 
-@media screen and (max-width: 450px) {
+@media screen and (max-width: 600px) {
     .home-content {
         width: 90%;
     }
@@ -396,5 +401,10 @@ button:not(:disabled) {
         font-size: 14px;
         min-width: 80px !important;
         height: 40px;
+    }
+    
+    .nav-bar img {
+        margin-left: 20px;
+        margin-top: 20px;
     }
 }
