@@ -28,6 +28,10 @@
     border: solid 3px white;
     overflow: hidden;
     margin: 5rem auto;
+    height: 50%;
+    min-width: 55rem;
+    min-height: 300px;
+    max-height: 600px;
 }
 
 .timer--container {
@@ -202,7 +206,7 @@ input[type=number] {
     transform: translateY(1px);
 }
 
-@media screen and (max-width:1024px) {
+@media screen and (max-width:1100px) {
     .wrapper {
         width: 85%;
     }
@@ -211,6 +215,7 @@ input[type=number] {
         font-size: 0.9em;
     }
 }
+
 @media screen and (max-width:667px) {
     .timer--display__time {
         font-size: 8.2em;
@@ -251,13 +256,3 @@ input[type=number] {
         font-size: 1em;
     }
 }
-
-@media screen and (max-height:978px) {
-    .wrapper {
-        height: 98%;
-    }
-    .timer--display__time {
-        margin: 1.5rem 0;
-    }
-}
-

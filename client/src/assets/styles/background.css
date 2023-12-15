@@ -39,11 +39,23 @@
     font-size: 45px;
 }
 
-.background-item img {
+.hash-container {
+    border-radius: 15px;
+    overflow: hidden;
+    height: 112.5px;
+}
+
+.background-image {
     width: 200px;
     height: 112.5px;
     display: block;
     border-radius: 15px;
+    opacity: 0;
+    transition: opacity 2s ease;
+}
+
+.background-image.loaded {
+    opacity: 1;
 }
 
 .background-item img {
@@ -76,4 +88,10 @@
     font-size: 1.1rem;
     margin-top: 12px;
     letter-spacing: 0.06em;
+}
+
+@media screen and (max-width: 600px) {
+    .background-header h1 {
+        font-size: 35px;
+    }
 }

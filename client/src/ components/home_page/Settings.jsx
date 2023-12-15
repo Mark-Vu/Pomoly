@@ -60,7 +60,6 @@ function Logout() {
 
 function Settings({ onClose, showSettings, onChangeBackground }) {
   const [activeTab, setActiveTab] = useState('logout');
-  const testFunction = () => console.log('Test function called');
   return (
     <>
       {showSettings && (
