@@ -650,9 +650,6 @@
     transform: scale(1.1);
 }
 
-.no-overflow {
-    overflow: hidden;
-}
 
 @media screen and (max-height: 1200px) {
     .year {
@@ -858,14 +855,15 @@
         width: 100%;
         padding-top: 70px;
         height: 75%;
-        max-height: 750px;
+        max-height: 650px;
     }
 
     .right {
         width: 100%;
         height: 50%;
         border-radius: 0 0 5px 5px;
-        max-height: 600px;
+        max-height: 530px;
+        min-height: 500px;
     }
 
     .calendar::before,
@@ -912,7 +910,6 @@
     }
 
     .no-events {
-        z-index: 100;
         padding: 0;
     }
 }
@@ -926,42 +923,231 @@
         min-height: 600px;
         max-height: 700px;
     }
+
+    .events .no-events {
+        font-size: 1.4rem;
+    }
 }
 
-@media screen and (max-width: 500px) {
-      .calendar .month {
-          height: 75px;
-      }
-    .calendar .weekdays {
-          height: 50px;
-      }
-    .calendar .days .day {
-          height: 40px;
-          font-size: 0.8rem;
-      }
-    .calendar .days .day.active,
-    .calendar .days .day.today {
-          font-size: 1rem;
-      }
-    .right .today-date {
-          padding: 20px;
-      }
-  }
+@media screen and (max-width: 1050px) and (max-height: 1200px) {
+    .calendar--container {
+        min-width: 400px;
+        max-width: 500px;
+    }
 
-  .credits {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      text-align: center;
-      padding: 10px;
-      font-size: 12px;
-      background-color: #b38add;
-  }
-  .credits a {
-      text-decoration: none;
-      font-weight: 600;
-  }
-  .credits a:hover {
-      text-decoration: underline;
-  }
+    .left {
+        padding-top: 50px;
+        max-height: 600px;
+    }
+
+    .right {
+        min-height: 430px;
+        max-height: 530px;
+    }
+
+    .calendar .days .day {
+        height: 60px;
+    }
+
+    .right .today-date .event-day {
+        font-size: 1.5rem;
+    }
+
+    .right .today-date .event-date {
+        font-size: 0.95rem;
+    }
+
+    .events .no-events {
+        font-size: 1.2rem;
+    }
+
+    .events .no-events {
+        margin-top: 70px;
+    }
+
+    
+    .calendar .days .today::after {
+        top: 45px;
+        height: 15px;
+        width: 15px;
+        border: 4px solid #ffffff;
+    }
+
+    .calendar .days .today::before {
+        width: 42px;
+        height: 42px;
+    }
+
+    .calendar .days .day {
+        font-size: 1.1rem;
+    }
+
+    .calendar .days .day::before {
+        width: 42px;
+        height: 42px;
+    }
+}
+
+@media screen and (max-width: 1050px) and (max-height: 1070px) {
+    .calendar--container {
+        max-width: 400px;
+    }
+    
+    .left {
+        padding-top: 70px;
+        max-height: 550px;
+    }
+
+    .right {
+        min-height: 400px;
+        max-height: 430px;
+    }
+
+    .calendar .days .day {
+        height: 50px;
+    }
+
+    .right .today-date .event-day {
+        font-size: 1.5rem;
+    }
+
+    .right .today-date .event-date {
+        font-size: 0.95rem;
+    }
+
+    .events .no-events {
+        font-size: 1.2rem;
+    }
+
+    .events .no-events {
+        margin-top: 70px;
+    }
+ 
+    .calendar .days .today::after {
+        top: 37px;
+        height: 12px;
+        width: 12px;
+        border: 3px solid #ffffff;
+    }
+
+    .calendar .days .today::before {
+        width: 37px;
+        height: 37px;
+    }
+
+    .calendar .days .day::before {
+        width: 37px;
+        height: 37px;
+    }
+
+    .calendar .days .day {
+        font-size: 1.1rem;
+    }
+
+    .calendar .goto-today button {
+        padding: 8px 15px;
+        font-size: 1.1rem;
+    }
+
+    .calendar .goto-today .goto input {
+        font-size: 1.1rem;
+    }
+
+    .calendar .weekdays {
+        font-size: 1.1rem;
+    }
+
+    .year {
+        font-size: 1.7rem;
+    }
+
+    .month svg {
+        font-size: 1.5rem;
+        margin-top: 6px;
+    }
+}
+
+@media screen and (max-width: 1050px) and (max-height: 1020px) {
+    .calendar--container {
+        max-width: 360px;
+        min-width: 360px;
+    }
+    
+    .left {
+        padding-top: 90px;
+        max-height: 500px;
+    }
+
+    .right {
+        min-height: 380px;
+        max-height: 380px;
+    }
+
+    .calendar .days .day {
+        height: 40px;
+    }
+
+    .right .today-date .event-day {
+        font-size: 1.3rem;
+    }
+
+    .right .today-date .event-date {
+        font-size: 0.8rem;
+    }
+
+    .events .no-events {
+        font-size: 1.1rem;
+    }
+
+    .events .no-events {
+        margin-top: 50px;
+    }
+ 
+    .calendar .days .day {
+        font-size: 0.9rem !important;
+    }
+
+    .calendar .days .today::after {
+        top: 30px;
+        height: 10px;
+        width: 10px;
+        border: 3px solid #ffffff;
+    }
+
+    .calendar .days .today::before {
+        width: 30px;
+        height: 30px;
+    }
+
+    .calendar .days .day::before {
+        width: 30px;
+        height: 30px;
+    }
+
+    .calendar .days .day {
+        font-size: 1.1rem;
+    }
+
+    .calendar .goto-today button {
+        padding: 8px 15px;
+        font-size: 0.9rem;
+    }
+
+    .calendar .goto-today .goto input {
+        font-size: 0.9rem;
+        height: 34.5px;
+    }
+
+    .calendar .weekdays {
+        font-size: 1.1rem;
+    }
+
+    .year {
+        font-size: 1.7rem;
+    }
+
+    .month svg {
+        font-size: 1.5rem;
+        margin-top: 6px;
+    }
+}
