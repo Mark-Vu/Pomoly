@@ -30,8 +30,22 @@
     bottom: 1rem;
     right: 1rem;
 }
+
 .bottom-line {
     display: flex;
     flex-direction: row;
     gap: 0.8rem;
+}
+
+@media screen and (max-height: 950px) {
+    .settings-button {
+        width: 2.25rem;
+        font-size: 1.25rem;
+        height: 2.25rem;
+    }
+
+    .footer {
+        bottom: 0.7rem;
+        right: 0.7rem;
+    }
 }

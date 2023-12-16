@@ -32,3 +32,10 @@
     border-radius: 50%;
 }
 
+@media screen and (max-height: 950px) {
+    .bottom-bar {
+        width: 7rem;
+        font-size: 1.2rem;
+        height: 2.5rem;
+    }
+}
