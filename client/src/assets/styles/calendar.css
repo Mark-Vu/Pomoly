@@ -6,8 +6,8 @@
 }
 
 .calendar--wrapper {
-    height: 100%;
-    width: 100%;
+    height: 100vh;
+    width: 100vw;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -17,8 +17,9 @@
     position: relative;
     width: 70%;
     height: 80%;
-    max-width: 1000px;
-    max-height: 800px;
+    max-width: 1200px;
+    max-height: 780px;
+    min-width: 1000px;
     display: flex;
     border-radius: 10px;
     box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
@@ -29,7 +30,6 @@
     background: linear-gradient(to top left, #f4c7ca, #e3a7b3, #c385aa, #8969a4, #6e5c98);
     position: relative;
     width: 40%;
-    min-height: 100%;
     padding: 20px 0;
 }
 
@@ -315,6 +315,7 @@
     cursor: pointer;
     color: white;
     justify-content: center;
+    font-family: 'Oxygen';
     transition: transform 0.3s ease-out; 
 }
 
@@ -338,20 +339,24 @@
 }
 
 .right .today-date .event-day {
-    font-size: 2rem;
+    font-size: 1.7rem;
     font-weight: 500;
     color: white;
 }
 
 .right .today-date .event-date {
     height: 100%;
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     font-weight: 400;
     color: #ffffff;
     display: flex;
     align-items: center;
     font-family: 'Overpass';
     margin-top: 10px;
+}
+
+.Todos {
+    height: 70%;
 }
 
 .events {
@@ -500,11 +505,10 @@
     height: 100px;
     padding-left: 70px;
     margin-top: 110px;
-    overflow: hidden;
     font-size: 1.75rem;
     font-weight: 500;
     color: #ffffff;
-    line-height: 2.2rem;
+    line-height: 2rem;
 }
 
 .add-event-wrapper {
@@ -625,27 +629,30 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 15px;
+    margin: 15px 0 15px 0;
 }
 
 .add-event-footer .add-event-btn {
     height: 40px;
+    width: 90px;
     font-size: 1.2rem;
     font-weight: 600;
     outline: none;
     border: none;
     background-color: #b49bf9;
-    border-radius: 5px;
+    border-radius: 7px;
     cursor: pointer;
     transition: transform 0.3s ease-out; 
     margin-bottom: 5px;
+    color: white;
 }
 
 .add-event-footer .add-event-btn:hover {
     transform: scale(1.1);
 }
 
-@media screen and (max-height: 950px) {
+
+@media screen and (max-height: 1200px) {
     .year {
         font-size: 2rem;
     }
@@ -662,14 +669,6 @@
         height: 75px;
     }
 
-    .right .today-date .event-day {
-        font-size: 1.8rem;
-    }
-
-    .right .today-date .event-date {
-        font-size: 1.1rem;
-    }
-
     .events .no-events {
         font-size: 1.5rem;
     }
@@ -683,84 +682,811 @@
         height: 17px;
         width: 17px;
     }
+
 }
 
-@media screen and (max-width: 1000px) {
+@media screen  and (max-height: 780px) {
+    .calendar--container {
+        width: 66%;
+    }
+
+    .year {
+        font-size: 1.8rem;
+    }
+
+    .month svg {
+        font-size: 1.6rem;
+    }
+
+    .calendar .weekdays {
+        height: 70px;
+    }
+
+    .calendar .days .day {
+        height: 68px;
+    }
+
+    .right .today-date .event-day {
+        font-size: 1.7rem;
+    }
+
+    .right .today-date .event-date {
+        font-size: 1rem;
+    }
+
+    .events .no-events {
+        font-size: 1.4rem;
+    }
+
+    .calendar .days .today::after {
+        top: 45px;
+        height: 15px;
+        width: 15px;
+        border: 4px solid #ffffff;
+    }
+
+    .calendar .days .today::before {
+        width: 42px;
+        height: 42px;
+    }
+
+    .calendar .days .day {
+        font-size: 1.1rem;
+    }
+
+    .calendar .days .day::before {
+        width: 42px;
+        height: 42px;
+    }
+
+    .calendar .goto-today .goto input {
+        font-size: 1.1rem;
+    }
+
+    .calendar .goto-today button {
+        padding: 8px 15px;
+        font-size: 1.1rem;
+    }
+
+    .add-event-wrapper {
+        bottom: 88px;
+    }
+
+    .add-event-wrapper.active {
+        max-height: 260px;
+    }
+
+    .add-event-header {
+        height: 40px;
+    }
+
+    .add-event-header .title{
+        font-size: 1.5rem;
+    }
+    
+    .add-event-body {
+        margin-top: 10px;
+    }
+
+    .add-event-body .add-event-input {
+        height: 40px;
+        border-radius: 10px;
+    }
+
+    .add-event-footer .add-event-btn {
+        height: 35px;
+        width: 80px;
+    }
+
+    .events .no-events {
+        margin-top: 90px;
+    }
+}
+
+@media screen  and (max-height: 710px) {
+    .calendar--container {
+        width: 65%;
+    }
+
+    .calendar .days .day {
+        height: 65px;
+    }
+
+    .right .today-date {
+        margin-top: 30px;
+    }
+}
+
+@media screen  and (max-height: 680px) {
+    .calendar--container {
+        width: 61%;
+    }
+
+    .calendar .days .day {
+        height: 60px;
+    }
+
+    .right .today-date .event-day {
+        font-size: 1.5rem;
+    }
+
+    .right .today-date .event-date {
+        font-size: 0.95rem;
+    }
+
+    .events .no-events {
+        font-size: 1.2rem;
+    }
+
+    .events .no-events {
+        margin-top: 70px;
+    }
+}
+
+@media screen and (max-width: 1250px) {
+    .right .today-date {
+        padding-left: 50px;
+    }
+
+    .events .no-events {
+        padding-left: 50px;
+    }
+}
+
+@media screen and (max-width: 1050px) {
     body {
         align-items: flex-start;
         justify-content: flex-start;
     }
 
-    .calendar--container {
-        min-height: 100vh;
-        flex-direction: column;
-        border-radius: 0;
+    .calendar--wrapper {
+        align-items: flex-start;
+        width: 60%;
     }
 
-    .calendar--container .left {
-          width: 100%;
-          height: 100%;
-          padding: 20px 0;
-      }
-    .calendar--container .right {
-          width: 100%;
-          height: 100%;
-          padding: 20px 0;
-      }
+    .calendar--container {
+        height: 75%;
+        flex-direction: column;
+        border-radius: 0;
+        min-width: 600px;
+        max-height: none;
+        overflow: none;
+        box-shadow: none;
+    }
+
+    .left {
+        width: 100%;
+        padding-top: 70px;
+        height: 75%;
+        max-height: 650px;
+    }
+
+    .right {
+        width: 100%;
+        height: 50%;
+        border-radius: 0 0 5px 5px;
+        max-height: 530px;
+        min-height: 500px;
+    }
+
     .calendar::before,
     .calendar::after {
-          top: 100%;
-          left: 50%;
-          width: 97%;
-          height: 12px;
-          border-radius: 0 0 5px 5px;
-          transform: translateX(-50%);
-      }
-    .calendar::before {
-          width: 94%;
-          top: calc(100% + 12px);
-      }
-    .events {
-          padding-bottom: 340px;
-      }
-    .add-event-wrapper {
-          bottom: 100px;
-      }
-  }
-@media screen and (max-width: 500px) {
-      .calendar .month {
-          height: 75px;
-      }
-    .calendar .weekdays {
-          height: 50px;
-      }
-    .calendar .days .day {
-          height: 40px;
-          font-size: 0.8rem;
-      }
-    .calendar .days .day.active,
-    .calendar .days .day.today {
-          font-size: 1rem;
-      }
-    .right .today-date {
-          padding: 20px;
-      }
-  }
+        top: 100%;
+        left: 50%;
+        width: 97%;
+        height: 12px;
+        border-radius: 0 0 5px 5px;
+        transform: translateX(-50%);
+    }
 
-  .credits {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      text-align: center;
-      padding: 10px;
-      font-size: 12px;
-      background-color: #b38add;
-  }
-  .credits a {
-      text-decoration: none;
-      font-weight: 600;
-  }
-  .credits a:hover {
-      text-decoration: underline;
-  }
+    .calendar::before {
+        width: 94%;
+        top: calc(100% + 12px);
+    }
+
+    .add-event-wrapper {
+        bottom: 100px;
+    }
+
+        
+    .year {
+        font-size: 1.9rem;
+    }
+
+    .month svg {
+        font-size: 1.6rem;
+    }
+
+    .calendar .days .day {
+        height: 68px;
+    }
+
+    .calendar .days .today::after {
+        top: 50px;
+        height: 15px;
+        width: 15px;
+        border: 3px solid #ffffff;
+    }
+
+    .right .today-date {
+        margin-top: 10px;
+    }
+
+    .no-events {
+        padding: 0;
+    }
+
+    .add-event {
+        bottom: 25px;
+        right: 25px;
+        height: 35px;
+        width: 35px;
+        font-size: 1.3rem;
+    }
+    
+    .add-event-wrapper.active {
+        height: 180px;
+    }
+
+    .add-event-wrapper {
+        bottom: 70px;
+        width: 60%;
+        left: 63%;
+    }
+
+    .add-event-header .title {
+        font-size: 1.15rem;
+    }
+
+    .add-event-footer {
+        margin: 10px 0 8px 0;
+    }
+
+    .add-event-footer .add-event-btn {
+        height: 25px;
+        width: 65px;
+        font-size: 0.8rem;
+    }
+
+    .add-event-body .add-event-input {
+        height: 28px;
+        border-radius: 5px;
+    }
+
+    .add-event-body .add-event-input input, .time-placeholder {
+        font-size: 0.8rem;
+    }
+
+    .clock-icon {
+        height: 25px;
+        width: 25px;
+    }
+
+    .events .event {
+        min-height: 50px;
+        padding-left: 40px;
+        gap: 0px;
+    }
+
+    .events .event .title .event-title {
+        font-size: 0.9rem;
+        margin-left: 10px;
+    }
+
+    .title svg {
+        color: #b49bf9;
+        font-size: 0.7rem;
+    }
+
+    .events .event .event-time span {
+        font-size: 0.65rem;
+        margin-left: 4.5px;
+    }
+}
+
+@media screen and (max-width: 1050px) and (min-height: 1400px) {
+    .left {
+        padding-top: 120px;
+    }
+
+    .right {
+        min-height: 600px;
+        max-height: 700px;
+    }
+
+    .events .no-events {
+        font-size: 1.4rem;
+    }
+}
+
+@media screen and (max-width: 1050px) and (max-height: 1200px) {
+    .calendar--container {
+        min-width: 400px;
+        max-width: 500px;
+    }
+
+    .left {
+        padding-top: 50px;
+        max-height: 600px;
+    }
+
+    .right {
+        min-height: 430px;
+        max-height: 530px;
+    }
+
+    .calendar .days .day {
+        height: 60px;
+    }
+
+    .right .today-date .event-day {
+        font-size: 1.5rem;
+    }
+
+    .right .today-date .event-date {
+        font-size: 0.95rem;
+    }
+
+    .events .no-events {
+        font-size: 1.2rem;
+    }
+
+    .events .no-events {
+        margin-top: 70px;
+    }
+
+    
+    .calendar .days .today::after {
+        top: 45px;
+        height: 15px;
+        width: 15px;
+        border: 3px solid #ffffff;
+    }
+
+    .calendar .days .today::before {
+        width: 42px;
+        height: 42px;
+    }
+
+    .calendar .days .day {
+        font-size: 1.1rem;
+    }
+
+    .calendar .days .day::before {
+        width: 42px;
+        height: 42px;
+    }
+}
+
+@media screen and (max-width: 1050px) and (max-height: 1070px) {
+    .calendar--container {
+        max-width: 400px;
+    }
+    
+    .left {
+        padding-top: 70px;
+        max-height: 550px;
+    }
+
+    .right {
+        min-height: 400px;
+        max-height: 430px;
+    }
+
+    .calendar .days .day {
+        height: 50px;
+    }
+
+    .right .today-date .event-day {
+        font-size: 1.5rem;
+    }
+
+    .right .today-date .event-date {
+        font-size: 0.95rem;
+    }
+
+    .events .no-events {
+        font-size: 1.2rem;
+    }
+
+    .events .no-events {
+        margin-top: 70px;
+    }
+ 
+    .calendar .days .today::after {
+        top: 37px;
+        height: 12px;
+        width: 12px;
+        border: 3px solid #ffffff;
+    }
+
+    .calendar .days .today::before {
+        width: 37px;
+        height: 37px;
+    }
+
+    .calendar .days .day::before {
+        width: 37px;
+        height: 37px;
+    }
+
+    .calendar .days .day {
+        font-size: 1.1rem;
+    }
+
+    .calendar .goto-today button {
+        padding: 8px 15px;
+        font-size: 1.1rem;
+    }
+
+    .calendar .goto-today .goto input {
+        font-size: 1.1rem;
+    }
+
+    .calendar .weekdays {
+        font-size: 1.1rem;
+    }
+
+    .year {
+        font-size: 1.7rem;
+    }
+
+    .month svg {
+        font-size: 1.5rem;
+        margin-top: 6px;
+    }
+}
+
+@media screen and (max-width: 1050px) and (max-height: 1020px) {
+    .calendar--container {
+        max-width: 360px;
+        min-width: 360px;
+    }
+    
+    .left {
+        padding-top: 90px;
+        max-height: 500px;
+    }
+
+    .right {
+        min-height: 380px;
+        max-height: 380px;
+    }
+
+    .calendar .days .day {
+        height: 40px;
+    }
+
+    .right .today-date .event-day {
+        font-size: 1.3rem;
+    }
+
+    .right .today-date .event-date {
+        font-size: 0.8rem;
+    }
+
+    .events .no-events {
+        font-size: 1.1rem;
+    }
+
+    .events .no-events {
+        margin-top: 50px;
+    }
+ 
+    .calendar .days .day {
+        font-size: 0.9rem;
+    }
+
+    .calendar .days .today::after {
+        top: 30px;
+        height: 10px;
+        width: 10px;
+        border: 3px solid #ffffff;
+    }
+
+    .calendar .days .today::before {
+        width: 30px;
+        height: 30px;
+    }
+
+    .calendar .days .day::before {
+        width: 30px;
+        height: 30px;
+    }
+
+    .calendar .goto-today button {
+        padding: 8px 15px;
+        font-size: 0.9rem;
+    }
+
+    .calendar .goto-today .goto input {
+        font-size: 0.9rem;
+        height: 34.5px;
+        border: 3px solid #b49bf9;
+    }
+
+    .calendar .weekdays {
+        font-size: 1.1rem;
+    }
+
+    .year {
+        font-size: 1.7rem;
+    }
+
+    .month svg {
+        font-size: 1.5rem;
+        margin-top: 6px;
+    }
+}
+
+@media screen and (max-width: 1050px) and (max-height: 940px) {
+    .calendar--container {
+        max-width: 330px;
+        min-width: 330px;
+    }
+
+    .left {
+        padding-top: 60px;
+        max-height: 480px;
+    }
+
+    .right {
+        min-height: 380px;
+        max-height: 400px;
+    }
+}
+
+@media screen and (max-width: 1050px) and (max-height: 910px) {
+    .left {
+        padding-top: 100px;
+        max-height: 490px;
+    }
+
+    .right {
+        min-height: 330px;
+        max-height: 330px;
+    }
+
+    .add-event {
+        bottom: 20px;
+        right: 25px;
+        height: 35px;
+        width: 35px;
+        font-size: 1.2rem;
+        border: 2.5px solid #ffffff;
+    }
+
+    .add-event-wrapper {
+        bottom: 65px;
+        width: 65%;
+        left: 60%;
+    }
+    
+    .add-event-wrapper.active {
+        max-height: 170px;
+    }
+
+    .add-event-header .title {
+        font-size: 1.15rem;
+    }
+
+    .add-event-footer .add-event-btn {
+        height: 25px;
+        width: 60px;
+        font-size: 0.8rem;
+    }
+
+    .add-event-body .add-event-input {
+        height: 25px;
+        border-radius: 7px;
+    }
+
+    .add-event-body .add-event-input input {
+        font-size: 0.8rem;
+    }
+
+    .time-placeholder {
+        font-size: 0.8rem;
+    }
+
+    .add-event-footer {
+        margin: 7px 0 7px 0;
+    }
+
+    .clock-icon {
+        height: 25px;
+        width: 25px;
+    }
+}
+
+@media screen and (max-width: 1050px) and (max-height: 900px) {
+    .left {
+        padding-top: 70px;
+        max-height: 460px;
+    }
+
+    .right {
+        min-height: 310px;
+        max-height: 330px;
+    }
+
+    .events .no-events {
+        margin-top: 20px;
+        line-height: 1.7rem;
+    }
+}
+
+@media screen and (max-width: 1050px) and (max-height: 835px) {
+    .left {
+        padding-top: 80px;
+        max-height: 450px;
+    }
+
+    .right {
+        min-height: 280px;
+        max-height: 300px;
+    }
+
+    .year {
+        font-size: 1.4rem;
+    }
+
+    .month svg {
+        font-size: 1.2rem;
+    }
+
+    .calendar .weekdays {
+        font-size: 1rem;
+    }
+
+    .calendar .days {
+        margin-bottom: 10px;
+    }
+    
+    .calendar .goto-today button {
+        padding: 8px 15px;
+        font-size: 0.8rem;
+    }
+
+    .calendar .goto-today .goto input {
+        font-size: 0.8rem;
+        height: 33px;
+    }
+
+    .events .no-events {
+        margin-top: 10px;
+    }
+
+    .add-event {
+        width: 30px;
+        height: 30px;
+        font-size: 1rem;
+        border: 2px solid #ffffff;
+    }
+}
+
+@media screen and (max-width: 1050px) and (max-height: 800px) {
+    .left {
+        padding-top: 70px;
+        max-height: 420px;
+    }
+
+    .right {
+        min-height: 260px;
+        max-height: 270px;
+    }
+
+    .events .no-events {
+        margin-top: 0px;
+        font-size: 0.9rem;
+    }
+
+    .right .today-date .event-day {
+        font-size: 1.1rem;
+    }
+
+    .right .today-date .event-date {
+        font-size: 0.6rem;
+    }
+}
+
+@media screen and (max-width: 1050px) and (max-height: 750px) {
+    .calendar--container {
+        max-width: 310px;
+        min-width: 310px;
+    }
+
+    .left {
+        padding-top: 40px;
+        max-height: 380px;
+    }
+
+
+    .events .no-events {
+        margin-top: 0px;
+    }
+
+    .calendar .goto-today button {
+        padding: 4px 10px;
+        font-size: 0.7rem;
+    }
+
+    .calendar .goto-today .goto input {
+        font-size: 0.7rem;
+        height: 23px;
+    }
+    
+    .calendar .weekdays {
+        font-size: 0.8rem;
+    }
+
+    .year {
+        font-size: 1.1rem;
+    }
+
+    .month svg {
+        font-size: 0.9rem;
+        margin-top: 12px;
+    }
+
+    .calendar .days .day {
+        font-size: 0.7rem;
+    }
+
+    .calendar .days .today::after {
+        top: 28px;
+        height: 8px;
+        width: 8px;
+        border: 2px solid #ffffff;
+    }
+
+    .calendar .days .today::before {
+        width: 26px;
+        height: 26px;
+    }
+
+    .calendar .days .day::before {
+        width: 26px;
+        height: 26px;
+    }
+}
+
+@media screen and (max-width: 1050px) and (max-height: 700px) {
+    .left {
+        padding-top: 40px;
+    }
+
+    .right {
+        min-height: 240px;
+        max-height: 240px;
+    }
+
+    .month {
+        max-height: 30px;
+        margin-bottom: 10px;
+    }
+
+    .add-event {
+        bottom: 12px;
+        right: 20px;
+    }
+
+    .add-event-wrapper {
+        bottom: 48px;
+        left: 62%;
+    }
+    
+    .add-event-wrapper.active {
+        max-height: 162px;
+    }
+
+    .add-event-header .title {
+        font-size: 1.1rem;
+    }
+
+    .add-event-footer .add-event-btn {
+        height: 22px;
+        width: 55px;
+        font-size: 0.75rem;
+    }
+}
