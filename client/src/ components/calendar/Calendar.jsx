@@ -450,7 +450,7 @@ export default function Calendar({todoList, handleSetTodo}) {
             <div className="event-date">{dayMonthYear}</div>
           </div>
           <div className="Todos">
-          <div className='events'>
+          <div className={`events ${sortedEvents.length === 0 ? 'no-overflow' : ''}`}>
             {sortedEvents.length > 0 ? (
               sortedEvents.map((event) => (
                 <div className="event" key={event.id} onClick={() => deleteEvent(event.id)}>
@@ -464,7 +464,9 @@ export default function Calendar({todoList, handleSetTodo}) {
                 </div>
               ))
             ) : (
+              <>
               <div className="no-events">{noEventText}</div>
+              </>
             )}
           </div>
           </div>
@@ -516,10 +518,10 @@ export default function Calendar({todoList, handleSetTodo}) {
               </form>
             </div>
           </div>
-        </div>
-        <button className="add-event" onClick={toggleAddEvent}>
+          <button className="add-event" onClick={toggleAddEvent}>
           <FontAwesomeIcon icon={isAddEvent ? faClose : faPlus} />
-        </button>
+          </button>
+        </div>
       </div>
     </section>
   );
